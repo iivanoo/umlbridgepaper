@@ -1,0 +1,128 @@
+\documentclass[orivec]{llncs}
+
+\usepackage{algorithmic}
+\usepackage{pdfsync}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+\newcommand\dually{{\bf D}{\sc U}{\bf AL}{\sc L}{\sc y}}
+\newcommand\name{{\sc byADL}}
+\newcommand\charmy{{\sc Charmy}}
+
+% partial maps
+\newcommand{\pto}{\rightarrowtail}
+% domain of a partial map
+\newcommand{\pmapincluded}{\subseteq}
+% typed graphs: underlying graph
+\newcommand{\tgr}[1]{\ensuremath{|{#1}|}}
+% typed graphs: underlying morphism
+\newcommand{\tmap}[1]{\ensuremath{\tau_{{#1}}}}
+% category of T-typed graphs with partial morphisms
+\newcommand{\PTyped}[1]{\ensuremath{{#1}\mbox{-}\mathbf{PGraph}}}
+% domain of a partial map
+\newcommand{\dom}[1]{\ensuremath{\mathit{dom}(#1)}}
+
+\def \mathrule #1#2#3{\begin{array}{l}%
+    {\mbox{\scriptsize ({\sc #1})} }%
+    \\ \irule{#2}{#3}%
+\end{array}}
+\newcommand{\irule}[2]{\frac{\textstyle\rule[-1.3ex]{0cm}{3ex}#1}%
+{\textstyle\rule[-.5ex]{0cm}{3ex}#2}}
+
+\def \mathaxiom #1#2{\begin{array}{l}%
+    {\mbox{\scriptsize ({\sc #1})} }%
+    \\ \iaxiom{#2}%
+\end{array}}
+\newcommand{\iaxiom}[1]{\textstyle\rule[-1.3ex]{0cm}{3ex}#1}
+
+\def \mathruleside #1#2#3#4{\begin{array}{l}%
+    {\mbox{\scriptsize ({\sc #1})} }%
+    \\\irule{#2}{#3} \;\;\scriptstyle{#4}%
+\end{array}}
+
+% *** ALIGNMENT PACKAGES ***
+%
+\usepackage{array}
+\usepackage{mdwmath}
+\usepackage{mdwtab}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{times}
+
+% Macros for proof-reading
+\usepackage[normalem]{ulem} % for \sout
+\usepackage{xcolor}
+\newcommand{\ra}{$\rightarrow$}
+\newcommand{\ugh}[1]{\textcolor{red}{\uwave{#1}}} % please rephrase
+\newcommand{\ins}[1]{\textcolor{blue}{\uline{#1}}} % please insert
+\newcommand{\del}[1]{\textcolor{red}{\sout{#1}}} % please delete
+\newcommand{\chg}[2]{\textcolor{red}{\sout{#1}}{\ra}\textcolor{blue}{\uline{#2}}} % please change
+
+% Put edit comments in a really ugly standout display
+\usepackage{ifthen}
+\usepackage{amssymb}
+\newboolean{showcomments}
+\setboolean{showcomments}{true} % toggle to show or hide comments
+\ifthenelse{\boolean{showcomments}}
+  {\newcommand{\nb}[2]{
+    \fcolorbox{gray}{yellow}{\bfseries\sffamily\scriptsize#1}
+    {\sf\small$\blacktriangleright$\textit{#2}$\blacktriangleleft$}
+   }
+   \newcommand{\version}{\emph{\scriptsize$-$working$-$}}
+  }
+  {\newcommand{\nb}[2]{}
+   \newcommand{\version}{}
+  }
+
+\newcommand\ivano[1]{\nb{Ivano}{#1}}
+\newcommand\henry[1]{\nb{Henry}{#1}}
+\newcommand\marco[1]{\nb{Marco}{#1}}
+
+
+
+% end Macros for proof-reading
+
+
+\begin{document}
+
+\title{{Developing a fully automatic bridge between UML profiles and EMF metamodels}
+\thanks{This work is partly supported by the Italian PRIN d-ASAP project.}}
+
+\titlerunning{A fully automatic bridge between UML profiles and metamodels}
+
+\author{Ivano Malavolta, Henry Muccini, Marco Sebastiani}
+\institute{University of L'Aquila, Dipartimento di Informatica\\
+\email{ivano.malavolta,henry.muccini,marco.sebastiani}@univaq.it}
+
+\authorrunning{Malavolta, Muccini, Sebastiani}\maketitle
+
+\begin{abstract}
+\ivano{abstract}
+\end{abstract}
+
+%-------------------------------------------------------------------------
+\input{introduction}
+\input{motivation}
+\input{framework}
+\input{tool}
+\input{caseStudy}
+\input{related}
+\input{conclusion}
+
+%\section*{Acknowledgments} This work is partly supported by the
+%EU IST CONNECT ({\small\url{http://www.connect-forever.eu}}) No
+%231167 of the FET - FP7 program and the Italian PRIN d-ASAP
+%projects.
+
+%-------------------------------------------------------------------------
+%\nocite{ex1,ex2}
+
+%\nocite{*}
+\bibliographystyle{splncs}
+\bibliography{umlBridge}
+
+%\newpage
+%\input{appendix}
+
+\end{document}
