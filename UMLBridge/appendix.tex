@@ -1,0 +1,294 @@
+
+\section{Appendix}
+
+The demonstration will be carried out using two projectors to
+provide both a technical and a practical perspectives in parallel.
+In the following, a description of the demonstration is given steps
+by step.
+
+\subsection{\em Software Architectures and Architecture Description Languages}
+We will start the demonstration by giving a short introduction to
+software architectures and the existent languages and tools to
+describe software architectures. A table summarizing existing
+approaches will be presented with the aim of providing a snapshot of
+the state of the art and of the practice in this area.
+In this step ADLs are divided into two main types: first-generation and second-generation ones.
+The requirements a next-generation ADL should satisfy are also provided.
+
+\subsection{\em The role of MDE technologies into next-generation of ADLs}
+We will explain the power and the potentiality of Model-driven
+technologies and how they can open new perspective in software
+architectures and software engineering in general.
+
+\subsection{\em Technologies overview}
+ As the audience might not be
+familiar with model transformation techniques and with the AMMA
+platform, their characteristics will be introduced and shown in
+details. The Eugenia editor creator is presented, along with  a brief sketch on
+the HUTN textual notation.
+
+\subsection{\em The \name{} framework}
+The parts that compose the \name{} framework will be conceptually
+shown on projector 1 and practically shown on projector 2 (see
+Figure~\ref{fig:highLevelDesign}). By means of projector 2 we will
+illustrate how the various parts of the \name{} framework have been implemented
+and how they relate to each other within the Eclipse platform.
+
+\subsection{\em Putting in practice \name{}}
+In this presentation step we show how the conceptual features of
+\name{} are applied to an illustrative case study, explaining the
+usage session of our framework both for creating a next generation ADL
+and for using it to model a software system.
+
+\subsubsection{\em Composing the notations}
+In this part of the demonstration we will compose (see Section {\bf Metamodels composition:}) the Darwin ADL\footnote{J. Magee and
+J. Kramer. Dynamic structure in software architectures. SIGSOFT
+Softw. Eng. Notes, 21(6):3 14, 1996.}
+with other metamodels in order to enrich it with additional concepts.
+In this step we will show how metamodels are imported into the \name{} framework
+(see the {\bf Metamodels import} section in the paper).
+
+The first step is to consider the Darwin ADL as the staging point for the
+composition. Now we enrich it with additional concerns
+like fault tolerance, direct link to the development process, and so
+on. We do this incrementally, by firstly adding to Darwin the
+idealized fault tolerant component model\footnote{G. Ferreira, C. M.
+Rubira, and R. de Lemos. Explicit Representation of Exception
+Handling in the Development of Dependable Component-based Systems.
+In HASE01, 2001.} that is one of the solutions extensively used to
+make an architecture fault tolerant. Then we integrate Darwin
+extended with fault tolerance with the development process in
+Business Process Modeling Notation (BPMN)\footnote{BPMN
+specification: \small{\url{http://www.bpmn.org/}}} and finally the
+obtained ADL is customized by adding software connectors as
+first-class elements.
+
+% IdealComponent
+\noindent \emph{DarwinFT: Extending Darwin with Fault Tolerance}. We
+compose the Darwin ADL with the \textit{IdealComponent}
+model\footnote{D. Di Ruscio, H. Muccini, A. Pierantonio, and P.
+Pelliccione. Towards weaving software architecture models. In
+MBD-MOMPES '06, 2006.} for specifying software components according
+to the idealized fault tolerant component model.
+Figure~\ref{fig:WM_DarwinIdealComponent} is a screenshot of the
+weaving model composing the Darwin and \textit{IdealComponent}
+metamodels.
+
+% BPMN
+\noindent \emph{DarwinFT+BPMN: DarwinFT \& Development process in}
+\emph{BPMN}. In this scenario, we show how DarwinFT can be composed
+with the BPMN metamodel. Upon doing so, software architects can
+associate structural parts of the system to specific development
+activities. In this step we use the Eclipse STP BPMN simplified metamodel\footnote{STP BPMN simplified metamodel: \underline{http://www.eclipse.org/bpmn}} and
+Figure~\ref{fig:WM_DarwinFTBPMN} is a screenshot of the weaving model
+composing the DarwinFT and BPMN metamodels.
+
+% customization
+\noindent \emph{(DarwinFT+BPMN)$_{cc}$: Darwin customization}. We
+customize the DarwinFT+BPMN language by adding software connectors
+as first-class elements. Components may communicate also through
+connectors now and connectors have associated portals that act as
+architectural roles.
+Figure~\ref{fig:WM_DarwinBPMNCustomization} is a screenshot of the weaving model
+customizing the DarwinFT+BPMN metamodel by adding the concept of software connector.
+
+\subsubsection{\em Generating the model migrators}
+In this step we will consider the weaving model of the first scenario
+(i.e., the one composing the Darwin metamodel with the \textit{IdealComponent} UML profile)
+and we will generate a model migrator from it.
+More specifically, we will generate the model migrator that produces a Darwin and UML model starting from
+a model conforming to the composed metamodel (the one we call DarwinFT).
+Figure~\ref{fig:migratorScreenshot} shows part of the generated migrator in our Eclipse
+environment.
+Depending on the time availability, we will consider an example model conforming to
+the composed metamodel and we will execute the generated migrator
+and a generic Darwin specification extractor on that model
+in order to show the audience that a ready-to-use Darwin specification is produced by the migrator.
+
+\subsubsection{\em Generating the editors}
+In this section we will present the various concrete syntaxes of the language
+we are developing. We will show the three editors that the current \name{} framework
+is able to provide for the generated ADL; they are the tree-based (see Figure~\ref{fig:treeEditor}),
+textual (see Figure~\ref{fig:textualEditor}) and graphical one (see Figures~\ref{fig:graphicalEditor1}~\ref{fig:graphicalEditor2}), respectively.
+
+\subsubsection{\em Using the generated language}
+In this part of the demonstration we will model a software system
+by means of the new ADL we have constructed (DarwinFT+BPMN$_{cc}$)
+using the editors generated in the previous step.
+The modeled system is called Integrated Environment for Communication on Ship
+(IECS)~\cite{duallyTSE}; it is based on a specification that comes from
+a project developed within Selex Communications, a company mainly
+operating in the naval communication domain.
+
+IECS is a multitier environment capable of maintaining a fail-safe
+communication within a military vessel. The main functionalities of
+the system are: (i) provide several communication modes; (ii) manage
+and distribute operative messages; (iii) manage and configure
+transmission and reception over radio channel; (iv) remote control
+and monitoring of the system; (v) implement communication security
+techniques.
+
+Figures~\ref{fig:treeEditor},~\ref{fig:textualEditor},~\ref{fig:graphicalEditor1},~\ref{fig:graphicalEditor2}
+give an idea on the software architecture of the IECS system.
+The integration of Darwin with BPMN, allows us to model both
+%(see Figure \ref{fig:editors}.c)
+the software architecture of the IECS system and the adopted
+development strategies. The IECS software architecture is composed
+of the Equipment, Workstation, Proxy, DB and CTSM components. The
+type of the latter one (CTSMType in Figure~\ref{fig:graphicalEditor1}) is described using the
+idealized fault tolerant component model integrated in Darwin.
+Network is a software connector; this is possible thanks to the
+customization of Darwin we performed (third composition scenario).
+%As can beseen in figure, Darwin and BPMN are represented via two different
+%views. (DarwinFT+BPMN)$_{cc}$ enables to assign software components
+%of the designed SA to developer teams. In particular, let us assume
+%to have two developers teams (namely, A and B), a system engineering
+%team and a testing team. The dotted lines graphically render how
+%Darwin components are associated to the BPMN tasks and pools
+%describing the activities assigned to each team (i.e., Proxy, DB,
+%and Network are assigned to the system engineering team, Equipment
+%and CTSM to the development team A, and Workstation to the
+%development team B). Even if these relationships are not graphically
+%rendered, they exist in the IECS model and can be accessed through
+%the Properties panel of both graphical editors.
+
+\subsection{\em Relationship with the next-generation requirements}
+In this step we aim to show to the audience how the newly generated ADL
+relates to the requirements a next-generation ADL should satisfy.
+We will analyse each requirement independently and we will show how it relates to the generated ADL
+by means of practical examples.
+
+
+\subsection{\em Future work}
+In this step we will present the future work we envision on the \name{} framework.
+We decided to present the future work on \name{} in this demonstration in order
+to discuss it with the audience about it and possibly to gain useful ideas to
+enhance the framework.
+
+The future work on \name{} comprises the following directions:
+\begin{itemize}
+    \item We are planning to investigate more powerful and formal ways to provide semantics.
+%    In the current version of \name{}, the semantics of the ADL is defined by means
+%    of relationships with $A_0$.
+    Indeed, since $A_0$ is minimal, there could be some problems related
+    to its expressivity (e.g., the semantics of elements that do not have a corresponding one in $A_0$ is
+    not precise).
+    \item
+    %There is no evidence that the defined operators are enough for extending any existing ADL.
+    We are investigating on the completeness of the
+    set of composition operators and on how to prove that a candidate operators set is complete.
+    \item The graphical editors creator is the most prototypical component of \name{},
+    we will investigate on how to improve it.
+%    It is not able to automatically solve every possible conflict that may arise. This
+%    aspect needs further investigation.
+    \item \name{} allows the creation of new ADLs by extending existing ones. We will investigate on the creation of a
+    new ADL from scratch (possibly starting from the $A_0$ metamodel), and we will assess its feasibility as well.
+%    \item After the execution of a migrator, a model conforming to the native ADL is generated.
+%    We will work on how to provide means to identify the parts of the software architecture described using the
+%    generated ADL that are affected by changes made by native ADL tools.
+%    This enables software architects to understand if results of performed
+%    analysis are still valid even after changes or if the analysis must be re-performed.
+\end{itemize}
+
+\subsection{\em References}
+Finally, the web site of \name{} will be shown to allow the
+audience to know where they can download the framework and the case
+studies as well as to find more details about the tool that is under
+construction and the release dates.
+
+
+Depending on the time availability, some of the aforementioned items
+may be shortened or deleted.
+
+%\newpage
+
+\section{Screen Dumps}\label{sec:dumps}
+%(see next pages)
+%
+%\begin{figure}[h]
+%    \begin{center}
+%    \includegraphics[scale=.45]{figures/Darwin.png}
+%    \caption{Darwin metamodel}\label{fig:Darwin}
+%    \end{center}
+%\end{figure}
+%
+%\begin{figure}[h]
+%    \begin{center}
+%    \includegraphics[scale=.45]{figures/IdealComponent.png}
+%    \caption{Ideal Component UML profile}\label{fig:customization}
+%    \end{center}
+%\end{figure}
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/WM_DarwinIdealComponent.png}
+    \caption{Composing the Darwin metamodel with the \textit{IdealComponent} UML profile.}\label{fig:WM_DarwinIdealComponent}
+    \end{center}
+\end{figure*}
+%\begin{figure*}[h]
+%\begin{center}
+%    \includegraphics[scale=.4]{figures/BPMN.png}
+%  \caption{BPMN metamodel}\label{fig:BPMN}
+%\end{center}
+%\end{figure*}
+%
+%\begin{figure}[h]
+%    \begin{center}
+%%    \includegraphics[scale=.45]{figures/importWizard.png}
+%    \caption{Import metamodels wizard}\label{fig:importWizard}
+%    \end{center}
+%\end{figure}
+
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/WM_DarwinFTBPMN.png}
+    \caption{Composing the DarwinFT metamodel with the BPMN metamodel.}\label{fig:WM_DarwinFTBPMN}
+    \end{center}
+\end{figure*}
+
+%\begin{figure*}[h]
+%\begin{center}
+%    \includegraphics[scale=.4]{figures/softwareConnectorMM.png}
+%  \caption{Software connector metamodel}\label{fig:softwareConnectorMM}
+%\end{center}
+%\end{figure*}
+
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/WM_DarwinBPMNCustomization.png}
+    \caption{Customization of the DarwinFT+BPMN metamodel by adding software connectors.}\label{fig:WM_DarwinBPMNCustomization}
+    \end{center}
+\end{figure*}
+
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/migratorScreenshot.png}
+    \caption{The \textit{Composed2Single} migrator generated by \name{} from the \textit{Darwin\_IdealComponent} weaving model.}\label{fig:migratorScreenshot}
+    \end{center}
+\end{figure*}
+
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/treeEditor.png}
+    \caption{The tree-based editor for the generated ADL.}\label{fig:treeEditor}
+    \end{center}
+\end{figure*}
+
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/textualEditor.png}
+    \caption{The textual editor for the generated ADL.}\label{fig:textualEditor}
+    \end{center}
+\end{figure*}
+
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/graphicalEditor1.png}
+    \caption{The structural part of the graphical editor for the generated ADL.}\label{fig:graphicalEditor1}
+    \end{center}
+\end{figure*}
+\begin{figure*}[ht]
+    \begin{center}
+    \includegraphics[scale=.3]{figures/graphicalEditor2.png}
+    \caption{The BPMN-related part of the graphical editor for the generated ADL.}\label{fig:graphicalEditor2}
+    \end{center}
+\end{figure*}
