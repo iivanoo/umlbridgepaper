@@ -5,17 +5,17 @@
 As mentioned in the second paragraph, the problem of interoperability has already been addresses in previous researches. Abouzahra, Bézivin et al. \cite{Abouzahra}, propose an integration process starting with an UML profile. 
 
 The tool, they implemented, takes as input an UML profile and the metamodel of the system described by the profile. That tool allows
-transforming between models conforming to those inputs. It transforms UML models designed with this profile to models conforming to the profiled metamodel and vice versa. The tool aims at automatically generating transformations between models and not transforming a metamodel to a profile or the opposite. To reach this goal it needs 
+transforming between models conforming to those inputs. It transforms UML models designed with this profile to models conforming to the profiled metamodel and vice versa. The tool aims at automatically generating transformations between models and not transforming a metamodel to a profile or the opposite. To reach this goal it needs mapping links to be implemented. Mapping details specify links between UML elements and the elements from the profiled metamodel. This information should not to be redundant. To meet this requirement, this approach represents the two input models (the profile model and the profiled metamodel) separately. A modeling weaving tool, the AMMA model weaving one, has been used for this purpose. This approach has the limitation of finding correspondaces beetwen the profile and the metamodel, as mentioned in the limitation section of their paper, since there's no normalized way to define UML profiles and their mapping with MOF metamodels. What we propose is a tool wich bridges, in a completely automated manner, a profile to metamodels (and every profiled model into the corresponding). This previous approach led us the way to our approach.
 
 
+The second approach we cited in the second paragraph has been proposed by Manuel Wimmer in this \cite{Wimmer}. Assuming there's no available profile yet, this approach proposes a Bridge Generator component which automatically generates transformations and profile by means of an explicit, and manually build, mapping model. The integration process then is as follows: First, the user defines
+the correspondences between the DSL metamodel and the UML metamodel in terms of a mapping model in an interactive mapping environment. The mapping model is expressed with a dedicated metamodel bridging language which enables the automatic processing. After finalizing the mapping model, the Bridge Generator automatically generates the UML profile and in the case that an uni-directional model transformation language is used, also the transformations from the DSL to UML and back again. Wimmer's approach has, as its principal benefit, the reduction of error having a single source of information (the mapping model) and automated repetitive tasks by means of the transformation. Our approach, again, has the completely automated manner of defining the mapping. Moreover, our approach is in a way specular to Wimmer's one, since our starting point is a profile and several profiled models.
 
-starts
-with an UML prole and one has to dene the mappings between the DSL meta-
-model and the UML prole elements. The model transformations between the
-DSL and UML models are automatically derived from these mappings. Another
-approach has been proposed by Manuel Wimmer in this \cite{Wimmer}. Wimmer assumes
-that there's no available prole yet, and he proposes a Bridge Generator com-
-ponent which generates transformations and prole by means of an explicit, and
-manually build, mapping model. The principal benet of this approach is the
-reduction of error having a single source of information (the mapping model) and
-automated repetitive tasks by means of the transformation.
+
+Another method used for bridging purposes is the use of EMF umluitl.java library
+
+\marco{serve reference}
+
+which works at the metamodeling level
+
+\marco{serve documentation}
