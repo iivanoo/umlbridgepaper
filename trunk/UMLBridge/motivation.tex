@@ -1,9 +1,8 @@
 \section{Motivational background}\label{sec:motivation}
 
 \ivano{1 pagina descrizione della situazione attuale SENZA il nostro bridge}
+
 \ivano{spiegare il motivo per cui ci serve il nostro bridge}
-
-
 
 In the last decade many languages for specifying and analyzing software architecture have been proposed. Architectural Description Languages (ADLs) are used to describe software architecture in terms of components, their interconnections and their behaviors. Nowadays basically two approaches appear and evolve. The first is the UML approach, which is largely adopted in every industrial contexts. The second approach is based on DSLs (Domain Specific Languages). It aims at representing each domain with a specific metamodel. The UML approach uses profiles to model domain specific concepts. A UML profile describes the semantics of systems or applications which is not supported by the UML metamodel. DSLs, on the other hand, represent each domain with a specific metamodel. Both approaches are adopted to tailor the language in system design to a specific need, and are currently used by an increasing number of communities. The volume of artifacts of both approaches is rapidly increasing too. Whatever the future evolution of MDE in either branch, we need interoperability between these approaches: to produce an UML profiled model from a model conforming to a DSL metamodel and vice versa. At the moment, when 
 
@@ -12,3 +11,6 @@ In previous researches the problem of interoperability and integration has alrea
 
 
 Starting from this point we propose as a solution a model-driven engineering tool to build these bridges. The system we propose connects the UML approach to the DSL one, as the Abouzahra partially does, by means of several automated transformations, as in Wimmer approach. Differently from the previous approaches, our bridge automatically generates a metamodel from an existing profile and then it automatically generates transformations which convert a UML model which has applied a profile to the corresponding model conforming to the brand new generated metamodel.
+
+\ivano{3/4 di pagina per il running example?}
+\marco{quale uso? }
