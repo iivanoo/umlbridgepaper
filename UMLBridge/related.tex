@@ -1,3 +1,21 @@
 \section{Related work}\label{sec:related}
 \ivano{descrizione di lavori simili in letteratura e come si differenziano da noi... bezivin e wimmer differenze col nostro}
 \marco{un paragrafo ogni approccio. bezivin e wimmer differenze col nostro, EMF umluitl.java (solo livello meta)}
+
+As mentioned in the second paragraph, the problem of interoperability has already been addresses in previous researches. Abouzahra, Bézivin et al. \cite{Abouzahra}, propose an integration process starting with an UML profile. 
+
+The tool, they implemented, takes as input an UML profile and the metamodel of the system described by the profile. That tool allows
+transforming between models conforming to those inputs. It transforms UML models designed with this profile to models conforming to the profiled metamodel and vice versa. The tool aims at automatically generating transformations between models and not transforming a metamodel to a profile or the opposite. To reach this goal it needs 
+
+
+
+starts
+with an UML prole and one has to dene the mappings between the DSL meta-
+model and the UML prole elements. The model transformations between the
+DSL and UML models are automatically derived from these mappings. Another
+approach has been proposed by Manuel Wimmer in this \cite{Wimmer}. Wimmer assumes
+that there's no available prole yet, and he proposes a Bridge Generator com-
+ponent which generates transformations and prole by means of an explicit, and
+manually build, mapping model. The principal benet of this approach is the
+reduction of error having a single source of information (the mapping model) and
+automated repetitive tasks by means of the transformation.
