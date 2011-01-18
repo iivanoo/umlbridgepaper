@@ -2,21 +2,21 @@
 \ivano{descrizione completa del bridge senza dettagli}
 \ivano{3/4 di pagina per il running example?}
 \marco{quale uso? }
-\marco{da inserire immagini, e completare l'ultimo capoverso, quello che dipende dall’immagine. Per il resto, salvo altre considerazioni "SOLO" da revisionare}
+\marco{da inserire immagini, e completare l'ultimo capoverso, quello che dipende dall'immagine. Per il resto, salvo altre considerazioni "SOLO" da revisionare}
 
 
 The concept of bridge is used to denote the capability of interoperability between the UML approach and the DSL one. When a corresponding bridge is available for a metamodel and a corresponding profile, it is possible to produce automatically an UML profiled model from a model conforming to the metamodel in question and conversely. In our project we implement a bridge between the metamodels, either between models. The resulting artifacts of the bridge are: a metamodel which represents the profile we are about to translate,  automatically generated transformations which bridge a UML model conforming the profile in question and a model conforming to the brand new generated metamodel.
 
-\marco{io ci metterei la figura che rappresenta schematicamente il bridge, quella che descrive quali sono gli input, qual e’ il bridge ad alto livello e cosa restituisce. Se va bene la inserisco e chiudo questo paragrafo descrivendola come di seguito}
+\marco{io ci metterei la figura che rappresenta schematicamente il bridge, quella che descrive quali sono gli input, qual e' il bridge ad alto livello e cosa restituisce. Se va bene la inserisco e chiudo questo paragrafo descrivendola come di seguito}
 \marco{senza figura questa parte la cancello -->}
 
-In the below figure,  source models are white, representing the input artifacts to be transformed, target models are red, to denote that they’re automatically generated. The yellow shapes denote the bridge engine. As it can be noticed, the bridging procedure is split in two phases: the first one, the yellow ellipse in figure, works at the metamodeling level by generating a metamodel which is the representation of the profile (and the UML metamodel); the second phase, the yellow arrow in figure, works at the modeling level by automatically generating transformations from a UML model which has applied a profile to a model which is conform to the brand new generated metamodel.
+In the below figure,  source models are white, representing the input artifacts to be transformed, target models are red, to denote that they are automatically generated. The yellow shapes denote the bridge engine. As it can be noticed, the bridging procedure is split in two phases: the first one, the yellow ellipse in figure, works at the metamodeling level by generating a metamodel which is the representation of the profile (and the UML metamodel); the second phase, the yellow arrow in figure, works at the modeling level by automatically generating transformations from a UML model which has applied a profile to a model which is conform to the brand new generated metamodel.
 
 \marco{<--senza figura questa parte la cancello}
 
 The resulting metamodel can be considered a union of the UML metamodel (copied in the target one by means of an ad-hoc trasformation superomposed to our one) and the metamodel described in the profile model. We propose a further optimization to our tool which lets the developper to reduce the size of the UML metamodel imported in the target one.
 
-\marco{metto due righe dicendo cosa si dira’ nel seguito del paragrafo?}
+\marco{metto due righe dicendo cosa si dira' nel seguito del paragrafo?}
 
 In the following we will show the bridge behaviour at the metamodeling level and at the modeling one. In the end we will show the procedure we propose to slice the obtained metamodel.
 
@@ -33,7 +33,7 @@ At the metamodeling level the bridge takes as input the UML metamodel and the pr
 
 represents a UML profile translated into an EMF metamodel. All the UML metamodel elements are in the target metamodel, all the profiled elements (stereotypes and further data types) are represented in the target metamodel. The extension mechanism of a stereotype and its metaclass is represented by means of a binding mechanism. Every super class has a reference to the eventual stereotype.
 
-\marco{immagine usata nella presentazione, quella della slide “Approccio finale”, tra profilo e metamodello target}
+\marco{immagine usata nella presentazione, quella della slide "Approccio finale" tra profilo e metamodello target}
 
 In the figure 
 
