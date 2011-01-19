@@ -1,12 +1,17 @@
 \section{Motivational background}\label{sec:motivation}
 
-\subsection{UML profiles}
-\ivano{descrizione di cosa è un profilo UML e come sono utilizzati}
+UML profiling and MOF-based Domain Specific Modeling Languages are the most used approaches for specifying and documenting a system. 
+Even though these two modeling approaches share many common aspects, each of them has its own set of peculiar features. 
+Next section provides some background information on them and will serve as a dictionary of terms used
+throughout the paper. In Section \ref{sec:motivation2} we discuss the main motivations that lead us to propose this work.
 
-\subsection{Domain Specific Modeling Languages}
-\ivano{descrizione di cosa è un DSML e come sono utilizzati}
 
-\subsection{Motivation}
+\subsection{UML profiles and Domain Specific Modeling Languages}\label{sec:background}
+\ivano{descrizione di cosa e' un profilo UML e come sono utilizzati}
+
+\ivano{descrizione di cosa e' un DSML e come sono utilizzati}
+
+\subsection{Motivation}\label{sec:motivation2}
 
 The motivation that led us to develop a fully automatic bridging tool between UML profiles and metamodels comes from our observation and analysis of the actual state of art of the techniques used in the MDE process. We can notice a spreading production of models based on UML profiling approach and metamodeling one. What we we witnessed is a need of practical bridging tools to reconcile both worlds or to provide migration paths. A UML developer, which want to harness the model driven tool support in the design phase, may have a large legacy of UML profiled artifacts and he usually have to manually transform their profiles, generating metamodel in a domain specific language, and then generate tranformations at the modeling level to bridge his models. That's the first need we wanted to satisfy with our bridging tool. There are several more complex scenarios in which our tool may be useful. We categorize our observations in the following scenarios:
 
