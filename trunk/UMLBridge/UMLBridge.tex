@@ -86,10 +86,10 @@
 
 \begin{document}
 
-\title{{Developing a fully automatic bridge between UML profiles and metamodels}
+\title{{Developing an automatic bridge between UML profiles and MOF metamodels}
 \thanks{This work is partly supported by the Italian PRIN d-ASAP project.}}
 
-\titlerunning{A fully automatic bridge between UML profiles and metamodels}
+\titlerunning{Developing an automatic bridge between UML profiles and MOF metamodels}
 
 \author{Ivano Malavolta, Henry Muccini, Marco Sebastiani}
 \institute{University of L'Aquila, Dipartimento di Informatica\\
@@ -98,9 +98,17 @@
 \authorrunning{Malavolta, Muccini, Sebastiani}\maketitle
 
 \begin{abstract}
-\ivano{abstract}
-UML profiling and metamodelling are the most spread modeling approaches in the software engineering's world. Choosing the right approach depends on several aspect, such as tool support, expressivity, ease in transforming models, company or organization policy, etc.. What happens today is that in most cases UML profiling and metamodelling are mutually exclusive. This precludes the possibility to benefit from both techniques during the system's design phase.
-The thesis proposed is the development of a mechanism for bridging between UML profiles and metamodels, in the Eclipse environment. This mechanism is fully automatic and operates at both metamodelling and modelling levels.
+In Model Driven Engineering, UML profiles and Domain Specific Modeling Languages are the most used approaches for specifying and documenting a system. The choice of the right approach depends on several aspects, such as tool support, expressivity, complexity of models, company or organization policies. In general, profiled UML models are intuitive for designers but intrinsically complex for tools processing them; conversely, DSML models are more concise and easy to be processed by tools, but they require an initial effort in terms of users training and tool support. 
+%What happens today is that UML is widely used by designers, but the underlying tools suffer from the complexity of the models. 
+
+In this paper we propose an approach that allows to get the best of the two worlds: designers describe systems using UML, the tools process DSML models. Our approach is based on an automatic bridge between UML profiles and MOF metamodels (which are the basic artifact of DSMLs). The bridge is transparent to the user since it autonomously operates both on UML profiles (and their corresponding MOF metamodels) and the  involved models. The bridge is realized as a combination of model transformation techniques in the Eclipse platform. In this paper we show its application on a case study based on SysML.
+
+
+%In Model Driven Engineering, the use of UML profiles and Domain Specific Modeling Languages are the most used approaches for specifying and documenting a system. The choice of the right approach depends on several aspects, such as tool support, expressivity, complexity of models, company or organization policies. What happens today is that in many UML-based approaches, models are intrinsically complex and the application of a profile on them exarcebates this situation; this complexity affects also the other artifacts (e.g., model transformations, graphi) associated to the
+%
+%
+ %profiling and the use of a DSML are mutually exclusive. This precludes the possibility to benefit from both techniques while design the system of interest.
+%This paper presents an approach for bridging UML profiles and MOF metamodels with a focus on automation. Indeed, the proposed mechanism is fully automatic and operates at both metamodelling and modelling levels. The approach is realized through model transformation techniques in the Eclipse platform.
 \end{abstract}
 
 %-------------------------------------------------------------------------
