@@ -1,13 +1,70 @@
 \section{Introduction}\label{sec:intro}
 
-\ivano{MDE, modelli e uml profiles}
+When describing an application in the context of a specific domain it is particularly important to 
+%correctly capture its elements, 
+to represent it at the right level of abstraction, and to effectively consider the peculiar features of its domain.
+Domain Specific Languages (DSLs) are extremely useful while describing domain specific applications since they allow to "natively" consider the various aspects of the domain of interest. 
 
-\ivano{DSML vs UML profiles}
+\ivano{MDE}
 
-\ivano{dire che noi non vogliamo dire cosa è meglio, ma che vogliamo semplificare la parte di UML e ci focalizziamo su quella}
+In Model Driven Engineering, \textit{UML profiling} and \textit{Domain Specific Modeling} are the most used techniques for defining a DSL. 
+
+The UML profiling technique consists in extending the UML modeling language with concepts coming from the domain of interest.
+A UML profile is the definition of such an extension; the application of a profile to a UML model allows to tailor it with domain-specific information. A UML profile can contain three kinds of constructs: stereotypes, tagged values and constraints.
+Typical examples of currently used UML profiles are SysML for modeling systems engineering applications, 
+MARTE for real-time and embedded applications, EAST-ADL for automotive electronic systems.
+
+The Domain Specific Modeling technique consists in defining and using languages dedicated to a specific domain.
+Those languages are called Domain Specific Modeling Languages (DSMLs) and their concepts are usually formalized as MOF metamodels.
+Each language can have its textual or graphical representation, and tool support can be provided either by generic (meta-modelling tools) or
+ad-hoc modeling environments. 
+Examples of DSMLs are AADL for modeling embedded real-time systems, Backbone for component-based applications, BPMN for business processes, and so on. 
+ 
+Each technique has its own strengths and weaknesses, depending on the needs of the various stakeholders of the application.
+More specifically, ...
+The choice of the right approach depends on several aspects, such as tool support, expressivity, complexity of models, company policies. In general, profiled UML models are very much used since they are intuitive for designers and model editors already exist, however they are intrinsically complex for model manipulation (e.g., transformation, analysis); conversely, DSML models are more concise and easy to be manipulated, but they require an initial effort in terms of designers training and model editors development. 
+What happens today is that UML is widely used by designers, but the underlying tools suffer from the complexity of the models. 
+ 
+Determining which is the best technique is not in the scope of this paper, we focus on the current state-of-the-practice
+in MDE-based projects. Indeed, nowadays we are      IN MDE THEY ARE BOTH EXTENSIVELY USED  
+\ivano{gli approcci possono essere complementari, ma che vogliamo semplificare la parte di UML e ci focalizziamo su quella}
+
+
 
 \ivano{descrizione del bridge ad alto livello}
 
+In this paper we propose an approach that allows to get the best of the two worlds: 
+on one side designers describe the system using a UML profile familiar to them, on the other side DSML models (automatically generated from profiled UML models) enable a better model manipulation. Our approach is based on an automatic bridge between UML profiles and MOF metamodels (which are the main artifacts of MOF-based DSMLs). The bridge is transparent to the user since it autonomously operates both on UML profiles 
+%(and their associated MOF metamodels) 
+and all the involved models. The bridge is realized through model transformation techniques in the Eclipse platform.
+
+
 \ivano{dire che abbiamo applicato il tutto ad un case study in SysML}
 
-\ivano{organizzazione del paper}
+ In this paper we show its application on a case study based on SysML.
+
+
+The remainder of this paper is organized as follows. In Section \ref{sec:motivation} we discuss the main motivations for our work.
+We describe our automatic bridge in Section \ref{sec:framework} and the mechanism for slicing the obtained MOF metamodel 
+in Section \ref{sec:slicing}. 
+Then, Section \ref{sec:tool} gives some implementation details, and Section \ref{sec:caseStudy} describes the application of
+the proposed approach on a real case study. Related work and a discussion on how our bridge differs from other approaches
+are presented in Section \ref{sec:related}. 
+Finally, in Section \ref{sec:conclusion} we discuss future work directions and draw the conclusions. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
