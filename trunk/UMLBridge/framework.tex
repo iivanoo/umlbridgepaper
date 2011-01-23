@@ -47,14 +47,67 @@ we show the behaviour of our approach. We have a stereotype \emph{MyStereotype2}
 
 At the modeling level the bridge automatically generates transformations which bridge a profiled model in a model conforming to the brand new generated metamodel.
 
-\marco{immagine usata nella presentazione, quella della slide “Generazione di regole di trasformazione”, che mostra il codice generato nelle tre fasi. La posso modificare rendendola un’immagine unica e colorando le 3 fasi di generazione}
+\marco{immagine usata nella presentazione, quella della slide "Generazione di regole di trasformazione", che mostra il codice generato nelle tre fasi. La posso modificare rendendola un'immagine unica e colorando le 3 fasi di generazione}
 
-As shown in the above figure, the transformation generates a transformation at the modeling level in three phases: in the first one we generate rules to transofrm UML metaclasses into EMF ones; in the second phase we generate new rules to transform stereotype’s applications into metaclasses’instances representing the stereotype in the target metamodel; in the last phase we generate imperative code, inserted at the end of every rules generated in the fist phase, to trigger the rules obtained in the second phase. The result is a transformation able to bridge a profiled model in a model conforming to the corresponding brand new genarated metamodel.
+As shown in the above figure, the transformation generates a transformation at the modeling level in three phases: in the first one we generate rules to transofrm UML metaclasses into EMF ones; in the second phase we generate new rules to transform stereotype's applications into metaclasses' instances representing the stereotype in the target metamodel; in the last phase we generate imperative code, inserted at the end of every rules generated in the fist phase, to trigger the rules obtained in the second phase. The result is a transformation able to bridge a profiled model in a model conforming to the corresponding brand new genarated metamodel.
 
-\marco{immagine usata nella presentazione, quella della slide “Applicazione sul caso di studio”, tra modello profilato e modello target / oppure quella utilizzata nella tesi, capitolo 5.1.1 (ovviamente la rifaccio usando magic draw)?}
+\marco{immagine usata nella presentazione, quella della slide "Applicazione sul caso di studio", tra modello profilato e modello target / oppure quella utilizzata nella tesi, capitolo 5.1.1 (ovviamente la rifaccio usando magic draw)?}
 
 By executing this brand new transformation we complete the bridge from UML profiling to EMF metamodeling. As example we use the same scenario of the previous paragraph - modeling level. The model element 
 \marco{... bla bla bla}
 
 \section{Slicing the obtained metamodel}\label{sec:slicing}
+
+As previously said, the default behavior of the bridge is to consider the whole UML metamodel and keep its metaclasses also in the
+target MOF metamodel. If on one side this ensures that the bridge is loss-less with respect to the UML information we are...
+(that is our primary goal while designing this system),
+on the other side it moves the UML meta-muddle into the target MOF metamodel. 
+In order to avoid this situation, we couple the bridge with a generic \textbf{slicing algorithm} that allows designers keep  
+in the MOF metamodel only the subset of UML which is relevant for them.
+At this point it is important to define what "relevant" means for UML models developers.
+
+RELEVANT = POSSIAMO ASSUMERE CHE A LIVELLO MODELLO, AVREMO ISTANZE DI SOLO LE CLASSI RELEVANT
+nel caso dei UML profiles questo Ã¨ moooolto tipico: MagicDraw permette di farlo, Papyrus pure?
+
+INFORMAZIONI RELEVANT = INSIEME DI METACLASSI (CHE IMPLICITAMENTE FORMANO UN SUBSET DI UML CON LE LORO RELAZIONI) 
+
+Therefore, we needed a different way to collect this extra information that was related to the source model but not included in it. Since this information or parameters had to be available for the ATL program and considering that we were in a MDE context, the best option was to use another model (and thus to define a new metamodel): an annotation model.
+
+LE METACLASSI RELEVANT LE POSSIAMO DEDURRE IN DIVERSI MODI
+
+COME AIUTARE IL DESIGNER A FORNIRCI QUESTO INSIEME DI METACLASSI? DIVERSI MODI
+
+Lo slice lavora come un post processor degli artifact prodotti dal bridge, e quindi abbiamo che in effetti lo slice e il bridge sono indipendenti e lo possiamo "attivare/disattivare" come ci pare. Questo implica anche il fatto che lo sclicer deve operare anch'esso a tutti
+e due i livelli di astrazione.
+
+SLICE A LIVELLO META:
+
+ then only the portion of
+the left metamodel involved in some operator application will be
+part of the composed metamodel. The same mechanism holds for
+\textit{sliceRight}. The relevant portion of metamodel is computed
+by executing a slicing procedure before calculating the union of the metaclasses in
+\texttt{leftMM} and \texttt{rightMM}. This slicing procedure is based on a
+slicing algorithm for UML models~\cite{UMLSlicer}. Let
+$MM$ be a metamodel and let $SC$ be a subset of the elements in
+$MM$; $slice$ is defined as follows:
+
+\vspace{-.3cm}
+$$slice(SC)=SC \cup \displaystyle\bigcup_{c \in
+SC}{slice(neighbour(c))}$$
+\vspace{-.2cm}
+
+\noindent where $neighbour(c)$ is the set of all superclasses of
+$c$, of all classes referred (both with association and
+aggregation) by $c$, and of all types of attributes
+in $c$. It is important to note that even though $slice$ is defined
+as a set of classes, since each class contains also references
+to other classes, the final result is a part of the metamodel $MM$
+with both classes and their relationships.
+
+A LIVELLO MODELLO, NON CE NE FREGA DEI MODELLI VERI E PROPRI (perchÃ¨ abbiamo fatto l'assunzione), MA CE NE FREGA DI ADATTARE LE TRASFORMAZIONI
+
+
+%This facility is useful while composing a large metamodel and just a part of it is relevant
+%for composition.
 \ivano{descrizione dello slicing dal punto di vista tecnico}
