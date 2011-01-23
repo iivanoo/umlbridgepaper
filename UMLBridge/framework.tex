@@ -39,10 +39,87 @@ At the modeling level the bridge automatically generates transformations which b
 	\caption{The bridge at the modeling level}
 	\label{fig:Diapositiva3}
 \end{figure}
-As shown in figure \ref{fig:Diapositiva3}, the transformation generates a transformation at the modeling level in three phases: in the first one we generate rules to transofrm UML metaclasses into EMF ones; in the second phase we generate new rules to transform stereotype’s applications into metaclasses’instances representing the stereotype in the target metamodel; in the last phase we generate imperative code, inserted at the end of every rules generated in the fist phase, to trigger the rules obtained in the second phase. The result is a transformation able to bridge a profiled model in a model conforming to the corresponding brand new genarated metamodel.
+As shown in figure \ref{fig:Diapositiva3}, the transformation generates a transformation at the modeling level in three phases: in the first one we generate rules to transofrm UML metaclasses into EMF ones; in the second phase we generate new rules to transform stereotypeâ€™s applications into metaclassesâ€™instances representing the stereotype in the target metamodel; in the last phase we generate imperative code, inserted at the end of every rules generated in the fist phase, to trigger the rules obtained in the second phase. The result is a transformation able to bridge a profiled model in a model conforming to the corresponding brand new genarated metamodel.
 
 By executing this brand new transformation we complete the bridge from UML profiling to EMF metamodeling. As example we use the same scenario of the previous paragraph - modeling level. The model element 
 \marco{... bla bla bla}
 
 \section{Slicing the obtained metamodel}\label{sec:slicing}
-\ivano{descrizione dello slicing dal punto di vista tecnico}
+
+As previously said, the default behavior of the bridge is to consider the whole UML metamodel and to keep its concepts also in the
+target MOF metamodel. On one side this behavior ensures that our bridge is loss-less with respect to the information
+provided in the models (it is our primary goal while designing the bridge);
+however, on the other side it moves the complexity of the UML metamodel (it contains 246 classes and 583 properties)
+into the target MOF metamodel. 
+In order to avoid this situation, we couple the bridge with a generic \textbf{slicing algorithm} that allows it to consider  
+only the \textit{subset of relevant UML concepts} when passing to the target MOF metamodel.
+
+The subset of relevant UML concepts can be considered as the set of UML metaclasses that can be instantiated in the context of a specific project;
+metaclasses outside the relevant set are never instantiated in any model.
+A typical example is when designers assume that in the context of a specific project only UML
+use case diagrams will be produced; the subset of relevant UML concepts contains only metaclasses 
+the can be used in sequence diagrams (e.g., actor, use case, association) and there is no need to keep modeling concepts
+for state machines, sequence diagrams, and so on.
+This kind of assumptions is recurrent \cite{CITAZIONI}, thus we designed our approach so that the target MOF metamodel contains only 
+metaclasses corresponding to relevant UML concepts.
+%indeed many UML modeling tools allow to restrict the kind of diagrams that can be created by designers. 
+
+The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers). 
+Since the slicing algorithm is realized as a model transformation and considering that we were in a MDE context, the set of relevant
+metaclasses is represented as an annotation model
+\footnote{An annotation model is a minimalistic model containing auxiliary information about another model it is linked to (the annotated model)\cite{MCDFthesis}}  linked to the target MOF metamodel. The annotation model contains a link to each relevant metaclass coming from UML, the slicing algorithm uses those links to identify
+the metaclasses that will not be sliced out by the slicing procedure.
+
+Currently, our approach provides three mechanisms to create an annotation model:
+
+\begin{enumerate}
+	\item the annotation model is automatically generated from the definition of a UML profile;
+	\item designers specify only the types of UML diagram they will use, and the corresponding annotation model is automatically generated;
+	\item designers provide a set of example UML models, and then the annotation model is automatically generated starting from them.
+\end{enumerate}
+
+Each mechanism has its own level of automation and requires different input artifacts. 
+For example, if designers already know they will use only specific kinds of UML diagram, then option 2 seems to be the most convenient;
+or else, if designers already defined some initial model, they may use the option 3.
+Of course, if full control over the generated MOF metamodel is needed, designers can define the annotation model manually, that is they can create an annotation link for each metaclasses that can be instantiated in their UML models.
+
+Once an annotation model is available, then the slicing procedure can be performed on the target MOF metamodel.
+The slicing procedure is based on a generic slicing algorithm we defined in a previous work~\cite{ICSEbyadl}. Let
+$MM$ be a metamodel and let $SC$ be a subset of the elements in
+$MM$; $slice$ is defined as follows:
+
+\vspace{-.2cm}
+$$slice(SC)=SC \cup \displaystyle\bigcup_{c \in
+SC}{slice(neighbour(c))}$$
+\vspace{-.2cm}
+
+\noindent where $neighbour(c)$ is the set of all superclasses of
+$c$, of all classes referred (both with association and
+aggregation) by $c$, and of all types of attributes
+in $c$. 
+It is important to note that even though $slice$ is defined
+as a set of classes, since each class contains also references
+to other classes, the final result is a subset of the metamodel $MM$
+with both classes and their relations.
+
+
+As can be seen in Figure \ref{fig:slicing}.a, the slicing algorithm is realized as a model transformation that 
+
+
+ \begin{figure}[htbp]
+  \centering
+  %\subfigure[]{\label{fig:example1}\includegraphics[width=4.2cm]{figures/example1.pdf}}
+  %\subfigure[]{\label{fig:example2}\includegraphics[width=4.2cm]{figures/example2.pdf}}
+  \caption{Slicing the MOF metamodel (a) and the generated transformations (b)}
+  \label{fig:slicing}
+\end{figure}
+
+
+
+
+
+
+A LIVELLO MODELLO, NON CE NE FREGA DEI MODELLI VERI E PROPRI (perchÃ¨ abbiamo fatto l'assunzione), MA CE NE FREGA DI ADATTARE LE TRASFORMAZIONI
+
+
+Lo slice lavora come un post processor degli artifact prodotti dal bridge, e quindi abbiamo che in effetti lo slice e il bridge sono indipendenti e lo possiamo "attivare/disattivare" come ci pare.
