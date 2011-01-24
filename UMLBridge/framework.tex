@@ -63,10 +63,9 @@ metaclasses corresponding to relevant UML concepts.
 The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers). 
 Since the slicing algorithm is realized as a model transformation and considering that we were in a MDE context, the set of relevant
 metaclasses is represented as an annotation model
-\footnote{An annotation model is a minimalistic model containing auxiliary information about another model it is linked to (the annotated model)\cite{MCDFthesis}}  linked to the target MOF metamodel. The annotation model contains a link to each relevant metaclass coming from UML, the slicing algorithm uses those links to identify
-the metaclasses that will not be sliced out by the slicing procedure.
+\footnote{An annotation model is a minimalistic model containing auxiliary information about another model it is linked to (the annotated model)\cite{MCDFthesis}}  linked to the target MOF metamodel. The annotation model contains a link to each relevant metaclass coming from UML, the slicing algorithm uses those links to identify the metaclasses that will not be sliced out by the slicing procedure.
 
-Currently, our approach provides three mechanisms to semi-automatically obtain the annotation model that will drive the slicing procedure:
+The current prototype of our approach provides three mechanisms to semi-automatically obtain the annotation model that will drive the slicing procedure:
 
 \begin{enumerate}
 	\item the annotation model is automatically generated from the definition of a UML profile;
@@ -74,13 +73,13 @@ Currently, our approach provides three mechanisms to semi-automatically obtain t
 	\item designers provide a set of example UML models, and then the annotation model is automatically generated starting from them.
 \end{enumerate}
 
-They are all implemented as model-to-model transformations (see Section \ref{sec:tool} for more details);
+The mechanisms are implemented as model-to-model transformations (see Section \ref{sec:tool} for more details);
 each mechanism has a different level of automation and requires different input artifacts.
 For example, if designers already know they will use only specific kinds of UML diagram, then option 2 seems to be the most convenient;
 or else, if designers already defined some initial model, they may use the option 3.
 Of course, if full control over the generated MOF metamodel is needed, designers can define the annotation model manually, that is they can create an annotation link for each metaclasses that can be instantiated in their UML models.
 
-Once an annotation model is available, then the slicing procedure can be performed on the target MOF metamodel;
+Once an annotation model is available, then the slicing procedure can be performed;
 it is based on a generic slicing algorithm for MOF metamodels~\cite{ICSEbyadl}. Let
 $MM$ be a metamodel and let $SC$ be a subset of the elements in
 $MM$; $slice$ is defined as follows:
@@ -99,7 +98,9 @@ to other classes, the final result is a subset of the metamodel $MM$
 with both classes and their relations.
 
 
-As can be seen in Figure \ref{fig:slicing}.a, the slicing algorithm is realized as a model transformation that ...
+As can be seen in Figure \ref{fig:slicing}.a, the slicing algorithm is realized as a model-to-model transformation called \textit{MMslicer}.
+It that takes as input a MOF metamodel $MM_x$ and an annotation model $am_x$, and generates a new metamodel $MM_sliced$ containing 
+a subset of $MM_x$ according to the metaclasses referenced in $am_x$.
 \ivano{da completare}
 
 
