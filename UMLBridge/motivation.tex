@@ -11,31 +11,42 @@
 %
 %\ivano{descrizione di cosa e' un DSML e come sono utilizzati}
 
-The motivation that led us to develop a fully automatic bridging tool between UML profiles and metamodels comes from our observation and analysis of the actual state of art of the techniques used in the MDE process. We can notice a spreading production of models based on UML profiling approach and metamodeling one. What we we witnessed is a need of practical bridging tools to reconcile both worlds or to provide migration paths. A UML developer, which want to harness the model driven tool support in the design phase, may have a large legacy of UML profiled artifacts and he usually have to manually transform their profiles, generating metamodel in a domain specific language, and then generate tranformations at the modeling level to bridge his models. That's the first need we wanted to satisfy with our bridging tool. There are several more complex scenarios in which our tool may be useful. We categorize our observations in the following scenarios:
+As previously said, the primary motivation for proposing our bridge is to alleviate the accidental complexity of manipulating profiled UML models, 
+without forcing designers to do not use UML for their modeling activities.
+In this section we provide a discussion on the main motivations that lead us to propose this work.
+For the sake of clarity, we categorize our observations in three high-level scenarios.
 
-\textbf{First scenario - Synergetic approach of UML notation and MOF metamodeling}
+\textbf{First scenario - Analysis tools based on UML profiles}
+Both in academia and in practice there are many tools that allow designers to perform some kind of analysis on profiled UML models.
+For example, the XX allows to, and YYY performs...
+These tools share a strong difficulty in manipulating models conforming to UML (vedere metaPruning).
+The proposed bridge helps tool developers since they can reason on standard MOF metamodels and the involved tools
+operate on smaller MOF-based models only, ...
 
-As suggested from several studies, an approach based on the synergy of UML, as notation, and MOF-based DSLs for the engines is possible and desirable. Orlando Avila et al. proposes in its studies 
-
-\marco{riferimento ad avila},
-
-a separation of concerns in MDE not only in terms of multiple levels of abstraction, but also by modeling multiple concerns at any of those levels. Each of these concerns must be addressed with its own well defined and precisely focused independent Domain Specific Language. For example, the treatment of security separately from the rest of concerns. This is possible by defining a DSL specifically tailored to describe such a concern at the required level of abstraction. In other words, he proposes to generate lightweight ad-hoc editors for any aspect of the model that needs to be separately presented and edited. Our approach provides a solution in this way. By means of an automatic bridge one developper can take advantage of the MOF languages, and overcome the lack of specific tooling, which is a known disadvantage of MOF languages and the stenght of UML.
-
-\textbf{Second scenario - large scale profile for defining application in specific constrained languages}
-
-In Madeleine Faug\'ere et al, \cite{Madeleine} there is described the relation between MARTE profile and AADL-based models. AADL is a very specific and constrained language which gives a specific abstraction layer in the development life cycle of the system. MARTE is the UML profile for modeling and analysis of real-time and embedded systems. Using Marte for modelling AADL applications allows designers to model applications at earlier design stages. Every model can be completed from different point of views (like performance and scheduling, hardware and software resources modelling, etc.) making the application understanding easier. A bridging tool may help developers to define thair own application by means of MARTE and then exploit the AADL specific and constrained language.
-
-\textbf{Third scenario - domain-specific environment from UML profiles}
-
-Creating a MOF based domain specific modeling language, which is a formal way for describing a specific domain, may be easier using a graphical notation. As suggested in 
-
-\marco{riferimento DOMAIN-SPECIFIC MODELING ENVIRONMENT BASED ON UML PROFILES}
-
-, MagicDraw may be a useful tool for defining a UML profile to describe a domain. To have a DSL environment they suggest a seven step process for creating it from a profile. In our approach, one developer may just define his own profile(s) and/or model(s) and then migrating in a MOF based domain specific environment by means of an automatic transformation procedure.
-
-\textbf{Fourth scenario - transforming among several architectural notations}
-
-In the last years we witnessed the proliferation of architectural languages, each one with the aim of becoming the ideal language for specifying software architectures. What is evident nowadays, instead, is that architectural languages are defined by stakeholder concerns. Capturing all such concerns within a single notation is difficult and nevertheless it is impractical to define and use a \textit{universal} notation. A powerful framework to create interoperability has been proposed in \cite{duallyTSE}. This framework allows software archtiects to transform among formal ADLs and UML model-based notations and vice versa. \ivano{spiegare in una frase che ECORE è il metameta di EMF} The transformation engine has, though, to take care of the dual metamodel (UML and ECORE), this means additional operational effort while performing the transformation. Our bridge make possible to lighten the engine by working only one one metamodel (the ECORE one) thus improving the whole framework.
+\textbf{Second scenario - Model transformation tools}
+Current model transformation tools do not natively support the management of UML profiles.
+Thus, in current state-of-the-practice model transformation engines 
+like ATL\footnote{ATL project website: \small{\url{http://www.eclipse.org/atl}}} and
+MediniQVT\footnote{Medini QVT project website: \small{\url{http://projects.ikv.de/qvt}}}
+need to be tailored or extended to support the transformation of profiled UML models; 
+even worse, some interesting model transformation engine (e.g.,   
+JTL\footnote{JTL project website: \small{\url{http://jtl.di.univaq.it}}}, GReAT) 
+has the limitation that it cannot natively access profile-specific information when transforming UML models.
+These problems are caused by a set of additional constraints that make the manipulation of profiled UML models difficult for both model transformations users and transformation engines developers:
+%
+\begin{itemize}
+	\item specific mechanisms to apply (and un-apply) either UML profiles or stereotypes must be implemented 
+	in the model transformation engine itself (or at least as an ad-hoc extension for it);
+	\item the model transformation engine must consider the order in which profiles and stereotypes can be applied; 
+	for example, a UML restriction imposes that a stereotype cannot be applied to a model element $x$ before 
+	the profile has been applied to a package containing $x$;
+	\item the model transformation language must expose specific constructs for accessing tagged values associated to a UML model element;
+\end{itemize}
+%
+By automating the transition from profiled UML models to MOF-based models and vice versa, our bridge relaxes the above mentioned constraints
+by allowing model transformation users and transformation engine developers to assume they work on MOF-based models only.
+  
+\textbf{Third scenario - Homogeneous representation of meta-concepts}
 
 \ivano{dire anche che col nostro approccio semplifichiamo la scrittura di trasf (prima, la complessità dei livelli introdotta dal profiling, 
 ce la portavamo dietro anche quando sviluppavamo le trasf.)}
