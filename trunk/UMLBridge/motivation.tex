@@ -17,8 +17,11 @@ In this section we provide a discussion on the main motivations that lead us to 
 For the sake of clarity, we categorize our observations in three high-level scenarios.
 
 \textbf{First scenario - Analysis tools based on UML profiles}
-Both in academia and in practice there are many tools that allow designers to perform some kind of analysis on profiled UML models.
-For example, the XX allows to, and YYY performs...
+Both in academia and in practice there are many verification engines that allow designers to perform some kind of analysis on UML models.
+For example, the XX allows to \cite{perfMarte}, and YYY performs\cite{securityUMLsec}...
+
+The typical workflow is that designers develop a UML model, then they augment it with additional information by means of a UML profile,
+and finally the verification engine performs the analysis step on the profiled model.
 These tools share a strong difficulty in manipulating models conforming to UML (vedere metaPruning).
 The proposed bridge helps tool developers since they can reason on standard MOF metamodels and the involved tools
 operate on smaller MOF-based models only, ...
