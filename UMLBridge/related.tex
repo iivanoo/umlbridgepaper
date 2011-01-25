@@ -9,6 +9,15 @@ transforming between models conforming to those inputs. It transforms UML models
 
 Another approach has been proposed by Manuel Wimmer in this \cite{Wimmer}. Assuming there's no available profile yet, this approach proposes a Bridge Generator component which automatically generates transformations and profile by means of an explicit, and manually build, mapping model. The integration process then is as follows: First, the user defines the correspondences between the DSL metamodel and the UML metamodel in terms of a mapping model in an interactive mapping environment. The mapping model is expressed with a dedicated metamodel bridging language which enables the automatic processing. After finalizing the mapping model, the Bridge Generator automatically generates the UML profile and in the case that an uni-directional model transformation language is used, also the transformations from the DSL to UML and back again. Wimmer's approach has, as its principal benefit, the reduction of error having a single source of information (the mapping model) and automated repetitive tasks by means of the transformation. Our approach, again, has the completely automated manner of defining the mapping. Moreover, our approach is in a way specular to Wimmer's one, since our starting point is a profile and several profiled models.
 
+Using UML as notation to visualize models conforming to a given MOF-based DSL has already been proposed.
+
+\marco{riferimento a Bas Graaf and Arie van Deursen. Visualisation of domain-specific modelling languages
+using uml. In ECBS ’07: Proceedings of the 14th Annual IEEE International
+Conference and Workshops on the Engineering of Computer-Based Systems, pages
+586–595, Washington, DC, USA, 2007. IEEE Computer Society.} 
+
+This approach, through an unidirectional mapping between those models conforming to the DLS and UML models with profiles. By means of this tecnique it is possible to use of general-purpose UML editors to visualize the models (as documentation). The approach is thus partial and not usable for architectural reasons but only for the documentation.
+
 Another method used for bridging purposes is the use of EMF umlutil.java library. This library converts UML elements to representative Ecore model elements. This utility helps, in the Eclipse framework, to automatically convert UML elements into Ecore ones. Nevertheless the conversion is possible only at the metamodeling level, one developer has to manually implement transformations from his own profile to the metamodel that is the strenght of the bridge we are propose here.
 
 \marco{reference al sito? http://download.eclipse.org/modeling/mdt/uml2/javadoc/2.2.0/org/eclipse/uml2/uml/util/UMLUtil.UML2EcoreConverter.html}
