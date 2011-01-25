@@ -115,10 +115,7 @@ previously generated model transformations of the bridge may refer to missing me
 This implies that our approach must provide a mechanism for adapting also the $UML2MM_x$ and $MM_x2UML$ transformations
 to the newly sliced metamodel.
 We are aware that in literature there are generic approaches managing the coupled evolution of metamodels and model transformations
-\cite{CITATION1}\cite{CITATION2}; however, since in our case we can assume that elements 
-\begin{center}
-
-\end{center}
+\cite{TransEvolution}; however, since in our case we can assume that elements
 can be only deleted from metamodels (we do not need to manage neither additions or updates), and since we need a fully automatic mechanism, we developed our minimalistic solution to automatically adapt model transformations to sliced metamodels.
 Our solution takes inspiration from the EMFMigrate project\footnote{EMFMigrate project website: \small{\url{http://www.emfmigrate.org}}}
 and it is based on an higher-order transformation; in this work we call it $Tslicer$.
