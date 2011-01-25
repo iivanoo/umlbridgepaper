@@ -37,7 +37,14 @@ At the modeling level the bridge automatically generates transformations which b
 \end{figure}
 As shown in figure \ref{fig:modelingLevel}, we used higher order transformations to automatically generate tranformations at the modeling level. The HOT generates a transformations in three phases: (i) in the first one we generate rules to transofrm UML metaclasses into EMF ones; (ii)in the second phase we generate new rules to transform stereotype’s applications into metaclasses’instances representing the stereotype in the target metamodel; (iii) in the last phase we generate imperative code, inserted at the end of every rules generated in the fist phase, to trigger the rules obtained in the second phase. The result is a transformation able to bridge a profiled model in a model conforming to the corresponding brand new genarated metamodel.
 
-By executing this brand new transformation we complete the bridge from UML profiling to EMF metamodeling. 
+By executing this brand new transformation we complete the bridge from UML profiling to EMF metamodeling.
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{figures/modelingExample.jpg}
+	\caption{Transformations at the modeling level}
+	\label{fig:modelingExample}
+\end{figure}
+ 
 
 \section{Slicing the obtained metamodel}\label{sec:slicing}
 
