@@ -28,12 +28,12 @@ have the limitation that they cannot natively access profile-specific informatio
 These problems are caused by a set of additional constraints that make the manipulation of profiled UML models difficult for both model transformations users and transformation engines developers:
 %
 \begin{itemize}
-	\item specific mechanisms to apply (and un-apply) either UML profiles or stereotypes must be implemented 
+	\item[$\bullet$] specific mechanisms to apply (and un-apply) either UML profiles or stereotypes must be implemented 
 	in the model transformation engine itself (or at least as an ad-hoc extension for it);
-	\item the model transformation engine must consider the order in which profiles and stereotypes can be applied; 
+	\item[$\bullet$] the model transformation engine must consider the order in which profiles and stereotypes can be applied; 
 	for example, a UML restriction imposes that a stereotype cannot be applied to a model element $x$ before 
 	the profile has been applied to a package containing $x$;
-	\item the model transformation language must expose specific constructs for accessing tagged values associated to a UML model element;
+	\item[$\bullet$] the model transformation language must expose specific constructs for accessing tagged values associated to a UML model element;
 \end{itemize}
 %
 By automating the transition from profiled UML models to MOF-based models and vice versa, our bridge relaxes the above mentioned constraints
