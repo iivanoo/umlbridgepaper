@@ -1,47 +1,38 @@
 \section{Introduction}\label{sec:intro}
 
-When describing an application in the context of a specific domain it is particularly important to 
-%correctly capture its elements, 
-to represent it at the right level of abstraction and to effectively consider the peculiar features of its domain.
-Domain Specific Languages (DSLs, \cite{FowlerBook}) are extremely useful while describing domain specific applications since they allow to 
-directly consider the various aspects of the domain of interest. 
-In Model Driven Engineering (MDE), UML profiling \cite{UML} and Domain Specific Modeling \cite{DSML}
-are the most used techniques for defining a DSL. 
+The specification of domain specific applications require notations enabling to capture domain specific information, at the right level of abstraction. Domain Specific Languages (DSLs, \cite{FowlerBook}) have been introduced for this purpose, facilitating the specification of conceptual elements specific for the reference domain. In Model Driven Engineering (MDE), UML profiling \cite{UML} and Domain Specific Modeling \cite{DSML} are the most used techniques for defining a DSL.
 
-The \textit{UML profiling} technique consists in extending the UML modeling language with concepts coming from 
+The \textit{UML profiling} technique consists in extending the UML modeling language with concepts coming from
 the domain of interest \cite{UMLprofile}.
-A UML profile is the definition of such an extension; the application of a profile to a UML model allows to tailor it with domain-specific information. A UML profile can contain three kinds of constructs: stereotypes, tagged values and constraints.
-Typical examples of currently used UML profiles are: SysML\footnote{Official OMG SysML site: \small{\url{http://www.omgsysml.org}}}
-for modeling systems engineering applications, 
-MARTE\footnote{Official OMG MARTE site: \small{\url{http://www.omgmarte.org}}} for real-time and embedded applications, 
-EAST-ADL\footnote{EAST-ADL specification site: \small{\url{http://www.atesst.org}}} for automotive electronic systems.
+A UML profile is the definition of such an extension; the application of a profile to a UML model allows to tailor it with domain-specific information, by specializing existing UML meta classes. Among the most popular UML profiles, we can cite SysML\footnote{Official OMG SysML site: \small{\url{http://www.omgsysml.org}}}
+for modeling systems engineering applications, and 
+MARTE\footnote{Official OMG MARTE site: \small{\url{http://www.omgmarte.org}}} for real-time and embedded applications. 
+%and 
+%EAST-ADL\footnote{EAST-ADL specification site: %\small{\url{http://www.atesst.org}}} for automotive %electronic systems.
 
 The \textit{Domain Specific Modeling} technique consists in defining and using languages dedicated to a specific domain.
 Those languages are called Domain Specific Modeling Languages (DSMLs) and their concepts are usually formalized  via MOF metamodels \cite{MOF}.
 Each language can have its textual or graphical representation, and tool support can be provided either by generic (meta-modelling tools) or
-ad-hoc modeling environments \cite{DSML}. 
-Examples of DSMLs are: AADL for modeling embedded real-time systems \cite{aadl}, Backbone for component-based applications \cite{backbone}, BPMN for business processes \cite{BPMN}, and so on. 
- 
+ad-hoc modeling environments \cite{DSML}.
+Examples of DSMLs are: AADL for modeling embedded real-time systems \cite{aadl}, Backbone for component-based applications \cite{backbone}, BPMN for business processes \cite{BPMN}, and so on.
 
-Currently, in many MDE projects both UML profiles and DSMLs are extensively used and
-each technique has its own strengths and weaknesses, depending on the needs of the various stakeholders of the application.
-The choice of the right approach depends on several aspects, such as tool support, expressivity, 
-complexity of models, company policies \cite{comparison}. 
+
+Currently, in many MDE projects both UML profiles and DSMLs are extensively used and each technique has its own strengths and weaknesses, depending on the needs of the various stakeholders.
+The choice of the right approach depends on several aspects, such as tool support, language expressiveness,
+models complexity, and company policies \cite{comparison}.
 %In general, profiled UML models are very much used since they are intuitive for designers and model editors already exist, however they are intrinsically complex for model manipulation (e.g., transformation, analysis); conversely, DSML models are more concise and easy to be manipulated, but they require an initial effort in terms of designers training and model editors development.
 %A detailed discussion on how the two techniques differ is provided in .
 %Determining which is the best technique is not in the scope of this paper
 %and there are many cases in which they are used together in order to complement each other \cite{AAA}.
-However, what is happening today is that UML profiling is widely used by designers, 
-but underlying tools suffer from the complexity of the models \cite{comparison}\cite{france}.
-This complexity is mainly due to 
-(i) the complexity of the UML language in which many related concepts are scattered across its metamodel 
-(the so called "metamuddle") \cite{france}, and 
-(ii) because the application of a profile imposes additional constraints in the way models are manipulated \cite{UMLprofile}, for example there is a fixed order in which profiles and stereotypes can be applied, tagged values are accessed through ad-hoc mechanisms, and so on.
+What can be noticed today is that UML profiles became extremely popular, and used as an extensive tool for describing domain specific applications. However, while of more immediate use for practitioners (since it is essentially an annotated UML model that can be specified using existing UML tools), the underlying tools suffer from the complexity of the models \cite{comparison}\cite{france}.@@@ Ivano, che voglaimo dire?? Rifrasa@@
+This complexity is mainly due to (i) the complexity of the UML language in which many related concepts are scattered across its metamodel
+(the so called "metamuddle") \cite{france} @@@ Ivano, spiega meglio@@@, and
+(ii) because the application of a profile imposes additional constraints in the way models are manipulated \cite{UMLprofile}. For example, profiles and stereotypes can only be applied in a fixed order, tagged values are accessed through ad-hoc mechanisms, and so on.
 It is important to note that the complexity of manipulating profiled UML models is not strictly related to
-the system of interest, so we can consider it as an accidental complexity.
+the system of interest, but relies on the profiling technique itself.
+%so we can consider it as an accidental complexity.
 
-The scope of this work is to support those kind of projects in which the system is modelled using UML profiles, and there is a strong need to 
-automatically manipulate those models (e.g., to perform some kind of analysis \cite{UMLprofilesAnalysis}).
+The scope of this work is to support those kind of projects in which the system is modelled using UML profiles, and there is a strong need of automatic model manipulation (e.g., to perform some kind of analysis \cite{UMLprofilesAnalysis}).
 This paper proposes a fully \textbf{automatic bridge} between UML profiles and MOF metamodels; such a bridge alleviates the accidental difficulty in manipulating profiled UML models, without forcing designers to abandon UML-based notations.
 By using the bridge, on one side designers can describe the system using UML profiles, and on the other side tools operate
 on \textit{automatically generated} MOF-based models.
@@ -49,23 +40,23 @@ The bridge is totally transparent to designers since it operates at both metamod
 %that is, designers can continue to develop models using UML profiles, and the bridge manages to transform them to MOF-based models.
 At the metamodeling level, the bridge automatically generates a MOF metamodel $MM_x$ representing the concepts of each UML profile.
 At the modeling level, it automatically transforms each profiled UML model to a model conforming to $MM_x$, and viceversa.
-%This unveils one of the advantages of our approach: designers interact with UML models and the tools manipulate only MOF-based models. 
-Since in practice designers use only a small subset of the diagram types of UML \cite{france}, 
+%This unveils one of the advantages of our approach: designers interact with UML models and the tools manipulate only MOF-based models.
+Since in practice designers use only a small subset of the diagram types of UML \cite{france},
 it is fundamental that the automatically obtained MOF metamodel does not contain \textit{all} UML concepts;
-for this reason the proposed bridge is coupled with a generic \textbf{slicing algorithm} that allows the bridge to consider only the subset of UML which is relevant for the designer. This aspect of our approach is detailed in Section \ref{sec:slicing}. 
+for this reason the proposed bridge is coupled with a generic \textbf{slicing algorithm} that allows the bridge to consider only the subset of UML which is relevant for the designer. This aspect of our approach is detailed in Section \ref{sec:slicing}.
 
-The proposed bridge is implemented as an Eclipse\footnote{The Eclipse Foundation open source community website: 
-\small{\url{http://www.eclipse.org}}} plugin. The Eclipse platform allows us to integrate the bridge 
+The proposed bridge is implemented as an Eclipse\footnote{The Eclipse Foundation open source community website:
+\small{\url{http://www.eclipse.org}}} plugin. The Eclipse platform allows us to integrate the bridge
 with other technologies available in the Eclipse community, but also to make it available as a stand-alone application.
 In this paper we show application of the proposed bridge on a case study based on OMG Systems Modeling Language (SysML).
 
 The remainder of this paper is organized as follows. In Section \ref{sec:motivation} we discuss the main motivations for our work.
-We describe our automatic bridge in Section \ref{sec:framework} and the mechanism for slicing the obtained MOF metamodel 
-in Section \ref{sec:slicing}. 
+We describe our automatic bridge in Section \ref{sec:framework} and the mechanism for slicing the obtained MOF metamodel
+in Section \ref{sec:slicing}.
 Then, Section \ref{sec:tool} gives some implementation details, and Section \ref{sec:caseStudy} describes the application of
 the proposed approach on a case study. Related work and a discussion on how our bridge differs from other approaches
-are presented in Section \ref{sec:related}. 
-Finally, in Section \ref{sec:conclusion} we discuss future work directions and draw the conclusions. 
+are presented in Section \ref{sec:related}.
+Finally, in Section \ref{sec:conclusion} we discuss future work directions and draw the conclusions.
 
 
 
