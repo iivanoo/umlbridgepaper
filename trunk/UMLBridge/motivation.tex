@@ -16,25 +16,15 @@ without forcing designers to do not use UML for their modeling activities.
 In this section we provide a discussion on the main motivations that lead us to propose this work.
 For the sake of clarity, we categorize our observations in three high-level scenarios. 
 
-\textbf{First scenario - Analysis tools based on UML profiles}
-Both in academia and in practice there are many verification engines that allow designers to perform some kind of analysis on UML models.
-For example, the XX allows to \cite{perfMarte}, and YYY performs\cite{securityUMLsec}...
-
-The typical workflow is that designers develop a UML model, then they augment it with additional information by means of a UML profile,
-and finally the verification engine performs the analysis step on the profiled model.
-These tools share a strong difficulty in manipulating models conforming to UML (vedere metaPruning).
-The proposed bridge helps tool developers since they can reason on standard MOF metamodels and the involved tools
-operate on smaller MOF-based models only, ...
-
-\textbf{Second scenario - Model transformation tools}
+\textbf{First scenario - Model transformation tools.}
 Current model transformation tools do not natively support the management of UML profiles.
 Thus, in current state-of-the-practice model transformation engines 
 like ATL\footnote{ATL project website: \small{\url{http://www.eclipse.org/atl}}} and
 MediniQVT\footnote{Medini QVT project website: \small{\url{http://projects.ikv.de/qvt}}}
 need to be tailored or extended to support the transformation of profiled UML models; 
-even worse, some interesting model transformation engine (e.g.,   
+even worse, other interesting model transformation engines (e.g.,   
 JTL\footnote{JTL project website: \small{\url{http://jtl.di.univaq.it}}}, GReAT) 
-has the limitation that it cannot natively access profile-specific information when transforming UML models.
+have the limitation that they cannot natively access profile-specific information when transforming UML models.
 These problems are caused by a set of additional constraints that make the manipulation of profiled UML models difficult for both model transformations users and transformation engines developers:
 %
 \begin{itemize}
@@ -47,9 +37,33 @@ These problems are caused by a set of additional constraints that make the manip
 \end{itemize}
 %
 By automating the transition from profiled UML models to MOF-based models and vice versa, our bridge relaxes the above mentioned constraints
-by allowing model transformation users and transformation engine developers to assume they work on MOF-based models only.
+by allowing both users and developers of model transformation engines to assume to work on MOF-based models only.
+
+\textbf{Second scenario - Analysis tools based on UML profiles.}
+Both in academia and in practice there are many tools that allow designers to perform some kind of analysis on UML models.
+For example, MOSQUITO\cite{perfMarte} allows to analyse the performance of context-aware mobile 
+applications modelled with the MARTE profile, 
+the UMLsec profile\cite{securityUMLsec} is associated with a tool that automatically checks whether security 
+requirements are met by the modelled system, and so on.
+In this scenario, the typical workflow is that designers develop a UML model, then it is augmented with additional information by means of a UML profile, and finally the analysis tool performs an analysis step on the profiled model.
+Similarly to model transformation tools, analysis tools share a strong difficulty in manipulating profiled UML models:
+their logic must reflect the additional constraints imposed by the UML profiling mechanism, making the tool
+implementation difficult to understand, test, and maintain.
+Under this perspective, the proposed bridge (along with its slicing algorithm)
+helps analysis tools developers since they can reason on smaller and more concise MOF metamodels.
   
-\textbf{Third scenario - Homogeneous representation of meta-concepts}
-there are some tools that work with both UML profiles and metamodels...
-\ivano{dire anche che col nostro approccio semplifichiamo la scrittura di trasf (prima, la complessità dei livelli introdotta dal profiling, 
-ce la portavamo dietro anche quando sviluppavamo le trasf.)}
+\textbf{Third scenario - Homogeneous representation of meta-concepts.}
+Recently, tools working on meta-concepts (i.e., metaclasses, attributes, etc.) 
+that can be represented either as metamodels or UML profiles are emerging. 
+An example of this kind of tools is \dually{}, 
+an automated framework for architectural languages and interoperability\cite{duallyTSE}; in this specific case a set of higher-order
+ transformations (HOTs) is executed starting from the initial set of meta-concepts; those transformations are intrinsically complex since
+every time they need to access a meta-concept,
+they must distinguish whether it is represented as a MOF element (e.g., an attribute) or as a UML profile element (e.g., a tagged value).
+The proposed bridge allows designers to simplify their tools since it allows them to work seamlessly on both MOF metamodels and UML profiles. Indeed, every time a UML profile is provided, the proposed bridge can be used as a preliminary step in which 
+the MOF metamodel corresponding to the initial UML profile is automatically generated; 
+after this step, designers can assume that inner mechanisms of their tools (like the HOTs in \dually{}) work on MOF metamodels only. 
+
+In this section we described the most common scenarios that may arise while manipulating profiled UML models,
+they are only some of the many possible issues that may arise in practice. In the following sections we will present
+our bridge to overcome the above mentioned issues.
