@@ -1,26 +1,54 @@
 \section{The automatic bridge}\label{sec:framework}
 %
-The concept of bridge is used to denote the capability of interoperability between the UML approach and the DSML one. When a bridge is available for a metamodel and a corresponding profile, it is possible to produce automatically an UML profiled model from a model conforming to the metamodel in question and conversely. In our project we implement a bridge between the metamodels, either between models. The resulting artifacts of the bridge are: a metamodel which represents the profile we are about to translate,  automatically generated transformations which bridge a UML model conforming the profile in question and a model conforming to the brand new generated metamodel.
-%
+The proposed bridge allows to automatically consider a UML profile as standard MOF metamodel.
+So, on one side software designers to develop models using UML profiles familiar to them, and on the other side 
+developers of tools that manipulate models can assume to work on MOF metamodels only, avoiding the additional
+constraints introduced by UML profiling.
+Figure \ref{fig:overall} gives an high-level idea on how the proposed bridge works. 
+For the sake of simplicity, the M3, M2 and M1 level abstraction levels are not explicitly represented in the remaining figures of this paper.
+
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[width=0.75\textwidth]{figures/overall.png}
 	\caption{High-level view of the proposed bridge}
 	\label{fig:overall}
 \end{figure}
-%
-In the figure \ref{fig:overall},  we have a profile and some profiled models, representing the input artifacts to be transformed, target models are in the right side of the figure, to denote that they are automatically generated. As it can be noticed, the bridging procedure is split in two phases: the first one, consists in the generation of a metamodel which is the representation of the profile; the second phase consists in automatically generation of transformations at the modeling level which bridge a profiled UML model into a model conform to the brand new generated metamodel.
 
-\subsection{The bridge at the metamodeling level}\label{sec:metamodelLevel}
-At the metamodeling level the bridge takes as input the UML metamodel and the profile. The behaviour of our bridge at the metamodeling level is shown in figure \ref{fig:overall}, for the sake of simplicity, from now on, the distinction between the M3, M2 and M1 level is omitted in the figure. The resulting metamodel can be considered an union of the UML metamodel (copied in the target one by means of an ad-hoc transformation superimposed to our one) and the metamodel described in the profile model. The \textit{profile2ecore} transformation binds every element of the UML metamodel and every element in the profile. An additional effort has been spent while mapping a profile into a MOF metamodel. In the table the main feature are shown.
+The starting point of the whole bridging mechanism is the UML profile  
+(\textit{profile.uml} in figure), it conforms to the UML metamodel and can be applied to some UML models (e.g., \textit{m1.uml}).
+Such a profile is developed by a designer using any UML modeling tool.
+
+Then, all the other modeling artifacts involved in the bridge are automatically generated, they are:
+\begin{enumerate}
+	\item the $MM_x$ metamodel containing all the concepts corresponding to the elements of the UML profile,
+	\item a set of model-to-model transformations that allow to transform profiled UML models (\textit{m1.uml} in figure) into models
+conforming to $MM_x$ ($m1.mm_x$ in figure) and vice versa.
+\end{enumerate}
+%
+The modeling artifacts involved in the bridging procedure lie at different levels of abstraction  
+(i.e., M1 and M2 in the MDE modeling stack). In order to keep the bridging procedure well defined and manageable,
+we decided to keep this distinction in our bridge by decomposing it into two main phases: 
+%
 \begin{itemize}
-	\item[$\bullet$] \textbf{Stereotype}, each stereotype is mapped into a MOF \textbf{Class}. For each tagged value a reference to the corresponding class is provided. Each MOF class is bounded to its own extended metaclass through a reference which name is \textit{base\_} + \textit{extendedMetaclass} and by means of a \textit{composition} association
-	\item[$\bullet$] \textbf{Class}, each Class is mapped into a MOF \textbf{Class}. Each tagged which has been extended in the profile has a reference to the corresponding stereotype named  \textit{extension\_} + \textit{stereotypeName}
-	\item[$\bullet$] \textbf{Profile}, each profile is mapped into a MOF \textbf{Package}
-	\item[$\bullet$] \textbf{Property}, each property of a class (either a profile) is mapped into MOF \textbf{Attribute} or \textbf{Reference} depending on their type, simple data type or class
-	\item[$\bullet$] \textbf{DataType} and \textbf{Enumeration}, each data type of a class (either a profile) is mapped into MOF \textbf{DataType} and MOF \textbf{Emumeration}
+	\item[$\bullet$] \textbf{phase 1}: it is performed at the metamodeling level \textit{M2}) and consists in the generation of $MM_x$.
+	It is represented by the upper thick arrow in Figure \ref{fig:overall}. 
+	\item[$\bullet$] \textbf{phase 2}: it works at the modeling level (\textit{M1}) and consists in the generation of model-to-model 
+	transformations between UML and $MM_x$. It is represented by the lower thick arrow in Figure \ref{fig:overall}.
 \end{itemize}
 %
+Next sections will describe in details each phase of the bridging procedure.
+It is important to note that the proposed bridge is \textit{completely automatic}. That is, the two bridging phases require 
+the definition of the UML profile only, no additional effort is required by the user. This allows us to achieve
+that degree of separation of concerns we were looking for: designers work on the UML side, tool developers work on standard MOF metamodels,
+and the bridge automatically transforms models between the two.
+
+
+\subsection{The bridge at the metamodeling level}\label{sec:metamodelLevel}
+At the metamodeling level, the main task of the bridge it to consider an initial UML profile and to generate a corresponding MOF metamodel.
+As shown in Figure \ref{fig:metamodelingLevel}, we realized this part of the bridge as a model-to-model transformation called 
+\textit{UMLprofile2MOF}. This transformation generates a MOF metamodel ($MM_x$ in figure) starting from (i) the definition of the UML profile and (ii) the UML metamodel. The latter input parameter is needed since the transformation has to access the UML metaclasses referenced by the 
+various stereotypes defined in the profile.
+
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[width=0.80\textwidth]{figures/metamodelingLevel.png}
@@ -28,6 +56,35 @@ At the metamodeling level the bridge takes as input the UML metamodel and the pr
 	\label{fig:metamodelingLevel}
 \end{figure}
 %
+The \textit{UMLprofile2MOF} transformation contains a transformation rule for each element that can appear in the definition of a UML profile.
+In the following we describe the behaviour of the main transformation rules.
+
+\begin{itemize}
+	\item[$\bullet$] \textbf{Stereotype2Class}. Each UML stereotype is mapped into a MOF class. If the source stereotype was 
+	\ivano{dire come riassociamo metaclasse e stereotypes} 
+	\ivano{dire come gestiamo le specializzazioni}
+	
+	The generated MOF class is bounded to its own extended metaclass through a reference which name is \textit{base\_} + \textit{extendedMetaclass} and by means of a \textit{composition} association.   
+	
+	Tagged values of the source stereotype are separately managed by the \textbf{Property2Feature} rule.
+	\item[$\bullet$] \textbf{Class2Class}, each UML class is mapped into a MOF class. 
+	Properties of the source UML class are managed by the \textbf{Property2Feature} rule.
+	\item[$\bullet$] \textbf{Profile2Package}, each UML profile is mapped into a MOF package, specific bindings populate the newly generated 
+	package with the correct metaclasses (generated either by the \textit{Class2Class} or the \textit{Stereotype2Class} rules) in order to
+	recreate the same hierarchy of containments.
+	\item[$\bullet$] \textbf{Package2Package}, each UML package is mapped into a MOF package, 
+	it is populated in a similar way as in the \textit{Profile2package} rule.
+	\item[$\bullet$] \textbf{Property2Feature}, each UML property is mapped into MOF \textbf{Attribute} or \textbf{Reference}
+	depending on their type, simple data type or class \ivano{dire come da property possiamo generare reference o attributi}
+	\item[$\bullet$] \textbf{DataType2Datatype}, each UML data type is mapped into a MOF data type.
+	\item[$\bullet$] \textbf{Enumeration2Enumeration}, each UML enumeration is mapped into a MOF enumeration.
+\end{itemize}
+
+\textit{UMLprofile2MOF} contains also a set of auxiliary rules and bindings (e.g., the one setting the name of each MOF meta-element with the name of the corresponding source UML element), but for the sake of simplicity we do not describe them in this paper.
+
+\ivano{descrizione del metamodello risultante}
+The resulting $MM_x$ metamodel can be considered an union of the UML metamodel (copied in the target one by means of an ad-hoc transformation superimposed to our one) and the metamodel described in the profile model. 
+
 Figure \ref{fig:metamodelingExample} represents a trivial UML profile translated into a MOF metamodel. The Profile has been translated into a MOF package, the Component metaclass has been copied to the target metamodel and extended through the \textit{extension\_MyStereotype} attribute. Eventually the Stereotype has been translated into a MOF metaclass and bound with the extended metaclass by means of the composition reference.
 %
 \begin{figure}[htbp]
@@ -36,7 +93,9 @@ Figure \ref{fig:metamodelingExample} represents a trivial UML profile translated
 	\caption{Transformation at the metamodeling level}
 	\label{fig:metamodelingExample}
 \end{figure}
-%
+
+
+
 \subsection{The bridge at the modeling level}\label{sec:modeLevel}
 
 At the modeling level the bridge automatically generates transformations which bridge a profiled model in a model conforming to the brand new generated metamodel.
@@ -58,6 +117,15 @@ In the figure \ref{fig:modelingExample} we show the result of the execution of t
 	\label{fig:modelingExample}
 \end{figure}
 %
+
+
+\begin{itemize}
+	\item 
+	\item $UML2MM_x$: a transformation that allows to generate a model conforming 
+	to $MM_x$ from a UML model to which $profile.uml$ is applied 
+	\item $MM_x2UML$: a model-to-model transformation performing the opposite task of $UML2MM_x$; that is, it takes as input models
+	conforming to $MM_x$ and produces UML models profiled with $profile.uml$
+\end{itemize}
 
 \section{Slicing the obtained metamodel}\label{sec:slicing}
 
