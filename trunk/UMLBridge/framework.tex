@@ -60,7 +60,8 @@ The \textit{UMLprofile2MOF} transformation contains a transformation rule for ea
 In the following we describe the behaviour of the main transformation rules.
 
 \begin{itemize}
-	\item[$\bullet$] \textbf{Stereotype2Class}. Each UML stereotype is mapped into a MOF metaclass.  		
+	\item[$\bullet$] \textbf{Stereotype2Class}. Each UML stereotype is mapped into a MOF metaclass 
+	(e.g., \textit{XComponent} in Figure \ref{fig:metamodelingExample}).  		
 	Tagged values of the source stereotype are separately managed by the \textit{Property2Feature} rule. 
 	The rule checks also if the source UML stereotype specializes some other elements and then 
 	recreates the generalization hierarchies in the target MOF metamodel.
@@ -69,20 +70,29 @@ In the following we describe the behaviour of the main transformation rules.
 	the extended metaclass to the extension stereotype}. So, this rule transforms each UML extension into 
 	a MOF containment reference with cardinality \textit{0..1}. 	
 	\item[$\bullet$] \textbf{Class2Class}, each UML class is mapped into a MOF metaclass. 
-	Properties of the source UML class are managed by the \textbf{Property2Feature} rule and, similarly to \textbf{Stereotype2Class},
+	Properties of the source UML class are managed by the \textit{Property2Feature} rule and, similarly to \textit{Stereotype2Class},
 	contains a specific mechanism for managing its generalization hierarchy.
-	\item[$\bullet$] \textbf{Profile2Package}, each UML profile is mapped into a MOF package, specific bindings populate the newly generated 
+	\item[$\bullet$] \textbf{Profile2Package}, each UML profile is mapped into a MOF package (e.g.,\textit{ XProfile} in figure), specific bindings populate the newly generated 
 	package with the correct metaclasses (generated either by the \textit{Class2Class} or the \textit{Stereotype2Class} rules) in order to
-	recreate the same hierarchy of containments.
+	recreate the same hierarchy of containments. 
 	\item[$\bullet$] \textbf{Package2Package}, each UML package is mapped into a MOF package, 
 	it is populated in a similar way as in the \textit{Profile2package} rule.
-	\item[$\bullet$] \textbf{Property2Feature}, each UML property is mapped into MOF attribute or reference
-	depending on their type; more specifically, if the type of the source property is either a datatype, an enumeration or a primitive type, 
+	\item[$\bullet$] \textbf{Property2Feature}, each UML property (like \textit{executionTime} in figure) 
+	is mapped into MOF attribute or reference depending on their type; 
+	more specifically, if the type of the source property is either a data type, an enumeration or a primitive type, 
 	then a MOF attribute is generated, otherwise the rule generates a MOF reference.  
 	\item[$\bullet$] \textbf{DataType2Datatype}, each UML data type is mapped into a MOF data type.
-	\item[$\bullet$] \textbf{Enumeration2Enumeration}, each UML enumeration is mapped into a MOF enumeration containing the same literals.
+	\item[$\bullet$] \textbf{Enumeration2Enumeration}, each UML enumeration (\textit{type} in figure) 
+	or is mapped into a MOF enumeration containing the same literals.
 \end{itemize}
 
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.75\textwidth]{figures/metamodelingExample.png}
+	\caption{Example of generated MOF metamodel}
+	\label{fig:metamodelingExample}
+\end{figure}
+%
 \textit{UMLprofile2MOF} contains also a set of auxiliary rules and bindings (e.g., the one setting the name of each MOF meta-element with the name of the corresponding source UML element, etc.), for the sake of simplicity we do not describe them in this paper.
 Furthermore, \textit{UMLprofile2MOF} creates an ad-hoc package in $MM_x$ and brings in there the metaclasses of UML;
 this steps allows us to generate a self-contained MOF metamodel that does not depend on the UML metamodel itself; this opens for the possibility to 
@@ -91,12 +101,7 @@ This aspect of the bridge is presented in Section \ref{sec:slicing}.
 
 %Figure \ref{fig:metamodelingExample} represents a trivial UML profile translated into a MOF metamodel. The Profile has been translated into a MOF package, the Component metaclass has been copied to the target metamodel and extended through the \textit{extension\_MyStereotype} attribute. Eventually the Stereotype has been translated into a MOF metaclass and bound with the extended metaclass by means of the composition reference.
 %%
-%\begin{figure}[htbp]
-	%\centering
-		%\includegraphics[width=0.70\textwidth]{figures/metamodelingExample.jpg}
-	%\caption{Transformation at the metamodeling level}
-	%\label{fig:metamodelingExample}
-%\end{figure}
+
 
 
 
@@ -110,39 +115,31 @@ More specifically, Figure \ref{fig:modelingLevel} shows that our bridge generate
 	\item $MM_x2UML$ performs the opposite task of $UML2MM_x$: it takes as input models conforming to $MM_x$ 
 	and produces UML models profiled with $profile.uml$.
 \end{itemize}
-%
 
-Such transformations are automatically generated by means of the execution of two Higher-Order Transformations
-(i.e., transformations taking other transformations as input or producing
-other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$.
-They are the key elements of this bridging phase, they generate model-to-model transformations
-reflecting the logic of the rules defined at the metamodeling level. 
+At an high level point of view, $UML2MM_x$ has the following logical structure: (i) a set of rules transform each standard UML element into an instance of its corresponding metaclass in $MM_x$; (ii) another set of rules transforms the application of the each stereotype of the UML profile into an instance of the metaclass in $MM_x$ corresponding to the current stereotype; and (iii) for each rule, a portion of imperative code is generated in order to automatically manage the application of the stereotypes.
+The other generated transformation, $MM_x2UML$, works in the other way round: firstly it applies the UML profile to the target UML model, then it transforms each instance of the $MM_x$ metamodel into an instance of the corresponding UML element; stereotypes are applied to  previously generated elements according to the definition of the UML profile; specific rules manage the order in which profiles and stereotypes are applied, and how tagged values are accessed in the models. Figure \ref{fig:modelingExample} shows an example of models produced by the bridge. 
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.80\textwidth]{figures/modelingLevel.png}
+	\includegraphics[width=0.80\textwidth]{figures/modelingLevel.png}
 	\caption{The bridge at the modeling level}
 	\label{fig:modelingLevel}
 \end{figure}
 %
-The $uml2MM_xGenerator$, and conversely the $MMX2umlGenerator$, generates a transformations in three phases: (i) in the first one we generate rules to transform UML metaclasses into MOF ones; (ii) in the second phase we generate new rules to transform stereotype' applications into metaclasses' instances representing the stereotype in the target metamodel; (iii) in the last phase we generate imperative code, inserted at the end of every rules generated in the fist phase, to trigger the rules obtained in the second phase. The result is a transformation able to bridge a profiled model in a model conforming to the corresponding brand new generated metamodel.
+Such transformations are automatically generated by means of the execution of two Higher-Order Transformations
+(i.e., transformations taking other transformations as input or producing
+other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$.
 
-It is important to note that the use of higher-order transformations makes the bridge generic (and so totally automatic), i.e., it does not depend neither on source UML profiles nor on generated MOF metamodels.
-
-
-
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.80\textwidth]{figures/modelingExample.png}
+	\caption{Example of bridged models}
+	\label{fig:modelingExample}
+\end{figure}
+%
+It is important to note that higher-order transformations make the bridge generic (and so totally automatic), i.e., it does not depend neither on source UML profiles nor on the generated MOF metamodels.
 
 %In the figure \ref{fig:modelingExample} we show the result of the execution of the generated transformation on a model which has applied a the example profile of figure \ref{fig:metamodelingExample}. As you can see the element is a \textit{Component} and has applied \textit{MyStereotype} stereotype. In the target model we have an instance of a \textit{Component} MOF class which has an instance of a \textit{MyStereotype} class. Every tagged value has been kept and rightly instantiated.
-
-%\begin{figure}[htbp]
-	%\centering
-		%\includegraphics[width=0.80\textwidth]{figures/modelingExample.jpg}
-	%\caption{Transformations at the modeling level}
-	%\label{fig:modelingExample}
-%\end{figure}
-%%
-
-
 
 
 \section{Slicing the obtained metamodel}\label{sec:slicing}
