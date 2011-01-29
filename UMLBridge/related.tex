@@ -1,9 +1,10 @@
 \section{Related work}\label{sec:related}
 
 Both UML profiling and Domain DSML-based approaches are broadly used in practice, and the need to reconcile these two
-modeling techniques is well recognized. 
-So, many approaches to bridge UML profiles and MOF metamodels have been proposed. 
-They mainly differ from our bridge in terms of level of automation and on the effort required by designers to use them.
+modeling techniques is well recognized in research. 
+Many approaches to bridge UML profiles and MOF metamodels have been proposed, each of them with its own specific features and 
+usage scenarios. 
+They mainly differ from our bridge in terms of level of automation, and of the effort required by designers to use them.
 
 Abouzahra et al. \cite{Abouzahra} proposed an integration process starting from a UML profile and a MOF metamodel.
 Their concepts (e.g., stereotypes and tagged values for UML profiles, and metaclasses and structural features for MOF metamodels) 
@@ -34,11 +35,18 @@ Basically, our approach does not suffer from this limitation since the DSML meta
 are used, so elements pertaining to other UML diagrams are sliced out from the generated MOF metamodel; however, it may happen that in some model a state machine is defined into each component; when applying the transformation from UML to the MOF metamodel, all the information
 related to state machines is lost. Clearly, in this kind of situation the lost information problem is unavoidable, because it is a consequence of the wrong assumption of the designer.
 
-Using UML as notation to visualize models conforming to a given MOF-based DSL has already been proposed \ref{Graaf}.
-This approach, through an unidirectional mapping between those models conforming to the DLS and UML models with profiles. By means of this technique it is possible to use of general-purpose UML editors to visualize the models (as documentation). The approach is thus partial and not usable for architectural reasons but only for the documentation.
+In \cite{Graaf}, UML is used as a notation to visualize models conforming to a given MOF-based DSL.
+More specifically, this approach presents a unidirectional mapping from models conforming to the DSL to profiled UML models.
+By means of this technique it is possible to visualize DSL models into standard UML editors;
+this transformation is performed for documentation purposes because designers are more accustomed to the UML concrete syntax.
+This approach differs from ours in many points: 
+(i) the whole process starts from the DSL metamodel, while the initial artifact of our bridge is the definition of the UML profile,
+(ii) its goal is to support the documentation of DSL models, while our bridge aims at supporting the manipulation of UML models, and
+(iii) it proposes a unidirectional transformation from MOF to UML, while the transformations of our bridge operate in both directions
+(i.e., from UML to MOF and vice versa).
 
-In the context of the Eclipse platform, an automatic mechanism for bridging UML profiles and MOF metamodels is provided by EMF.
+In conclusion, in the context of the Eclipse platform an automatic mechanism for bridging UML profiles and MOF metamodels is provided by EMF.
 It is implemented as a Java class called \texttt{Profile2EPackageConverter} and  can be executed via a standard Java method call. 
 This class converts UML profiles to representative Ecore packages; the transformation logic is similar to the one we proposed at the metamodeling
 level (see Section \ref{sec:metamodelLevel}), but it does not have any mechanism to execute the bridge at the modeling level. This implies that
-designers can use Profile2EPackageConverter to automatically convert a UML profile into an Ecore metamodel, but also that they are forced to consider each UML model and to manually rebuild it as a model conforming to the newly created Ecore metamodel.
+designers can use \textit{Profile2EPackageConverter} to automatically convert a UML profile into an Ecore metamodel, but they are forced to consider each UML model and to manually rebuild it as a model conforming to the newly created Ecore metamodel.
