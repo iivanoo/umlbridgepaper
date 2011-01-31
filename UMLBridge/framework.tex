@@ -5,27 +5,27 @@ So, on one side software designers to develop models using UML profiles familiar
 developers of tools that manipulate models can assume to work on MOF metamodels only, avoiding the additional
 constraints introduced by UML profiling.
 Figure \ref{fig:overall} gives an high-level idea on how the proposed bridge works. 
-For the sake of simplicity, the M3, M2 and M1 level abstraction levels are not explicitly represented in the remaining figures of this paper.
+%For the sake of simplicity, the M1, M2 and M3 abstraction levels are not explicitly represented in remaining figures of the paper.
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.75\textwidth]{figures/overall.png}
+		\includegraphics[width=0.85\textwidth]{figures/overview.png}
 	\caption{High-level view of the proposed bridge}
 	\label{fig:overall}
 \end{figure}
 
-The starting point of the whole bridging mechanism is the UML profile  
-(\textit{profile.uml} in figure), it conforms to the UML metamodel and can be applied to some UML models (e.g., \textit{m1.uml}).
+The starting point of the whole bridging mechanism is the UML profile, 
+it conforms to the UML metamodel and can be applied to some UML models (e.g., \textit{models} in figure).
 Such a profile is developed by a designer using any UML modeling tool.
 
 Then, all the other modeling artifacts involved in the bridge are automatically generated, they are:
 \begin{enumerate}
 	\item the $MM_x$ metamodel containing all the concepts corresponding to the elements of the UML profile,
-	\item a set of model-to-model transformations that allow to transform profiled UML models (\textit{m1.uml} in figure) into models
-conforming to $MM_x$ ($m1.mm_x$ in figure) and vice versa.
+	\item a set of model-to-model transformations that allow to transform profiled UML models (\textit{models} in figure) into models
+conforming to $MM_x$ ($MOF models$ in figure) and vice versa.
 \end{enumerate}
 %
-The modeling artifacts involved in the bridging procedure lie at different levels of abstraction  
+Modeling artifacts involved in the bridging procedure lie at different levels of abstraction  
 (i.e., M1 and M2 in the MDE modeling stack). In order to keep the bridging procedure well defined and manageable,
 we decided to keep this distinction in our bridge by decomposing it into two main phases: 
 %
