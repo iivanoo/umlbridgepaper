@@ -1,7 +1,7 @@
 \section{Motivation}\label{sec:motivation}
 
-%UML profiling and MOF-based Domain Specific Modeling Languages are the most used approaches for specifying and documenting a system. 
-%Even though these two modeling approaches share many common aspects, each of them has its own set of peculiar features. 
+%UML profiling and MOF-based Domain Specific Modeling Languages are the most used approaches for specifying and documenting a system.
+%Even though these two modeling approaches share many common aspects, each of them has its own set of peculiar features.
 %Next section provides some background information on them and will serve as a dictionary of terms used
 %throughout the paper. In Section \ref{sec:motivation2} we discuss the main motivations that lead us to propose this work.
 %
@@ -11,59 +11,55 @@
 %
 %\ivano{descrizione di cosa e' un DSML e come sono utilizzati}
 
-As previously said, the primary motivation for proposing our bridge is to alleviate the accidental complexity of manipulating profiled UML models, 
-without forcing designers to do not use UML for their modeling activities.
-In this section we provide a discussion on the main motivations that lead us to propose this work.
-For the sake of clarity, we categorize our observations in three high-level scenarios. 
+%As previously said, the primary motivation for proposing our bridge is to alleviate the accidental complexity of manipulating profiled UML models,
+%without forcing designers to do not use UML for their modeling activities.
+This section provides a discussion on the main motivations of this work.
+For the sake of clarity, we categorize our observations in three high-level scenarios.\\
 
 \textbf{First scenario - Model transformation tools.}
 Current model transformation tools do not natively support the management of UML profiles.
-Thus, in current state-of-the-practice model transformation engines 
+Thus, state-of-the-practice model transformation engines
 like ATL\footnote{ATL project website: \small{\url{http://www.eclipse.org/atl}}} and
 MediniQVT\footnote{Medini QVT project website: \small{\url{http://projects.ikv.de/qvt}}}
-need to be tailored or extended to support the transformation of profiled UML models; 
-even worse, other interesting model transformation engines (e.g.,   
-JTL\footnote{JTL project website: \small{\url{http://jtl.di.univaq.it}}}, GReAT) 
-have the limitation that they cannot natively access profile-specific information when transforming UML models.
-These problems are caused by a set of additional constraints that make the manipulation of profiled UML models difficult for both model transformations users and transformation engines developers:
+need to be tailored or extended to support the transformation of profiled UML models;
+even worse, other interesting model transformation engines (e.g.,
+JTL\footnote{JTL project website: \small{\url{http://jtl.di.univaq.it}}}, GReAT)
+cannot natively access profile-specific information when transforming UML models.
+These problems are caused by a set of constraints that make the manipulation of profiled UML models difficult for both model transformations users and transformation engines developers:
 %
 \begin{itemize}
-	\item[$\bullet$] specific mechanisms to apply (and un-apply) either UML profiles or stereotypes must be implemented 
+	\item[$\bullet$] specific mechanisms to apply (and un-apply) either UML profiles or stereotypes must be implemented
 	in the model transformation engine itself (or at least as an ad-hoc extension for it);
-	\item[$\bullet$] the model transformation engine must consider the order in which profiles and stereotypes can be applied; 
-	for example, a UML restriction imposes that a stereotype cannot be applied to a model element $x$ before 
+	\item[$\bullet$] the model transformation engine must consider the order in which profiles and stereotypes can be applied;
+	for example, a UML restriction imposes that a stereotype cannot be applied to a model element $x$ before
 	the profile has been applied to a package containing $x$;
 	\item[$\bullet$] the model transformation language must expose specific constructs for accessing tagged values associated to a UML model element;
 \end{itemize}
 %
-By automating the transition from profiled UML models to MOF-based models and vice versa, our bridge relaxes the above mentioned constraints
-by allowing both users and developers of model transformation engines to assume to work on MOF-based models only.
+By automating the transition from profiled UML models to MOF-based models and vice versa, the above mentioned constraints
+are avoided thus allowing both users and developers of model transformation engines to assume to work on MOF-based models only.\\
 
 \textbf{Second scenario - Analysis tools based on UML profiles.}
-Both in academia and in practice there are many tools that allow designers to perform some kind of analysis on UML models.
-For example, MOSQUITO\cite{perfMarte} allows to analyse the performance of context-aware mobile 
-applications modelled with the MARTE profile, 
-the UMLsec profile\cite{securityUMLsec} is associated with a tool that automatically checks whether security 
+Both in academia and in practice there are many tools that enable designers to perform some kind of analysis on UML models.
+For example, MOSQUITO~\cite{perfMarte} allows to analyse the performance of context-aware mobile
+applications modelled with the MARTE profile,
+the UMLsec profile~\cite{securityUMLsec} is associated with a tool that automatically checks whether security
 requirements are met by the modelled system, and so on.
-In this scenario, the typical workflow is that designers develop a UML model, then it is augmented with additional information by means of a UML profile, and finally the analysis tool performs an analysis step on the profiled model.
-Similarly to model transformation tools, analysis tools share a strong difficulty in manipulating profiled UML models:
-their logic must reflect the additional constraints imposed by the UML profiling mechanism, making the tool
+In this scenario, designers develop a UML model, augment it with additional analysis-specific information by means of a UML profile, and and use analysis tool to analyse profiled model.
+Similarly to model transformation tools, analysis tools have difficulties in manipulating profiled UML models, since
+their logic has to reflect the additional constraints imposed by UML profiling mechanisms, making the tool
 implementation difficult to understand, test, and maintain.
 Under this perspective, the proposed bridge (along with its slicing algorithm)
-helps analysis tools developers since they can reason on smaller and more concise MOF metamodels.
-  
-\textbf{Third scenario - Homogeneous representation of meta-concepts.}
-Recently, tools working on meta-concepts (i.e., metaclasses, attributes, etc.) 
-that can be represented either as metamodels or UML profiles are emerging. 
-An example of this kind of tools is \dually{}, 
-an automated framework for architectural languages and interoperability\cite{duallyTSE}; in this specific case a set of higher-order
- transformations (HOTs) is executed starting from the initial set of meta-concepts; those transformations are intrinsically complex since
-every time they need to access a meta-concept,
-they must distinguish whether it is represented as a MOF element (e.g., an attribute) or as a UML profile element (e.g., a tagged value).
-The proposed bridge allows designers to simplify their tools since it allows them to work seamlessly on both MOF metamodels and UML profiles. Indeed, every time a UML profile is provided, the proposed bridge can be used as a preliminary step in which 
-the MOF metamodel corresponding to the initial UML profile is automatically generated; 
-after this step, designers can assume that inner mechanisms of their tools (like the HOTs in \dually{}) work on MOF metamodels only. 
+helps analysis tools developers to reason on smaller and more concise MOF metamodels.\\
 
-In this section we described the most common scenarios that may arise while manipulating profiled UML models,
-it is important to note that they are only some of the many possible issues that may arise in practice. Next sections present
-our solution to overcome the above mentioned issues.
+\textbf{Third scenario - Homogeneous representation of meta-concepts.}
+Recently, tools working on meta-concepts (i.e., metaclasses, attributes, etc.) that can be represented either
+as metamodels or UML profiles are emerging. \dually{}, an automated framework for architectural languages and interoperability~\cite{duallyTSE}, is representative of those tools. In \dually{}, a set of higher-order transformations (HOTs) is executed starting from the initial set of meta-concepts; at any time a transformation needs to access a meta-concept, it has to analyse whether a meta-concept is represented as a MOF element (e.g., an attribute) or as a UML profile element (e.g., a tagged value), making the computation more complex.%those transformations are intrinsically complex since
+%every time they need to access a meta-concept, they must distinguish whether a meta-concept is represented as a MOF element (e.g., an attribute) or as a UML profile element (e.g., a tagged value).
+The proposed bridge enables designers to simplify their tools: by using the proposed bridge as a pre-processing tool, UML profiles can be transformed into MOF metamodels, and tools may simply elaborate on MOF metamodels. 
+ 
+% since it allows them to work seamlessly on both MOF metamodels and UML profiles. Indeed, every time a UML profile is provided, the proposed bridge can be used as a preliminary step in which
+%the MOF metamodel corresponding to the initial UML profile is automatically generated;
+%after this step, designers can assume that inner mechanisms of their tools (like the HOTs in~\dually{}) work on MOF metamodels only.
+
+This section described the most common scenarios that may arise while manipulating profiled UML models. While not covering all the possible issues, they certainly demonstrated some relevant problems that may be managed by using our approach. 
