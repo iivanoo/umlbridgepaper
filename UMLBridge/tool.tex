@@ -1,52 +1,37 @@
 \section{Implementation of the bridge}\label{sec:tool}
 We implemented the proposed bridge in the context of the Eclipse platform.
-More specifically, it is realized as an Eclipse plugin that can be used in two different ways:
-%
-\begin{enumerate}
-	\item as a standard Eclipse plugin; this allows designers to integrate the bridge
-with other technologies available in the Eclipse community (e.g., model differencing tools, model transformation engines, and so on) 
-	\item as a stand-alone application in which the bridge and its dependencies are packed together. This allows designers
-	to use the bridge also outside the Eclipse environment.
-\end{enumerate}
-%
-Figure \ref{fig:tech} shows the modeling technologies we used to realize it; for the sake of simplicity
-transformations from MOF to UML are not represented in figure.
-Models and metamodels are represented by means of the EMF 
+More specifically, it is realized as an Eclipse plugin that can be used in two different ways: i) as a standard Eclipse plugin: this allows designers to integrate the bridge with other technologies available in the Eclipse community (e.g., model differencing tools, model transformation engines, and so on); ii) as a stand-alone application in which the bridge and its dependencies are packed together: this allows designers to use the bridge also outside the Eclipse environment.
+
+%Figure~\ref{fig:tech} shows the modeling technologies we used to realize the bridge (for the sake of simplicity,
+%transformations from MOF to UML are not represented in figure). 
+In our approach, models and metamodels are represented by means of the EMF
 framework\footnote{EMF project website: \small{\url{http://www.eclipse.org/modeling/emf/}}}.
 It includes an implementation of the MOF meta-metamodel called Ecore, and runtime support for models including,
 among all, persistence support by serializing models in the OMG XML Metadata Interchange (XMI).
 UML profiles are defined using UML2,
 the implementation of the UML metamodel for the Eclipse
 platform\footnote{UML2 project Web site:
-\underline{http://www.eclipse.org/uml2/}.}. 
+\underline{http://www.eclipse.org/uml2/}.}.
 This provides the bridge full compliance with OMG standards
 (specifically UML 2.0 and MDA) and interoperability with other
-UML modeling tools\footnote{List of UML2-compatible UML Tools: \small{\url{http://wiki.eclipse.org/MDT-UML2-Tool-Compatibility}}}. This allows designers to graphically design UML
-profiles with any UML modeling tool and directly import them into
-the Eclipse environment. The same rationale holds for UML models. 
+UML modeling tools\footnote{List of UML2-compatible UML Tools: \small{\url{http://wiki.eclipse.org/MDT-UML2-Tool-Compatibility}}}. Thanks to this choice, designers can graphically design UML profiles with any UML modeling tool, and directly import them into
+the Eclipse environment. The same rationale holds for UML models.
 %
-\begin{figure}[htbp]
-	\centering
-		\includegraphics[width=0.80\textwidth]{figures/implementation.png}
-	\caption{Modeling technologies for the realization of the bridge}
-	\label{fig:tech}
-\end{figure}
+%\begin{figure}[htbp]
+%	\centering
+%		\includegraphics[width=0.80\textwidth]{figures/implementation.png}
+%	\caption{Modeling technologies for the realization of the bridge}
+%	\label{fig:tech}
+%\end{figure}
 
 Both model transformations and annotation models are based on the Atlas Model Management Architecture (AMMA)~\cite{1}.
-More specifically, all model transformations in the bridge are specified using the
-Atlas Transformation Language (ATL)~\cite{3}, an hybrid model
-transformation language with both declarative and imperative constructs (Listing \ref{lst:generatedTransf} shows an excerpt of ATL code).
-The technology used for representing and manipulating annotation models is the Atlas Model
-Weaver (AMW)~\cite{3}. It allows the (graphical) definition of correspondences
-among models and links among model elements. Such
-links are captured by weaving models conforming to an extensible weaving metamodel \cite{MCDFthesis}.  
-We chose the AMMA platform since it best fits to
-the requirements we had to implement the bridge: (i) it provides a flexible model transformation engine, 
-(ii) it supports the concept of transformation model, thus enabling the development of higher-order transformations,
-and (iii) it is integrated into Eclipse and its modeling facilities~\cite{bezivin_06_canonical}.
+More specifically, the model transformations constituting the bridge are specified using the
+Atlas Transformation Language (ATL)~\cite{3}, a hybrid model transformation language with both declarative and imperative constructs (Listing \ref{lst:generatedTransf} shows an excerpt of ATL code).
+The technology used for representing and manipulating annotation models is the Atlas Model Weaver (AMW)~\cite{3}. It allows the (graphical) definition of correspondences
+among models and links among model elements. Such links are captured by weaving models conforming to an extensible weaving metamodel~\cite{MCDFthesis}. The AMMA platform has been selected since it best fits the requirements required to implement the bridge: (i) it provides a flexible model transformation engine, (ii) it supports the concept of transformation model, thus enabling the development of higher-order transformations, and (iii) it is integrated into Eclipse and its modeling facilities~\cite{bezivin_06_canonical}.
 
-The interested reader can download the current version of the bridge (along with its source code) from its project 
-web page\footnote{UML bridge web page \small{\url{http:\\www.di.univaq.it/malavolta/umlbridge}}}. 
+Interested readers can download the current version of the bridge (along with its source code) from the project
+web page at \small{\url{http://www.di.univaq.it/malavolta/umlbridge}}.
 
 
 
