@@ -129,8 +129,6 @@ other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$. I
 %------------------------------------------------------------------------------------------------------------------------
 \section{Slicing the obtained metamodel}\label{sec:slicing}
 
-\henry{mi pare di capire che sei crollato prima di modificare la sezione :) Aspetto prima di leggere}
-
 \ivano{tanto testo per dire poco}
 As previously said, the default behavior of the bridge is to consider the whole UML metamodel and to keep its concepts also in the
 target MOF metamodel. On one side this behavior ensures that our bridge is loss-less with respect to the information
@@ -149,21 +147,24 @@ for state machines, sequence diagrams, and so on.
 This kind of assumptions is recurrent in practice, thus we designed our approach so that the target MOF metamodel contains only
 metaclasses corresponding to relevant UML concepts.
 %indeed many UML modeling tools allow to restrict the kind of diagrams that can be created by designers.
+%
+\begin{wrapfigure}{l}{0.4\textwidth}
+	\vspace{-20pt}
+	\begin{center}
+	\includegraphics[width=0.38\textwidth]{figures/slicingIdea.png}
+	\end{center}
+	\caption{Rationale for the slicing mechanism}
+	\label{fig:slicingIdea}
+	\vspace{-20pt}
+\end{wrapfigure}
+%
 
 \ivano{il resto della sez e' strutturato cosi...}
 %The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers).
 Since the slicing mechanism is realized as a model transformation and considering that we were in a MDE context, the set of relevant
 metaclasses is represented as an \textit{annotation model}
 \footnote{An annotation model is a model containing auxiliary information about another model (the annotated model)\cite{MCDFthesis}} linked to the target MOF metamodel. The annotation model contains a link to each relevant metaclass coming from UML, the slicing mechanism uses those links to identify the metaclasses that will not be sliced out by the slicing procedure.
-%
-\begin{wrapfigure}{l}{0.4\textwidth}
-	\begin{center}
-	\includegraphics[width=0.38\textwidth]{figures/slicingIdea.png}
-	\end{center}
-	\caption{Rationale for the slicing mechanism}
-	\label{fig:slicingIdea}
-\end{wrapfigure}
-%
+
 The current prototype of our approach provides three mechanisms to (semi) automatically obtain the annotation model that will drive the slicing procedure:
 
 \begin{enumerate}
