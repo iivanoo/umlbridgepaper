@@ -129,27 +129,29 @@ other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$. I
 %------------------------------------------------------------------------------------------------------------------------
 \section{Slicing the obtained metamodel}\label{sec:slicing}
 
+\henry{mi pare di capire che sei crollato prima di modificare la sezione :) Aspetto prima di leggere}
+
 \ivano{tanto testo per dire poco}
 As previously said, the default behavior of the bridge is to consider the whole UML metamodel and to keep its concepts also in the
 target MOF metamodel. On one side this behavior ensures that our bridge is loss-less with respect to the information
 provided in the models (and this is our primary goal while designing the bridge);
 however, on the other side it moves the complexity of the UML metamodel (containing 246 classes and 583 properties)
-into the target MOF metamodel. 
+into the target MOF metamodel.
 In order to avoid this situation, we couple the bridge with a \textbf{slicing mechanism} that reduces the produced metaclasses
 to only the \textit{subset of relevant UML concepts} when passing to the target MOF metamodel.
 
-The subset of relevant UML concepts can be considered as the set of metaclasses that can be instantiated 
+The subset of relevant UML concepts can be considered as the set of metaclasses that can be instantiated
 in the context of a specific project; metaclasses outside the relevant set are never instantiated in any model.
 A typical example is when designers assume that in the context of a specific project only UML
-use case diagrams will be produced; the subset of relevant UML concepts contains only metaclasses 
+use case diagrams will be produced; the subset of relevant UML concepts contains only metaclasses
 the can be used in sequence diagrams (e.g., actor, use case, association) and there is no need to keep modeling concepts
 for state machines, sequence diagrams, and so on.
-This kind of assumptions is recurrent in practice, thus we designed our approach so that the target MOF metamodel contains only 
+This kind of assumptions is recurrent in practice, thus we designed our approach so that the target MOF metamodel contains only
 metaclasses corresponding to relevant UML concepts.
-%indeed many UML modeling tools allow to restrict the kind of diagrams that can be created by designers. 
+%indeed many UML modeling tools allow to restrict the kind of diagrams that can be created by designers.
 
 \ivano{il resto della sez e' strutturato cosi...}
-%The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers). 
+%The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers).
 Since the slicing mechanism is realized as a model transformation and considering that we were in a MDE context, the set of relevant
 metaclasses is represented as an \textit{annotation model}
 \footnote{An annotation model is a model containing auxiliary information about another model (the annotated model)\cite{MCDFthesis}} linked to the target MOF metamodel. The annotation model contains a link to each relevant metaclass coming from UML, the slicing mechanism uses those links to identify the metaclasses that will not be sliced out by the slicing procedure.
@@ -190,7 +192,7 @@ SC}{slice(neighbour(c))}$$
 
 \noindent where $neighbour(c)$ is the set of all superclasses of
 $c$, of all classes referred (both with association and
-aggregation) by $c$, and of all types of attributes in $c$. 
+aggregation) by $c$, and of all types of attributes in $c$.
 It is important to note that even though $slice$ is defined
 as a set of classes, since each class contains also references
 to other classes, the final result is a subset of the metamodel $MM$
@@ -198,15 +200,15 @@ with both classes and their relations.
 
 \begin{figure}
   \centering
-  \subfloat[]{\label{fig:slicerMM}\includegraphics[scale=0.4]{figures/slicerMM}}      
- \hspace{10mm}          
+  \subfloat[]{\label{fig:slicerMM}\includegraphics[scale=0.4]{figures/slicerMM}}
+ \hspace{10mm}
   \subfloat[]{\label{fig:slicerT}\includegraphics[scale=0.4]{figures/slicerT.png}}
   \caption{Slicing the MOF metamodel (a) and the generated transformations (b)}
   \label{fig:slicer}
 \end{figure}
 %
 As can be seen in Figure \ref{fig:slicerMM}, the slicing algorithm is realized as a model-to-model transformation called \textit{MMslicer}.
-It takes as input a MOF metamodel $MM_x$ and an annotation model $am_x$, and generates a new metamodel $MM_sliced$ containing 
+It takes as input a MOF metamodel $MM_x$ and an annotation model $am_x$, and generates a new metamodel $MM_sliced$ containing
 a subset of $MM_x$ according to the metaclasses referenced in $am_x$.
 
 At this point we must consider a possible issue that may arise: once the target MOF metamodel has been sliced, the
@@ -222,16 +224,16 @@ and it is based on an higher-order transformation; in this work we call it $Tsli
 %This kind of issue is well-known in the metamodel co-evolution research field \cite{CITAZIONI}, \footnote{http://www.emfmigrate.org}
 
 Figure \ref{fig:slicerT} gives an idea of how the \textit{Tslicer} transformation works. It takes as input (i) the sliced metamodel
-($MM_sliced$ in figure) and (ii) the model transformation to be adapted ($UML2MM_x$ in figure). $Tslicer$ automatically adapts the input transformation according to the meta-elements (i.e., metaclasses, attributes, references) 
+($MM_sliced$ in figure) and (ii) the model transformation to be adapted ($UML2MM_x$ in figure). $Tslicer$ automatically adapts the input transformation according to the meta-elements (i.e., metaclasses, attributes, references)
 \ivano{qui almeno diciamo la strategia e qualche implementation detail}
 that were previously sliced out from $MM_sliced$. The grey elements in Figure \ref{fig:slicerT} show that $Tslicer$ can also be
 applied on the transformation in the other direction (i.e., $MM_x2UML$); this ensures that using the slicing mechanism does not affect
 the bridge in terms of automation and bidirectionality. More details on $Tslicer$ are provided in Section \ref{sec:tool}.
 
-In conclusion, it is important to note that the whole slicing mechanism (both on metamodels and transformations) 
+In conclusion, it is important to note that the whole slicing mechanism (both on metamodels and transformations)
 acts as a post-processing activity of the artifacts generated by the bridge described in Section \ref{sec:framework}; this means that, according to project-specific needs, the proposed bridge and slicing mechanism can be used independently.
 %Intuitively, it copies all the elements of the input transformation (like transformation rules, imperative statements, conditions, and so on)
 %and ignores those elements that reference a meta-element  that are not in $MM_sliced$ anymore.
 
 %removes those elements of the input model transformation (e.g., transformation rules, imperative statements, conditions)
-%that reference a meta-element that is not in $MM_sliced$ anymore (i.e., such an element has been sliced out by $Mslicer$). 
+%that reference a meta-element that is not in $MM_sliced$ anymore (i.e., such an element has been sliced out by $Mslicer$).
