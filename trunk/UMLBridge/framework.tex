@@ -148,28 +148,42 @@ This kind of assumptions is recurrent in practice, thus we designed our approach
 metaclasses corresponding to relevant UML concepts.
 %indeed many UML modeling tools allow to restrict the kind of diagrams that can be created by designers.
 %
-\begin{wrapfigure}{l}{0.45\textwidth}
-	\vspace{-20pt}
-	\begin{center}
-	\includegraphics[width=0.44\textwidth]{figures/slicingIdea.png}
-	\end{center}
-	\caption{UML relevant concepts idea}
-	\label{fig:slicingIdea}
-	\vspace{-20pt}
-\end{wrapfigure}
+%\begin{wrapfigure}{l}{0.45\textwidth}
+	%\vspace{-20pt}
+	%\begin{center}
+	%\includegraphics[width=0.44\textwidth]{figures/slicingIdea.png}
+	%\end{center}
+	%\caption{UML relevant concepts}
+	%\label{fig:slicingIdea}
+	%\vspace{-20pt}
+%\end{wrapfigure}
+
+\begin{figure}
+  \centering
+  \subfloat[]{\label{fig:slicerMM}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
+	\hspace{2mm}
+  \subfloat[]{\label{fig:slicerT}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
+	\hspace{2mm}
+  \subfloat[]{\label{fig:slicerT}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
+  \caption{Mechanisms for defining the set of UML relevant concepts}
+  \label{fig:slicingIdea}
+\end{figure}
 %
 
-\ivano{il resto della sez e' strutturato cosi...}
+The remainder of the section is organized as follows: firstly we will describe how the set of relevant UML concepts can be 
+defined by designers, and then we will discuss how both the target MOF metamodel and the generated model-to-model transformations
+are sliced according to the selected UML relevant concepts.
+
 %The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers).
 Since the slicing mechanism is realized as a model transformation and considering that we were in a MDE context, the set of relevant
 metaclasses is represented as an \textit{annotation model}
 \footnote{An annotation model is a model containing auxiliary information about another model (the annotated model)\cite{MCDFthesis}} linked to the target MOF metamodel. The annotation model contains a link to each relevant metaclass coming from UML, the slicing mechanism uses those links to identify the metaclasses that will not be sliced out by the slicing procedure.
 
-The current prototype of our approach provides three mechanisms to (semi) automatically obtain the annotation model that will drive the slicing procedure:
+The current version of the bridge provides three mechanisms to (semi) automatically obtain the annotation model that will drive the slicing procedure:
 
 \begin{enumerate}
 	\item the annotation model is automatically generated from a UML profile;
-	\item designers specify only the types of UML diagram they will use, and the corresponding annotation model is automatically generated;
+	\item designers specify only the types of UML diagram they will use (e.g., activity and sequence diagrams), and the corresponding annotation model is automatically generated;
 	\item designers provide a set of example UML models, and then the annotation model is automatically generated starting from them.
 \end{enumerate}
 \ivano{spiegare meglio e di piu come si fa lo slicing}
