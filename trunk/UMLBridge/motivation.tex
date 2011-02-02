@@ -14,7 +14,7 @@
 %As previously said, the primary motivation for proposing our bridge is to alleviate the accidental complexity of manipulating profiled UML models,
 %without forcing designers to do not use UML for their modeling activities.
 This section provides a discussion on the main motivations of this work.
-For the sake of clarity, we categorize our observations in three high-level scenarios.\\
+For the sake of clarity, we categorize our observations in three high-level scenarios.
 
 \textbf{First scenario - Model transformation tools.}
 Current model transformation tools do not natively support the management of UML profiles.
@@ -37,20 +37,20 @@ These problems are caused by a set of constraints that make the manipulation of 
 \end{itemize}
 %
 By automating the transition from profiled UML models to MOF-based models and vice versa, the above mentioned constraints
-are avoided thus allowing both users and developers of model transformation engines to assume to work on MOF-based models only.\\
+are avoided thus allowing both users and developers of transformation engines to assume to work on MOF-based models only.
 
 \textbf{Second scenario - Analysis tools based on UML profiles.}
 Both in academia and in practice there are many tools that enable designers to perform some kind of analysis on UML models.
 For example, MOSQUITO~\cite{perfMarte} allows to analyse the performance of context-aware mobile
 applications modelled with the MARTE profile,
 the UMLsec profile~\cite{securityUMLsec} is associated with a tool that automatically checks whether security
-requirements are met by the modelled system, and so on.
+requirements are met by the modelled system, etc.
 In this scenario, designers develop a UML model, augment it with additional analysis-specific information by means of a UML profile, and and use analysis tool to analyse profiled model.
 Similarly to model transformation tools, analysis tools have difficulties in manipulating profiled UML models, since
 their logic has to reflect the additional constraints imposed by UML profiling mechanisms, making the tool
 implementation difficult to understand, test, and maintain.
 Under this perspective, the proposed bridge (along with its slicing algorithm)
-helps analysis tools developers to reason on smaller and more concise MOF metamodels.\\
+helps analysis tools developers to reason on smaller and more concise MOF metamodels.
 
 \textbf{Third scenario - Homogeneous representation of meta-concepts.}
 Recently, tools working on meta-concepts (i.e., metaclasses, attributes, etc.) that can be represented either
