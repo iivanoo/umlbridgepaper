@@ -161,9 +161,9 @@ and there is no need to keep modeling concepts for state machines, sequence diag
   \centering
   \subfloat[from the UML profile]{\label{fig:slicingIdea1}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
 	\hspace{2mm}
-  \subfloat[from diagram names]{\label{fig:slicingIdea2}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
+  \subfloat[from diagram names]{\label{fig:slicingIdea2}\includegraphics[scale=0.255]{figures/slicingIdea2.png}}
 	\hspace{2mm}
-  \subfloat[from example models]{\label{fig:slicingIdea3}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
+  \subfloat[from example models]{\label{fig:slicingIdea3}\includegraphics[scale=0.255]{figures/slicingIdea3.png}}
   \caption{Mechanisms for defining the set of UML relevant concepts}
   \label{fig:slicingIdea}
 \end{figure}
@@ -204,8 +204,8 @@ The current version of the bridge provides three mechanisms to (semi) automatica
 \begin{enumerate}
 	\item the annotation model is automatically generated from a UML profile (Figure \ref{fig:slicingIdea1}); intuitively, it creates a link in the annotation model
 	for each UML metaclass extended by at least a stereotype in the profile.  
-	\item designers specify only the types of UML diagram they will use (e.g., activity, sequence diagrams), and the corresponding annotation model
-	is automatically generated (Figure \ref{fig:slicingIdea1}); basically, designers provide the names of the UML diagrams they will use, and this mechanism deduces the set of metaclasses belonging to those diagrams, a link for each of those metaclasses is created in the annotation model.
+	\item the GUI of the bridge allows designers to specify only the types of UML diagram they will use (e.g., activity, sequence diagrams), and the corresponding annotation model
+	is automatically generated (Figure \ref{fig:slicingIdea1}); basically, designers provide the names of the UML diagrams, and this mechanism deduces the set of metaclasses belonging to those diagrams, then a link for each of those metaclasses is created in the annotation model.
 	\item designers provide an example of UML model, and then the annotation model is automatically generated from it (Figure \ref{fig:slicingIdea1}). 
 	Basically, this mechanism checks which metaclasses are instantiated in the example model and creates a link for each found metaclass in the annotation model.
 \end{enumerate}
