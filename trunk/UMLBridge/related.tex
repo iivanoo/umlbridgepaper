@@ -1,7 +1,7 @@
 \section{Related work}\label{sec:related}
 
 Both UML profiling and DSML-based approaches are broadly used in practice, and the need to reconcile these two
-modeling techniques is well recognized in research. Many approaches to bridge UML profiles and MOF metamodels have been proposed, each of them with its own specific features and usage scenarios. They mainly differ from our bridge in terms of level of automation, and of the effort required by designers to use them.
+modeling techniques is well recognized in research. Many approaches to bridge UML profiles and MOF metamodels have been proposed, each of them with its own features and usage scenarios. They mainly differ from our bridge in terms of level of automation, and of the effort required by designers to use them.
 
 Abouzahra et al.~\cite{Abouzahra} proposed an integration process starting from a UML profile and a MOF metamodel.
 Their concepts (e.g., stereotypes and tagged values for UML profiles, and metaclasses and structural features for MOF metamodels)
@@ -18,5 +18,5 @@ By means of this technique it is possible to visualize DSL models into standard 
 this transformation is performed for documentation purposes because designers are more accustomed to the UML concrete syntax.
 This approach differs from ours in many points: (i) the whole process starts from the DSL metamodel, while the initial artifact of our bridge is the definition of the UML profile, (ii) its goal is to support the documentation of DSL models, while our bridge aims at supporting the manipulation of UML models, and (iii) it proposes a unidirectional transformation from MOF to UML, while the transformations of our bridge operate in both directions (i.e., from UML to MOF and vice versa).
 
-In the context of the Eclipse platform an automatic mechanism for bridging UML profiles and MOF metamodels is provided by EMF. A Java class called \texttt{Profile2EPackageConverter} implements such a mechanism and  can be executed via a standard Java method call.
+In the Eclipse platform a transformation from UML profiles to MOF metamodels is provided by EMF. A Java class called \texttt{Profile2EPackageConverter} implements such a mechanism and  can be executed via a standard Java method call.
 This class converts UML profiles to representative Ecore packages. The transformation logic is similar to the one we proposed at the metamodeling level (in Section~\ref{sec:metamodelLevel}), but it does not provide any mechanism to execute the bridge at the modeling level. This implies that designers can use \textit{Profile2EPackageConverter} to automatically convert a UML profile into an Ecore metamodel, but they are forced to consider each UML model and to manually rebuild it as a model conforming to the newly created Ecore metamodel. 
