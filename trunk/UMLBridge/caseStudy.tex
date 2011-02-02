@@ -23,11 +23,10 @@ As shown in Figure \ref{fig:caseStudy}, we organized the case study as a seven-s
 	\item development of a simple manipulation tool that works on $HSUV.xmi$.
 \end{enumerate}
 %
-Before going into the details of each step, it is important to note that steps 1-4 are executed only once for each
-UML profile to bridge (SysML in this case), then the generated ATL transformation 
-can be re-used every time a profiled UML model has to be bridged.
+Before going into the details of each step, it is important to note that steps 1-4 are executed only once, 
+then the generated ATL transformation can be re-used every time a SysML model has to be bridged.
 
-\ivano{dire che due to space limitations non mettiamo le cose che valgono a livello metamodello, ma ci focalizziamo sui modelli e la trasf finale.}
+\ivano{dire che due to space limitations non mettiamo le cose che valgono in fase di generazione, ma che qui ci focalizziamo sui modelli e la trasf finale.}
 
 In this case study we use the Papyrus modeling tool\footnote{Papyrus UML web site: \small{\url{http://www.papyrusuml.org}}} as UML
 tool. We chose it for two main reasons: (i) a SysML add-in provides support for modeling SysML-like models in Papyrus according to
@@ -63,9 +62,9 @@ This model represents a Hybrid gas/electric powered Sport Utility Vehicle (HSUV)
 
 \begin{figure}
   \centering
-  \subfloat[]{\label{fig:hsuvUML}\includegraphics[scale=0.4]{figures/slicerMM}}
+  \subfloat[]{\label{fig:hsuvUML}\includegraphics[scale=0.4]{figures/hsuvUML.png}}
  \hspace{10mm}
-  \subfloat[]{\label{fig:hsuvMOF}\includegraphics[scale=0.4]{figures/slicerT.png}}
+  \subfloat[]{\label{fig:hsuvMOF}\includegraphics[scale=0.4]{figures/hsuvMOF.png}}
   \caption{HSUV system: a UML model (a) and its corresponding MOF-based model (b)}
   \label{fig:hsuv}
 \end{figure}
