@@ -32,7 +32,9 @@ we decided to keep this distinction in our bridge by decomposing it into two mai
 \end{itemize}
 
 Next sections describe in details the two phases of the bridging procedure.
-It is important to note that the proposed bridge is \textit{completely automatic}. That is, when a UML profile is defined, the above mentioned bridging phases do not require any additional effort to the user. As a matter of fact, designers work on the UML side, while tool developers work on standard MOF metamodels, thus enabling a clear separation of concerns.
+It is important to note that phases 1 and 2 are executed only once for each UML profile $p_x$, then generated model-to-model transformations 
+are re-used every time a UML model profiled with $p_x$ has to be bridged.
+Furthermore, the proposed bridge is \textit{completely automatic}, i.e., when a UML profile is defined, the above mentioned bridging phases do not require any additional effort to the user. As a matter of fact, designers work on the UML side, while tool developers work on standard MOF metamodels, thus enabling a clear separation of concerns.
 
 
 \subsection{Phase 1: The bridge at the metamodeling level}\label{sec:metamodelLevel}
@@ -78,7 +80,7 @@ The \textit{UMLprofile2MOF} transformation contains a transformation rule for ea
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.60\textwidth]{figures/metamodelingExample.png}
+		\includegraphics[width=0.70\textwidth]{figures/metamodelingExample.png}
 	\caption{Example of generated MOF metamodel}
 	\label{fig:metamodelingExample}
 \end{figure}
@@ -117,7 +119,7 @@ other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$. I
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.60\textwidth]{figures/modelingExample.png}
+		\includegraphics[width=0.70\textwidth]{figures/modelingExample.png}
 	\caption{Example of bridged models}
 	\label{fig:modelingExample}
 \end{figure}

@@ -1,5 +1,23 @@
 \section{Conclusions}\label{sec:conclusion}
-\ivano{conclusioni}
+In this paper we presented an automatic bridge between UML profiles and MOF metamodels.
+The problem that we want to alleviate is due to the fact that, even if profiled UML models are very used since they are intuitive for designers and model editors already exist, 
+they are intrinsically complex for model manipulation.
+So, the main goal of the proposed bridge is to support those kind of projects in which the system is modelled using UML profiles, and there is a strong need of automatic model manipulation.
 
-\ivano{the generation phase is executed only once for each UML profile, than the generated transformations at the modeling level
-are used for every model to which the UML profile has been applied}
+The bridge is fully automatic and, A MENO DI assumptions explicitly made by designers 
+(see the slicing mechanism), it is loss-less with respect to the information provided in the models. 
+These two aspects make the use of the proposed bridge totally transparent for designers, allowing
+model manipulation tool developers to gain from its features.
+
+In order to test its capabilities, we applied the proposed bridge to a non-trivial and widely used profile,
+SysML. If on one side such an application to a real-sized profile provided interesting insights and proved the usefulness of the bridge, on the other side it unveiled some of its limitations.
+
+\ivano{LIMITATIONS}
+\ivano{l'implem attuale gestisce profili nested, ma non profili che fanno riferimento a profili esterni}
+\ivano{} 
+
+
+\ivano{FUTURE WORK}
+\ivano{oltre allo slicing, vogliamo personalizzare di piu il metamodello ottenuto: numero di livelli nella gerarchia, presenza o meno di XXX, qualche altra caratteristica di cui vogliamo dotare il metamodello MOF}
+\ivano{evolvere lo slicing: black list di meta-elements che non vogliamo, altri modi per generare l'annotation model; quindi in generale sarebbe bello partire dal metamuddle di UML e ottenere non solo uno sliced MOF metamodel, ma anche un metamodello piu astratto}
+
