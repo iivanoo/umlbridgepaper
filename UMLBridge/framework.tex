@@ -187,7 +187,11 @@ aggregation) by $c$, and of all types of attributes in $c$.
 It is important to note that even though $slice$ is defined
 as a set of metaclasses, since each metaclass contains also references
 to other metaclasses, the final result is a subset of the metamodel $MM$
-with both metaclasses and their metarelations. In this work we implemented this algorithm as a reusable library for model-to-model transformations and we adapted it in order to effectively manage the UML metamodel.\henry{non si capisce come l'approccio estende quello ICSE. Spiega meglio}
+with both metaclasses and their meta-relations. In this work we modified the original slicing algorithm in two ways:
+(i) we implemented it as a reusable library for model-to-model transformations (previously it was embedded into
+the tool itself), and (ii) we introduced specific helpers to manage UML-specific issues (e.g.,
+every UML model must contain a root element called \texttt{Model}, so we added a specific helper that ensures that the slicing
+algorithm does not leave out this root element from the target MOF metamodel).
 
 %The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers).
 \textbf{Annotation models}. Since the slicing mechanism is realized as a model transformation, the set of relevant metaclasses is represented as an \textit{annotation model}
