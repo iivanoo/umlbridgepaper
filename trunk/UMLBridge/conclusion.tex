@@ -4,20 +4,35 @@ The problem that we want to alleviate is due to the fact that, even if profiled 
 they are intrinsically complex for model manipulation.
 So, the main goal of the proposed bridge is to support those kind of projects in which the system is modelled using UML profiles, and there is a strong need of automatic model manipulation.
 
-The bridge is fully automatic and, A MENO DI assumptions explicitly made by designers 
-(see the slicing mechanism), it is loss-less with respect to the information provided in the models. 
+The bridge is fully automatic and
+%, unless designers do not make particular assumptions on the models 
+%(see the slicing mechanism), 
+loss-less with respect to the information provided in the models. 
 These two aspects make the use of the proposed bridge totally transparent for designers, allowing
-model manipulation tool developers to gain from its features.
+model manipulation tool developers to gain from its features. The bridge is coupled with a slicing mechanism
+that allows to obtain smaller and more concise target MOF metamodels.
+In order to test its capabilities, we applied the proposed bridge to a non-trivial and widely used profile:
+SysML. 
 
-In order to test its capabilities, we applied the proposed bridge to a non-trivial and widely used profile,
-SysML. If on one side such an application to a real-sized profile provided interesting insights and proved the usefulness of the bridge, on the other side it unveiled some of its limitations.
+If on one side the application to a real-sized profile provided interesting insights and proved the usefulness of the bridge, on the other side it unveiled some of its \textbf{\textit{limitations}}.
+For example, the current implementation of the bridge is able to manage nested profiles (i.e., profiles containing other profiles), but it
+cannot manage profiles referencing external profiles.
+Furthermore, the slicing mechanism for model transformations can be enhanced in different ways. For example, currently it deletes all the
+elements (e.g., transformations rules, feature bindings, etc.) referring to meta-elements that have been sliced out from the metamodel;
+this behavior is correct and straightforward to be implemented, but we also recognize that it is very basic and something more elaborated should
+be provided. \ivano{other limitations?}
 
-\ivano{LIMITATIONS}
-\ivano{l'implem attuale gestisce profili nested, ma non profili che fanno riferimento a profili esterni}
-\ivano{} 
+The primary \textbf{\textit{future work}} direction for our UML bridge is to overcome the above mentioned limitations.
+Furthermore, we are also studying how to customize the generation of the target MOF metamodel by deciding a priori the number of levels in its generalizations hierarchy, by specifying whether or not some kind of attributes should be part of it or, more in general, to specify a priori some kind of characteristics that
+the target MOF metamodel must have. 
+We are also planning to evolve the slicing mechanism by providing a richer annotation model; for example,
+designers can define a kind of black-list of meta-elements that must not be part of the sliced metamodel. 
+%Another interesting research direction concerns
+%the study of a mechanism for analyzing the UML "metamuddle" and then to automatically return a kind of \textit{simpleUML} metamodel with an higher-level of abstraction than UML. 
+Moreover, we are planning to study our bridge in the context of model-based analysis and to check
+how the proposed bridge can be combined with regression analysis techniques.
+In conclusion, we are planning to embed the bridge in stable releases of other research tools; this gives us two main benefits:
+(i) on one side those research tools will benefit from the features of the UML bridge, 
+(ii) on the other side it also gives us the possibility to continuously test (and enhance) the UML bridge itself.
 
-
-\ivano{FUTURE WORK}
-\ivano{oltre allo slicing, vogliamo personalizzare di piu il metamodello ottenuto: numero di livelli nella gerarchia, presenza o meno di XXX, qualche altra caratteristica di cui vogliamo dotare il metamodello MOF}
-\ivano{evolvere lo slicing: black list di meta-elements che non vogliamo, altri modi per generare l'annotation model; quindi in generale sarebbe bello partire dal metamuddle di UML e ottenere non solo uno sliced MOF metamodel, ma anche un metamodello piu astratto}
 
