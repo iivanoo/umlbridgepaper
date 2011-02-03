@@ -1,3 +1,4 @@
+\vspace{-.2cm}
 \section{Motivation}\label{sec:motivation}
 
 %UML profiling and MOF-based Domain Specific Modeling Languages are the most used approaches for specifying and documenting a system.
@@ -13,6 +14,7 @@
 
 %As previously said, the primary motivation for proposing our bridge is to alleviate the accidental complexity of manipulating profiled UML models,
 %without forcing designers to do not use UML for their modeling activities.
+\vspace{-.1cm}
 This section provides a discussion on the main motivations of this work.
 For the sake of clarity, we categorize our observations in three high-level scenarios.
 
@@ -27,6 +29,7 @@ JTL\footnote{JTL project website: \small{\url{http://jtl.di.univaq.it}}}, GReAT)
 cannot natively access profile-specific information when transforming UML models.
 These problems are caused by a set of constraints that make the manipulation of profiled UML models difficult for both model transformations users and transformation engines developers:
 %
+\vspace{-.15cm}
 \begin{itemize}
 	\item[$\bullet$] specific mechanisms to apply (and un-apply) either UML profiles or stereotypes must be implemented
 	in the model transformation engine itself (or at least as an ad-hoc extension for it);
@@ -36,6 +39,7 @@ These problems are caused by a set of constraints that make the manipulation of 
 	\item[$\bullet$] the model transformation language must expose specific constructs for accessing tagged values associated to a UML model element;
 \end{itemize}
 %
+\vspace{-.15cm}
 By automating the transition from profiled UML models to MOF-based models and vice versa, the above mentioned constraints
 are avoided thus allowing both users and developers of transformation engines to assume to work on MOF-based models only.
 
