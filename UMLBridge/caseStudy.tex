@@ -83,39 +83,46 @@ have been translated to standard MOF properties. These two differences will faci
 the manipulation of the HSUV model because stereotypes and tagged values can be accessed as standard MOF elements.
 
 \textbf{Step 7.} In this step we provide an extremely simplified manipulation tool that operates on bridge MOF models. 
-It is important to point up that technical accuracy and XXX are not in the focus of this part of the case study, 
+It is important to point out that technical details and accuracy are not in the focus of this step of the case study, 
 its main goal is to show as clearly as possible how manipulation tools may benefit from our UML bridge. 
-More specifically, the manipulation tool is implemented as an ATL transformation that \ivano{completare...}.
+The manipulation tool is implemented as an ATL transformation checking if a SysML model follows a simple naming convention.
+Listing \ref{lst:manipulationTool} shows an excerpt of this transformation.
+It takes as input a SysML model and checks if the identifier of each Requirement starts with the string "ID\_" (line 3);
+the transformation generates a Problem element for each requirement that does not follow the convention (lines 10 to 15 in the listing).
 %
-\begin{lstlisting}[breaklines,style=AMMA,language=ATL,mathescape,rulesepcolor=\color{black},caption=ATL transformation working on MOF-based SysML models,captionpos=b,label={lst:manipulationTool}]
-helper context OclAny def : UntypedGenericKernels : 
-  Set(GenericKernel) = 
-  MM!GenericKernel.allInstancesFrom('IN')
-    ->select(x | x.type.oclIsUndefined());
-...
-entrypoint rule KernelTypeUpdate {
-  do {
-    for (e in thisModule.UntypedGenericKernels()) {
-      e.type<-thisModule.createNewKernelType(e);
-      thisModule.setSuperTypes(e.type);
-      ...
-}}}
+\begin{lstlisting}[breaklines,style=AMMA,language=ATL,mathescape,rulesepcolor=\color{black},caption=ATL transformation manipulating SysML models,captionpos=b,label={lst:manipulationTool}]
+rule checkIDsConvention {
+	from
+		s : SYSML!Requirement(not s.id.startsWith('ID_'))
+--		s : UML2!CLass(
+--		  s.isStereotypeApplied(thisModule.requirementStereotype) and 
+--			not s.getValue(s.getAppliedStereotypes()->select(e |
+--			e = thisModule.requirementStreotype
+--		  ).first(), 'id').toString().startsWith('ID_')
+--		)		
+	to
+		t : Problem!Problem (
+			severity <- #warning,
+			description <- 'the id of ' + s.base_Class.name + ' must start with ID_',
+			...
+		)
+}
 \end{lstlisting}
 
-Listing \ref{lst:manipulationTool} shows an excerpt of this transformation; the proposed bridge facilitates
-the development of this transformation in different ways; above all: 
+The proposed bridge facilitates
+the development of this transformation in different ways, above all: 
 (i) the target domain of the transformation (i.e., $slicedMM_{sysml}$) is smaller, 
 making the transformation more testable and maintainable, and 
 (ii) accessing stereotypes applications and tagged values 
-does not require to use UML-specific constructs (lines \ivano{XXX} and \ivano{YYY} in Listing \ref{lst:manipulationTool} 
-show the ATL instructions needed if the input UML model was not bridged).  
+does not require to use UML-specific constructs (lines from 4 to 9 in Listing \ref{lst:manipulationTool} 
+show how the condition in line 3 could have been if the input UML model was not bridged with the approach
+proposed in this paper).
 
-
-\ivano{lessons learned}
-
-All metamodels, models, and transformations described above are available at the UML bridge web page;
-moreover, since Papyrus UML is open source, also the SysML profile definition can be downloaded.
-Thus, the workflow of the HSUV case study presented in this section can be fully reproduced.
+In this case study we showed how the proposed bridge works and how manipulation tools developers benefit
+from its application. 
+The workflow of the HSUV case study presented in this section can be fully reproduced
+since all metamodels, models, and transformations described above are available at the UML bridge web page.
+%moreover, since Papyrus UML is open source, also the SysML profile definition can be downloaded.
 
 
 %The objective of this case study is to present how the UML bridge works at both metamodeling and modeling
