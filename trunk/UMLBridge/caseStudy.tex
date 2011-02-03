@@ -25,39 +25,41 @@ As shown in Figure \ref{fig:caseStudy}, we organized the case study as a seven-s
 %
 Before going into the details of each step, it is important to note that steps 1-4 are executed only once, 
 then the generated ATL transformation can be re-used every time a SysML model has to be bridged.
+Due to space limitations, in this section we will focus more on artifacts at the modeling level, by emphasizing
+how designers could benefit from the proposed bridge.
 
-\ivano{dire che due to space limitations non mettiamo le cose che valgono in fase di generazione, ma che qui ci focalizziamo sui modelli e la trasf finale.}
-
-In this case study we use the Papyrus modeling tool\footnote{Papyrus UML web site: \small{\url{http://www.papyrusuml.org}}} as UML
-tool. We chose it for two main reasons: (i) a SysML add-in provides support for modeling SysML-like models in Papyrus according to
-the official SysML specification,
-and (ii) it is based on Eclipse, so our bridge and the Papyrus tool coexist in the same modeling environment.
+In this case study we use the Papyrus modeling tool\footnote{Papyrus UML web site: \small{\url{http://www.papyrusuml.org}}} for
+creating the involved UML models. We chose it for three main reasons: 
+(i) a SysML add-in provides support for modeling SysML-like models in Papyrus according to the official SysML specification, and 
+(ii) it is based on Eclipse, so our bridge and the Papyrus tool coexist in the same modeling environment.
 
 \textbf{Step 1.} We firstly consider the SysML profile definition made available by the Papyrus add-in,
 and then we transform it into the corresponding MOF metamodel
 by means of the $UMLprofile2MOF$ transformation (it is described in Section \ref{sec:metamodelLevel}). 
-The resulting $MM_{sysml}$ metamodel is composed of XX metaclasses, YY attributes and ZZ references 
-(either associations, aggregations or generalizations).
+The resulting $MM_{sysml}$ metamodel is composed of 322 metaclasses (246 from the UML metamodel), 
+122 attributes and 665 references (either associations or aggregations).
 
-\textbf{Step 2.} In this step we execute the higher-order transformation called $UML2MM_xGenerator$ in order to obtain the
+\textbf{Step 2.} In this step we execute the HOT called $UML2MM_xGenerator$ in order to obtain the
 model transformation that takes as input SysML-profiled models and returns MOF-based models. The generated transformation 
-($UML2MM_{sysml}$ in figure) is composed of XXX transformation rules, YYYY feature bindings, ZZZ helpers; the total size of the transformation is XXXX lines of ATL code.
+($UML2MM_{sysml}$ in figure) is composed of 292 transformation rules, 3625 feature bindings, 10 helpers; the total size of the transformation is 5680 lines of ATL code.
 
-\textbf{Step 3.} In order to slice the obtained metamodel and transformation, 
+\textbf{Step 3.} In order to slice the obtained $MM_{sysml}$ metamodel and the $UML2MM_{sysml}$ transformation, 
 we (automatically) generate an annotation model by means of the second generation mechanism
-(see Section \ref{sec:slicing}) by assuming that only XXX and YYY diagrams are used.
-The generated annotation model ($am_{sysml}$ in figure) contains XXXX links to metaclasses like YYY, XXX, and so on.
+(see Section \ref{sec:slicing}) by assuming that only UML class diagrams and component diagrams are used.
+The generated annotation model ($am_{sysml}$ in figure) contains 37 links to UML metaclasses like Class, Dependency, Interface and so on.
+It is important to note that $am_{sysml}$ contains links to only concrete metaclasses in the lower part of the generalization hierarchy, the complete generalization hierarchy is automatically computed by the slicing algorithm presented in Section \ref{sec:slicing}.
 
-\textbf{Step 4.} The newly created annotation model is used to execute the \textit{MMslicer} and \textit{Tslicer} transformations.
-These transformations adapt $MM_{sysml}$ and $UML2MM_{sysml}$ by leaving out those elements that do not belong either to XXX or YYY diagrams. 
-The adapted metamodel ($slicedMM_{sysml}$) contains XXX metaclasses, yy attributes and ZZ references. 
-The size of the adapted transformation ($UML2slicedMM_{sysml}$) is XXXX lines 
-of ATL code; it contains XXX transformation rules, YYYYY feature bindings and ZZZ helpers. 
+\textbf{Step 4.} The newly created annotation model drives the execution of the \textit{MMslicer} and \textit{Tslicer} transformations.
+They adapt $MM_{sysml}$ and $UML2MM_{sysml}$ by leaving out those concepts that do not
+belong either to class or component diagrams. 
+The newly adapted metamodel ($slicedMM_{sysml}$) contains 171 metaclasses, 80 attributes and 460 references. 
+\ivano{} The size of the adapted transformation ($UML2slicedMM_{sysml}$) is XXXX lines 
+of ATL code; it contains XXX transformation rules, YYYYY feature bindings and 10 helpers. 
 The $UML2slicedMM_{sysml}$ transformation will be used to transform the initial UML model described in the next step into its 
 corresponding MOF-based model.
 
 \textbf{Step 5.} In order to impartially test the bridge, we decided to reuse an already existing SysML model. 
-In this case study we consider the example model provided in the SysML official specification and we developed it in the Papyrus UML modeling tool.
+In this case study we considered the example model provided in the SysML official specification and we reproduced it in the Papyrus UML modeling tool.
 This model represents a Hybrid gas/electric powered Sport Utility Vehicle (HSUV) by focussing on its requirements, performance, structure, and behavior. Figure \ref{fig:hsuvUML} represents a fragment of SysML requirements diagram that shows how some low-level requirements
 (e.g., \textit{RegenerativeBraking})
 are derived from system requirements (e.g., \textit{Braking}). Due to space limitations, we do not provide the details of the HSUV model, interested readers can download the full HSUV model from the web page of our bridge. 
@@ -71,13 +73,19 @@ are derived from system requirements (e.g., \textit{Braking}). Due to space limi
   \label{fig:hsuv}
 \end{figure}
 %
-\textbf{Step 6.} At this point we can execute the $UML2slicedMM_{sysml}$ Transformation in order to obtain a MOF-based representation
-of the HSUV model. Figure \ref{fig:hsuvMOF} shows a fragment of the .... \ivano{completare}.
+\textbf{Step 6.} At this point we can execute the $UML2slicedMM_{sysml}$ transformation in order to obtain a MOF-based representation
+of the HSUV model. Figure \ref{fig:hsuvMOF} shows a fragment of the obtained model. 
+Essentially, it contains the same elements of the source UML model, but (i) each stereotype application (e.g., \textit{Requirement}
+was applied to the \textit{Brake} UML class)
+has been transformed into an instance of the metaclass corresponding to the applied stereotype,
+and (ii) tagged values (e.g., \textit{text} or \textit{id} of \textit{Requirement}) 
+have been translated to standard MOF properties. These two differences will facilitate
+the manipulation of the HSUV model because stereotypes and tagged values can be accessed as standard MOF elements.
 
 \textbf{Step 7.} In this step we provide an extremely simplified manipulation tool that operates on bridge MOF models. 
 It is important to point up that technical accuracy and XXX are not in the focus of this part of the case study, 
 its main goal is to show as clearly as possible how manipulation tools may benefit from our UML bridge. 
-More specifically, the manipulation tool is implemented as an ATL transformation that XXXX...
+More specifically, the manipulation tool is implemented as an ATL transformation that \ivano{completare...}.
 %
 \begin{lstlisting}[breaklines,style=AMMA,language=ATL,mathescape,rulesepcolor=\color{black},caption=ATL transformation working on MOF-based SysML models,captionpos=b,label={lst:manipulationTool}]
 helper context OclAny def : UntypedGenericKernels : 
@@ -94,11 +102,20 @@ entrypoint rule KernelTypeUpdate {
 }}}
 \end{lstlisting}
 
-Listing \ref{lst:manipulationTool} shows an excerpt of this transformation. 
-\ivano{il dominio della trasf e' piccolo e ben definito, accedere agli stereotipi e' piu facile, accedere ai valori dei tagged value e' piu facile}
+Listing \ref{lst:manipulationTool} shows an excerpt of this transformation; the proposed bridge facilitates
+the development of this transformation in different ways; above all: 
+(i) the target domain of the transformation (i.e., $slicedMM_{sysml}$) is smaller, 
+making the transformation more testable and maintainable, and 
+(ii) accessing stereotypes applications and tagged values 
+does not require to use UML-specific constructs (lines \ivano{XXX} and \ivano{YYY} in Listing \ref{lst:manipulationTool} 
+show the ATL instructions needed if the input UML model was not bridged).  
 
-\ivano{il case study e' riproducibile: basta andare sulla webpage e scaricarsi i modelli e trasf descritti in questa sezione}
 
+\ivano{lessons learned}
+
+All metamodels, models, and transformations described above are available at the UML bridge web page;
+moreover, since Papyrus UML is open source, also the SysML profile definition can be downloaded.
+Thus, the workflow of the HSUV case study presented in this section can be fully reproduced.
 
 
 %The objective of this case study is to present how the UML bridge works at both metamodeling and modeling
