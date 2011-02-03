@@ -36,7 +36,7 @@ and (ii) it is based on Eclipse, so our bridge and the Papyrus tool coexist in t
 \textbf{Step 1.} We firstly consider the SysML profile definition made available by the Papyrus add-in,
 and then we transform it into the corresponding MOF metamodel
 by means of the $UMLprofile2MOF$ transformation (it is described in Section \ref{sec:metamodelLevel}). 
-The resulting $MM_sysml$ metamodel is composed of XX metaclasses, YY attributes and ZZ references 
+The resulting $MM_{sysml}$ metamodel is composed of XX metaclasses, YY attributes and ZZ references 
 (either associations, aggregations or generalizations).
 
 \textbf{Step 2.} In this step we execute the higher-order transformation called $UML2MM_xGenerator$ in order to obtain the
@@ -56,15 +56,17 @@ of ATL code; it contains XXX transformation rules, YYYYY feature bindings and ZZ
 The $UML2slicedMM_{sysml}$ transformation will be used to transform the initial UML model described in the next step into its 
 corresponding MOF-based model.
 
-\textbf{Step 5.} In order to XXX, we decided to reuse an already existing SysML-based UML model. So we in this case study we consider
- the example model provided in the SysML official specification and we developed it in the papyrus modeling tool.
-This model represents a Hybrid gas/electric powered Sport Utility Vehicle (HSUV) by focussing on its requirements, performance, structure, and behavior. Figure \ref{fig:hsuvUML} shows a fragment of ..... \ivano{completare}. Due to space limitations, we do not provide the details of the HSUV model, however the interested reader can download and use the full UML model from our UML bridge web page. 
+\textbf{Step 5.} In order to impartially test the bridge, we decided to reuse an already existing SysML model. 
+In this case study we consider the example model provided in the SysML official specification and we developed it in the Papyrus UML modeling tool.
+This model represents a Hybrid gas/electric powered Sport Utility Vehicle (HSUV) by focussing on its requirements, performance, structure, and behavior. Figure \ref{fig:hsuvUML} represents a fragment of SysML requirements diagram that shows how some low-level requirements
+(e.g., \textit{RegenerativeBraking})
+are derived from system requirements (e.g., \textit{Braking}). Due to space limitations, we do not provide the details of the HSUV model, interested readers can download the full HSUV model from the web page of our bridge. 
 
 \begin{figure}
   \centering
-  \subfloat[]{\label{fig:hsuvUML}\includegraphics[scale=0.4]{figures/hsuvUML.png}}
- \hspace{10mm}
-  \subfloat[]{\label{fig:hsuvMOF}\includegraphics[scale=0.4]{figures/hsuvMOF.png}}
+  \subfloat[]{\label{fig:hsuvUML}\includegraphics[scale=0.42]{figures/hsuvUML.png}}
+ \hspace{2mm}
+  \subfloat[]{\label{fig:hsuvMOF}\includegraphics[scale=0.42]{figures/hsuvMOF.png}}
   \caption{HSUV system: a UML model (a) and its corresponding MOF-based model (b)}
   \label{fig:hsuv}
 \end{figure}
