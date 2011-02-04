@@ -78,7 +78,7 @@ The \textit{UMLprofile2MOF} transformation contains a transformation rule for ea
 	is mapped into a MOF enumeration containing the same literals.
 \end{itemize}
 %
-\vspace{-.7cm}
+%\vspace{-.5cm}
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[width=0.90\textwidth]{figures/metamodelingExample.png}
@@ -105,7 +105,7 @@ More specifically, Figure~\ref{fig:modelingLevel} shows the two model transforma
 %
 $UML2MM_x$ has the following high-level logical structure: (i) a set of rules transform each standard UML element into an instance of its corresponding metaclass in $MM_x$; (ii) other rules transform each UML stereotype into an instance of the corresponding metaclass in $MM_x$; and (iii) for each rule, ad-hoc imperative code is generated in order to automatically manage the application of stereotypes. $MM_x2UML$ works in the other way round: (i) firstly it applies the UML profile to the target UML model; (ii) then, it transforms each instance of metaclasses in $MM_x$ into an instance of the corresponding UML element; (iii) stereotypes are applied to  previously generated elements. Specific rules manage the order in which profiles and stereotypes are applied, and how tagged values are accessed in the models. Figure~\ref{fig:modelingExample} shows an example of models produced by the bridge.
 %
-\vspace{-.4cm}
+%\vspace{-.4cm}
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.60\textwidth]{figures/modelingLevel.png}
@@ -154,7 +154,9 @@ and there is no need to keep modeling concepts for other UML diagrams.
 	%\label{fig:slicingIdea}
 	%\vspace{-20pt}
 %\end{wrapfigure}
-\vspace{-.2cm}
+In this section we describe the slicing algorithm first, then we describe how relevant UML concepts can be represented as annotation models, 
+and then we discuss how the slicing mechanism can be executed on both the  metamodels and transformations.
+%
 \begin{figure}
   \centering
   \subfloat[from the UML profile]{\label{fig:slicingIdea1}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
@@ -167,9 +169,6 @@ and there is no need to keep modeling concepts for other UML diagrams.
 \end{figure}
 %
 \vspace{-.4cm}
-In this section we describe the slicing algorithm first, then we describe how relevant UML concepts can be represented as annotation models, 
-and then we discuss how the slicing mechanism can be executed on both the  metamodels and transformations.
-
 \textbf{Slicing algorithm}. Our slicing mechanism
 extends a generic slicing algorithm for MOF metamodels presented in~\cite{ICSEbyadl}. Intuitively,
 it considers the set of relevant metaclasses and then navigates both their references and generalizations in order
@@ -212,6 +211,7 @@ The current version of the bridge provides three mechanisms to (semi) automatica
 	Basically, this mechanism checks which metaclasses are instantiated in the example model and creates a link in the annotation model for each of them.
 \end{enumerate}
 %
+\vspace{-.2cm}
 These mechanisms are implemented as model transformations. Each mechanism has a different level of automation and requires different input artifacts. 
 %For example, if designers already know they will use only specific UML diagrams, then the second option  may be the most convenient;
 %or else, if designers already defined some initial model, they may use the third option.
@@ -237,7 +237,7 @@ and contains a subset of $MM_x$ according to the metaclasses referenced in $am_x
 %\cite{TransEvolution}; however, since in our approach elements
 %can be only deleted from metamodels (neither added nor updated), and since we need a fully automatic mechanism, we developed our minimalistic solution to automatically adapt model transformations to sliced metamodels.
 %
-%\vspace{-.2cm}
+\vspace{-.3cm}
 \begin{figure}
   \centering
   \subfloat[]{\label{fig:slicerMM}\includegraphics[scale=0.4]{figures/slicerMM}}
@@ -246,7 +246,7 @@ and contains a subset of $MM_x$ according to the metaclasses referenced in $am_x
   \caption{Slicing the MOF metamodel (a) and the generated transformations (b)}
   \label{fig:slicer}
 \end{figure}
-%\vspace{-.2cm}
+\vspace{-.5cm}
 %
 \textbf{Slicing transformations}.
 Once the target MOF metamodel has been sliced, the

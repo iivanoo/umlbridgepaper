@@ -45,12 +45,12 @@ are avoided thus allowing both users and developers of transformation engines to
 
 \textbf{Second scenario - Analysis tools based on UML profiles.}
 Both in academia and in practice there are many tools that enable designers to perform some kind of analysis on UML models.
-For example, MOSQUITO~\cite{perfMarte} allows to analyse the performance of context-aware mobile
-applications modelled with the MARTE profile,
-the UMLsec profile~\cite{securityUMLsec} is associated with a tool that automatically checks whether security
-requirements are met by the modelled system, etc.
-In this scenario, designers develop a UML model, augment it with additional analysis-specific information by means of a UML profile, and and use analysis tool to analyse profiled model.
-Similarly to model transformation tools, analysis tools have difficulties in manipulating profiled UML models, since
+For example, 
+the MARTE profile can be used to analyse the performance of context-aware mobile applications~\cite{perfMarte},
+the UMLsec profile 
+can be used to check security properties in the modelled system~\cite{securityUMLsec}.
+In this scenario, designers develop a UML model, augment it with additional analysis-specific information by means of a UML profile, and  use analysis tool to analyse profiled model.
+Similarly to transformation tools, analysis tools have difficulties in manipulating profiled UML models, since
 their logic has to reflect the additional constraints imposed by UML profiling mechanisms, making the tool
 implementation difficult to understand, test, and maintain.
 Under this perspective, the proposed bridge (along with its slicing algorithm)
