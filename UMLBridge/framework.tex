@@ -5,7 +5,7 @@
 %developers of tools that manipulate models can assume to work on MOF metamodels only, avoiding the additional
 %constraints introduced by UML profiling.
 
-Figure~\ref{fig:overall} provides a high-level view on how the proposed bridge works. The starting point of the whole bridging mechanism is a UML profile and models conforming to it (see Figure~\ref{fig:overall}). The profile and its models can be developed using standard UML modeling tools. Then, all the other modeling artifacts involved in the bridge are automatically generated, and specifically:
+Figure~\ref{fig:overall} provides a high-level view on how the proposed bridge works. The starting point of the whole bridging mechanism is a UML profile and models conforming to it (see Figure~\ref{fig:overall}). The profile and its models can be developed using standard UML modeling tools. Then, all the other modeling artifacts are automatically generated:
 \vspace{-.1cm}
 \begin{enumerate}
 	\item the MOF $MM$ metamodel containing all the concepts corresponding to the elements of the UML profile,
@@ -33,15 +33,14 @@ we decided to keep this distinction in our bridge by decomposing it into two mai
 \end{itemize}
 %
 \vspace{-.2cm}
-Next sections describe in details the two phases of the bridging procedure.
-It is important to note that phases 1 and 2 are executed only once for each UML profile $p_x$, then generated model-to-model transformations
+It is important to note that phases 1 and 2 are executed only once for each UML profile $p_x$, then the generated transformations
 are re-used every time a UML model profiled with $p_x$ has to be bridged.
-Furthermore, the proposed bridge is \textit{completely automatic}, i.e., when a UML profile is defined, the above mentioned bridging phases do not require any additional effort to the user. As a matter of fact, designers work on the UML side, while tool developers work on standard MOF metamodels, thus enabling a clear separation of concerns.
+Moreover, the proposed bridge is \textit{completely automatic}, i.e., when a UML profile is defined, the above mentioned bridging phases do not require any additional effort to the user. As a matter of fact, designers work on the UML side, while tool developers work on standard MOF metamodels, thus enabling a clear separation of concerns. Next sections describe in details the two phases of the bridge.
 
 \vspace{-.2cm}
 \subsection{Phase 1: The bridge at the metamodeling level}\label{sec:metamodelLevel}
 
-At the metamodeling level, the bridge takes an initial UML profile and generates {\em a} corresponding MOF metamodel.
+At the metamodeling level, the bridge takes an initial UML profile and generates a corresponding MOF metamodel.
 As shown in Figure~\ref{fig:metamodelingLevel}, a model-to-model transformation called
 \textit{UMLprofile2MOF} is used for this purpose. This transformation generates a MOF metamodel ($MM_x$ in figure) starting from (i) the definition of the UML profile and (ii) the UML metamodel. The latter input is needed since the transformation has to access UML metaclasses referenced by the various stereotypes of the profile.
 %
@@ -55,7 +54,7 @@ As shown in Figure~\ref{fig:metamodelingLevel}, a model-to-model transformation 
 \vspace{-.5cm}
 
 %
-The \textit{UMLprofile2MOF} transformation contains a transformation rule for each element that can appear in the definition of a UML profile. In the following we describe how the main transformation rules behave:
+The \textit{UMLprofile2MOF} transformation contains a transformation rule for each element that can appear in the definition of a UML profile:
 \begin{itemize}
 	\item[$\bullet$] \textbf{Stereotype2Class}. Each UML stereotype is mapped into a MOF metaclass
 	(e.g., \textit{XComponent} in Figure \ref{fig:metamodelingExample}).  		
@@ -79,32 +78,32 @@ The \textit{UMLprofile2MOF} transformation contains a transformation rule for ea
 	is mapped into a MOF enumeration containing the same literals.
 \end{itemize}
 %
-\vspace{-.8cm}
+\vspace{-.7cm}
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.70\textwidth]{figures/metamodelingExample.png}
+		\includegraphics[width=0.90\textwidth]{figures/metamodelingExample.png}
 	\caption{Example of generated MOF metamodel}
 	\label{fig:metamodelingExample}
 \end{figure}
-\vspace{-.6cm}
+\vspace{-.5cm}
 
 \textit{UMLprofile2MOF} also contains a set of auxiliary rules and bindings (e.g., the one setting the name of each MOF meta-element with the name of the corresponding source UML element, etc.), not described in this paper for sake of simplicity. Furthermore, \textit{UMLprofile2MOF} creates an ad-hoc package in $MM_x$ where it copies all the UML metaclasses in there. In this way, the generated MOF metamodel is self-contained, and does not depend on the UML metamodel itself.
 %; this opens for the possibility to "slice" the MOF metamodel, allowing to do not suffer from the complexity of the UML metamodel any more.This aspect of the bridge is presented in Section~\ref{sec:slicing}.
 
 %Figure \ref{fig:metamodelingExample} represents a trivial UML profile translated into a MOF metamodel. The Profile has been translated into a MOF package, the Component metaclass has been copied to the target metamodel and extended through the \textit{extension\_MyStereotype} attribute. Eventually the Stereotype has been translated into a MOF metaclass and bound with the extended metaclass by means of the composition reference.
 %%
-\vspace{-.2cm}
 \subsection{Phase 2: The bridge at the modeling level}\label{sec:modeLevel}
 
 At the modeling level, the proposed bridge automatically generates model-to-model transformations between UML profiles and MOF metamodels.
 More specifically, Figure~\ref{fig:modelingLevel} shows the two model transformations generated by our bridge:
 %
-\vspace{-.1cm}
 \begin{itemize}
 	\item $UML2MM_x$ returns a model conforming to $MM_x$, starting from a UML model conforming to the $profile.uml$ profile;
 	\item $MM_x2UML$ performs the opposite task: it takes as input a model conforming to $MM_x$
 	and produces UML models profiled according to $profile.uml$.
 \end{itemize}
+%
+$UML2MM_x$ has the following high-level logical structure: (i) a set of rules transform each standard UML element into an instance of its corresponding metaclass in $MM_x$; (ii) other rules transform each UML stereotype into an instance of the corresponding metaclass in $MM_x$; and (iii) for each rule, ad-hoc imperative code is generated in order to automatically manage the application of stereotypes. $MM_x2UML$ works in the other way round: (i) firstly it applies the UML profile to the target UML model; (ii) then, it transforms each instance of metaclasses in $MM_x$ into an instance of the corresponding UML element; (iii) stereotypes are applied to  previously generated elements. Specific rules manage the order in which profiles and stereotypes are applied, and how tagged values are accessed in the models. Figure~\ref{fig:modelingExample} shows an example of models produced by the bridge.
 %
 \vspace{-.4cm}
 \begin{figure}[htbp]
@@ -113,22 +112,19 @@ More specifically, Figure~\ref{fig:modelingLevel} shows the two model transforma
 	\caption{The bridge at the modeling level}
 	\label{fig:modelingLevel}
 \end{figure}
-\vspace{-.4cm}
-
-$UML2MM_x$ has the following high-level logical structure: (i) a set of rules transform each standard UML element into an instance of its corresponding metaclass in $MM_x$; (ii) another set of rules transform each stereotype in the UML profile into an instance of the corresponding metaclass in $MM_x$; and (iii) for each rule, some imperative code is generated in order to automatically manage the application of stereotypes. $MM_x2UML$ works in the other way round: (i) firstly it applies the UML profile to the target UML model; (ii) then, it transforms each instance of metaclasses in $MM_x$ into an instance of the corresponding UML element; (iii) stereotypes are applied to  previously generated elements according to the definition of the UML profile. Specific rules manage the order in which profiles and stereotypes are applied, and how tagged values are accessed in the models. Figure~\ref{fig:modelingExample} shows an example of models produced by the bridge.
-%
-\vspace{-.4cm}
+%\vspace{-.4cm}
+\vspace{-.8cm}
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.70\textwidth]{figures/modelingExample.png}
+		\includegraphics[width=0.90\textwidth]{figures/modelingExample.png}
 	\caption{Example of bridged models}
 	\label{fig:modelingExample}
 \end{figure}
-\vspace{-.8cm}
+\vspace{-.5cm}
 
 Such transformations are automatically generated by means of the execution of two Higher-Order Transformations
 (i.e., transformations taking other transformations as input or producing
-other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$. It is important to note that higher-order transformations make the bridge generic (and so, totally automatic), so that it does not depend neither on source UML profiles nor on the generated MOF metamodels.
+other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$. It is important to note that higher-order transformations make the bridge generic (and so, totally automatic): it does not depend neither on source UML profiles nor on the generated MOF metamodels.
 %In the figure \ref{fig:modelingExample} we show the result of the execution of the generated transformation on a model which has applied a the example profile of figure \ref{fig:metamodelingExample}. As you can see the element is a \textit{Component} and has applied \textit{MyStereotype} stereotype. In the target model we have an instance of a \textit{Component} MOF class which has an instance of a \textit{MyStereotype} class. Every tagged value has been kept and rightly instantiated.
 
 
@@ -136,15 +132,15 @@ other transformations as output): $UML2MM_xGenerator$ and $MM_x2UMLGenerator$. I
 \section{Slicing the obtained metamodel}\label{sec:slicing}
 
 The default behavior of the bridge is to consider the whole UML metamodel and to keep its concepts also in the
-target MOF metamodel. While ensuring loss-less transformation (and this is our primary goal while designing the bridge), our current 
+target MOF metamodel. So, while ensuring loss-less transformation (and this is our primary goal while designing the bridge), our 
 approach moves the complexity of the UML metamodel (containing 246 classes and 583 properties)
 into the target MOF metamodel. In order to avoid such a complexity, we couple the bridge with a \textbf{slicing mechanism} that reduces the generated metaclasses to a \textit{subset of relevant UML concepts}.
 
 The subset of relevant UML concepts can be considered as the set of metaclasses that are expected to be instantiated
-in the context of a specific project; metaclasses outside the relevant set are never instantiated in any model.
+in the context of a specific project. %; metaclasses outside the relevant set are never instantiated in any model.
 A typical example is when designers assume that they will only use, e.g., use case diagrams.
 In this scenario, relevant UML concepts are only those pertaining to use case diagrams (e.g., actor, use case, association)
-and there is no need to keep modeling concepts for state machines, sequence diagrams, and so on.
+and there is no need to keep modeling concepts for other UML diagrams.
 %This kind of assumptions is recurrent in practice, thus we designed our approach so that the target MOF metamodel contains only
 %metaclasses corresponding to relevant UML concepts.
 %indeed many UML modeling tools allow to restrict the kind of diagrams that can be created by designers.
@@ -158,6 +154,7 @@ and there is no need to keep modeling concepts for state machines, sequence diag
 	%\label{fig:slicingIdea}
 	%\vspace{-20pt}
 %\end{wrapfigure}
+\vspace{-.2cm}
 \begin{figure}
   \centering
   \subfloat[from the UML profile]{\label{fig:slicingIdea1}\includegraphics[scale=0.255]{figures/slicingIdea.png}}
@@ -169,10 +166,12 @@ and there is no need to keep modeling concepts for state machines, sequence diag
   \label{fig:slicingIdea}
 \end{figure}
 %
-The remainder of the section is organized as follows: firstly we describe the slicing algorithm, then we describe how sets of relevant UML concepts can be represented as annotation models, and then we will discuss how the slicing algorithm can be executed on both the target MOF metamodel and the generated model transformations.
+\vspace{-.4cm}
+In this section we describe the slicing algorithm first, then we describe how relevant UML concepts can be represented as annotation models, 
+and then we discuss how the slicing mechanism can be executed on both the  metamodels and transformations.
 
-\textbf{Slicing algorithm}. Once a set of relevant UML concepts is identifies, the slicing mechanism can be applied. Our proposal
-is based and extends a generic slicing algorithm for MOF metamodels presented in~\cite{ICSEbyadl}. Intuitively,
+\textbf{Slicing algorithm}. Our slicing mechanism
+extends a generic slicing algorithm for MOF metamodels presented in~\cite{ICSEbyadl}. Intuitively,
 it considers the set of relevant metaclasses and then navigates both their references and generalizations in order
 to return a self-contained subset of the initial metamodel.
 More formally, let $MM$ be a metamodel and let $SC$ be a subset of relevant elements in
@@ -193,10 +192,12 @@ with both metaclasses and their meta-relations. In this work we modified the ori
 (i) we implemented it as a reusable library for model-to-model transformations (previously it was embedded into
 the tool itself), and (ii) we introduced specific helpers to manage UML-specific issues (e.g.,
 every UML model must contain a root element called \texttt{Model}, so we added a specific helper that ensures that the slicing
-algorithm does not leave out this root element from the target MOF metamodel).
+algorithm does not leave out this element from the target MOF metamodel).
 
 %The set of relevant metaclasses is an information related to the target MOF metamodel but it is not included in it (it depends on specific needs of designers).
-\textbf{Annotation models}. Since the slicing mechanism is realized as a model transformation, the set of relevant metaclasses is represented as an \textit{annotation model}
+\textbf{Annotation models}. 
+%Since the slicing mechanism is realized as a model transformation, 
+The set of relevant metaclasses is represented as an \textit{annotation model}
 \footnote{An annotation model is a model containing auxiliary information about another model (the annotated model)\cite{MCDFthesis}} linked to the target MOF metamodel.
 The annotation model contains a link to each relevant metaclass coming from UML: the slicing mechanism uses those links to identify the initial set of metaclasses that will not be sliced out by the slicing procedure.
 The current version of the bridge provides three mechanisms to (semi) automatically obtain the annotation model that will drive the slicing procedure:
@@ -204,21 +205,39 @@ The current version of the bridge provides three mechanisms to (semi) automatica
 \begin{enumerate}
 	\item the annotation model is automatically generated from a UML profile (Figure \ref{fig:slicingIdea1}); intuitively, it creates a link in the annotation model
 	for each UML metaclass extended by at least a stereotype in the profile.
-	\item the GUI of the bridge allows designers to specify only the types of UML diagram they will use (e.g., activity, sequence diagrams), and the corresponding annotation model
-	is automatically generated (Figure \ref{fig:slicingIdea2}); basically, designers provide the names of the UML diagrams, and this mechanism deduces the set of metaclasses belonging to those diagrams, then a link for each of those metaclasses is created in the annotation model.
+	\item a GUI allows designers to specify only the types of UML diagram they will use (e.g., activity, sequence diagrams), and the corresponding annotation model
+	is generated (Figure \ref{fig:slicingIdea2}); more specifically, designers provide the names of the UML diagrams, and this mechanism deduces the set of metaclasses belonging to those diagrams, 
+	then a link for each of those metaclasses is created in the annotation model.
 	\item designers provide an example of a UML model, and then the annotation model is automatically generated from it (Figure \ref{fig:slicingIdea3}).
-	Basically, this mechanism checks which metaclasses are instantiated in the example model and creates a link for each metaclass found in the annotation model.
+	Basically, this mechanism checks which metaclasses are instantiated in the example model and creates a link in the annotation model for each of them.
 \end{enumerate}
 %
-These mechanisms are implemented as model transformations. Each mechanism has a different level of automation and requires different input artifacts. For example, if designers already know they will use only specific UML diagrams, then option 2 may be the most convenient;
-or else, if designers already defined some initial model, they may use option 3.
+These mechanisms are implemented as model transformations. Each mechanism has a different level of automation and requires different input artifacts. 
+%For example, if designers already know they will use only specific UML diagrams, then the second option  may be the most convenient;
+%or else, if designers already defined some initial model, they may use the third option.
 Of course, if full control over the generated metamodel is needed, designers can manually define the annotation model by means of a dedicated graphical editor.
-Furthermore, those mechanisms can be executed incrementally; for example a metamodel could be sliced by means of
-mechanism 1, and then the resulting metamodel could be sliced multiple times with mechanism 3 with different example models:
-the resulting metamodel will be more concise and accurate.
+Furthermore, those mechanisms can be executed incrementally; 
+for example a metamodel could be sliced by means of the first
+mechanism, and then the resulting metamodel could be sliced multiple times via the third mechanism with different example models: the resulting metamodel will be more concise and accurate.
 %that is they can create an annotation link for each metaclasses that can be instantiated in their UML models.
 %
-\vspace{-.4cm}
+
+\textbf{Slicing metamodels}. As can be seen in Figure \ref{fig:slicerMM}, the slicing algorithm is used at the M2 level by a model-to-model transformation called \textit{MMslicer}.
+It takes as input a MOF metamodel $MM_x$ and an annotation model $am_x$, and generates a new metamodel $MM_{sliced}$.
+The resulting metamodel is self-contained (i.e., it does not contain any reference to external metamodels)
+and contains a subset of $MM_x$ according to the metaclasses referenced in $am_x$.
+
+%A possible issue that may arise needs to be discussed: once the target MOF metamodel has been sliced, the
+%previously generated model transformations implementing the bridge may refer to missing metaclasses in the metamodel.
+%For example, if all the concepts related to state machines have been sliced out, the generated $UML2MM_x$ transformation still contains
+%transformation rules for transforming states, transitions, etc.; so, it is not aligned with the newly sliced metamodel and its execution will be erroneous.
+%This implies that our approach has to provide a mechanism for adapting also the $UML2MM_x$ and $MM_x2UML$ transformations
+%to the newly sliced metamodel.
+%We are aware that in literature there are generic approaches managing the coupled evolution of metamodels and model transformations
+%\cite{TransEvolution}; however, since in our approach elements
+%can be only deleted from metamodels (neither added nor updated), and since we need a fully automatic mechanism, we developed our minimalistic solution to automatically adapt model transformations to sliced metamodels.
+%
+%\vspace{-.2cm}
 \begin{figure}
   \centering
   \subfloat[]{\label{fig:slicerMM}\includegraphics[scale=0.4]{figures/slicerMM}}
@@ -227,36 +246,29 @@ the resulting metamodel will be more concise and accurate.
   \caption{Slicing the MOF metamodel (a) and the generated transformations (b)}
   \label{fig:slicer}
 \end{figure}
-\vspace{-.4cm}
-
-\textbf{Slicing metamodels}. As can be seen in Figure \ref{fig:slicerMM}, the slicing algorithm is used at the M2 level by a model-to-model transformation called \textit{MMslicer}.
-It takes as input a MOF metamodel $MM_x$ and an annotation model $am_x$, and generates a new metamodel $MM_{sliced}$.
-The resulting metamodel is self-contained (i.e., it does not contain any reference to external metamodels)
-and contains a subset of $MM_x$ according to the metaclasses referenced in $am_x$.
-
-A possible issue that may arise needs to be discussed: once the target MOF metamodel has been sliced, the
-previously generated model transformations implementing the bridge may refer to missing metaclasses in the metamodel.
+%\vspace{-.2cm}
+%
+\textbf{Slicing transformations}.
+Once the target MOF metamodel has been sliced, the
+previously generated model transformations of the bridge may refer to missing metaclasses in the metamodel.
 For example, if all the concepts related to state machines have been sliced out, the generated $UML2MM_x$ transformation still contains
 transformation rules for transforming states, transitions, etc.; so, it is not aligned with the newly sliced metamodel and its execution will be erroneous.
-This implies that our approach has to provide a mechanism for adapting also the $UML2MM_x$ and $MM_x2UML$ transformations
-to the newly sliced metamodel.
+Our approach provides a mechanism for adapting also the $UML2MM_x$ and $MM_x2UML$ transformations to the newly sliced metamodel.
 We are aware that in literature there are generic approaches managing the coupled evolution of metamodels and model transformations
 \cite{TransEvolution}; however, since in our approach elements
 can be only deleted from metamodels (neither added nor updated), and since we need a fully automatic mechanism, we developed our minimalistic solution to automatically adapt model transformations to sliced metamodels.
-
-\textbf{Slicing transformations}.
 Our solution takes inspiration from the EMFMigrate project\footnote{EMFMigrate project website: \small{\url{http://www.emfmigrate.org}}}
-and is based on an higher-order transformation; in this work we call it $Tslicer$.
+and is based on an higher-order transformation: $Tslicer$.
 %This kind of issue is well-known in the metamodel co-evolution research field \cite{CITAZIONI}, \footnote{http://www.emfmigrate.org}
 Figure \ref{fig:slicerT} gives an idea of how the \textit{Tslicer} transformation works. It takes as input (i) the sliced metamodel
-($MM_{sliced}$ in figure) and (ii) the model transformation to be adapted ($UML2MM_x$ in figure). $Tslicer$ automatically adapts the input transformation according to the meta-elements (i.e., metaclasses, attributes, references) that were previously sliced out from $MM_{sliced}$.
-Basically, it traverses all the instructions of the input transformation (e.g., transformation rules, assignments)
+($MM_{sliced}$ in figure) and (ii) the model transformation to be adapted ($UML2MM_x$ in figure). 
+$Tslicer$ 
+%automatically adapts the input transformation according to the meta-elements (i.e., metaclasses, attributes, references) that were previously sliced out from $MM_{sliced}$.
+traverses all the instructions of the input transformation (e.g., transformation rules, assignments)
 and deletes those instructions referring to meta-elements not contained into the $MM_{sliced}$ metamodel.
-The grey elements in Figure \ref{fig:slicerT} show that $Tslicer$ can also be
-applied on the transformation in the other direction (i.e., $MM_x2UML$); this ensures that using the slicing mechanism does not affect
+$Tslicer$ can also be applied on the transformation in the other direction (i.e., $MM_x2UML$); this ensures that using the slicing mechanism does not affect
 the bridge in terms of automation and bidirectionality.
 %The interested reader can refer to  details on $Tslicer$ are provided in Section \ref{sec:tool}.
-
 In conclusion, it is important to note that the whole slicing mechanism (both on metamodels and transformations)
 acts as a post-processing activity of the artifacts generated by the bridge described in Section \ref{sec:framework}; this means that, according to project-specific needs, the proposed bridge and slicing mechanism can be used independently.
 

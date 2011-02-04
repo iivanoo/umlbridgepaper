@@ -3,16 +3,6 @@ In this section we show the application of the proposed UML bridge to a non-triv
 SysML is a general-purpose modeling language for systems engineering applications \cite{sysml}, it has been proposed by the OMG group
 and supports the specification of  hardware, software, processes, and facilities of a system.
 The objective of this case study is to present how each aspect of the proposed approach works in practice on SysML models.
-%
-\vspace{-.4cm}
-\begin{figure}[htbp]
-	\centering
-		\includegraphics[width=1\textwidth]{figures/caseStudy.png}
-	\caption{Overview of the HSUV case study}
-	\label{fig:caseStudy}
-\end{figure}
-\vspace{-.4cm}
-
 As shown in Figure \ref{fig:caseStudy}, we organized the case study as a seven-steps process:
 %
 \begin{enumerate}
@@ -25,15 +15,25 @@ As shown in Figure \ref{fig:caseStudy}, we organized the case study as a seven-s
 	\item development of a simple manipulation tool that works on $HSUV.xmi$.
 \end{enumerate}
 %
+\vspace{-.4cm}
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1\textwidth]{figures/caseStudy.png}
+	\caption{Overview of the HSUV case study}
+	\label{fig:caseStudy}
+\end{figure}
+\vspace{-.4cm}
+
+%
 Before going into the details of each step, it is important to note that steps 1-4 are executed only once, 
 then the generated ATL transformation can be re-used every time a SysML model has to be bridged.
 Due to space limitations, in this section we will focus more on artifacts at the modeling level, by emphasizing
 how designers could benefit from the proposed bridge.
-
-In this case study we use the Papyrus modeling tool\footnote{Papyrus UML web site: \small{\url{http://www.papyrusuml.org}}} for
-creating the involved UML models. We chose it for three main reasons: 
-(i) a SysML add-in provides support for modeling SysML-like models in Papyrus according to the official SysML specification, and 
-(ii) it is based on Eclipse, so our bridge and the Papyrus tool coexist in the same modeling environment.
+In this case study we use the Papyrus UML tool\footnote{Papyrus UML web site: \small{\url{http://www.papyrusuml.org}}} for
+creating the involved UML models. 
+%We chose it for two main reasons: 
+%(i) a SysML add-in provides support for modeling SysML-like models in Papyrus according to the official SysML specification, and 
+%(ii) it is based on Eclipse, so our bridge and the Papyrus tool coexist in the same modeling environment.
 
 \textbf{Step 1.} We firstly consider the SysML profile definition made available by the Papyrus add-in,
 and then we transform it into the corresponding MOF metamodel
@@ -51,20 +51,21 @@ we (automatically) generate an annotation model by means of the second generatio
 The generated annotation model ($am_{sysml}$ in figure) contains 37 links to UML metaclasses like Class, Dependency, Interface and so on.
 It is important to note that $am_{sysml}$ contains links to only concrete metaclasses in the lower part of the generalization hierarchy, the complete generalization hierarchy is automatically computed by the slicing algorithm presented in Section \ref{sec:slicing}.
 
-\textbf{Step 4.} The newly created annotation model drives the execution of the \textit{MMslicer} and \textit{Tslicer} transformations.
+\textbf{Step 4.} The newly created annotation model drives the execution of \textit{MMslicer} and \textit{Tslicer}.
 They adapt $MM_{sysml}$ and $UML2MM_{sysml}$ by leaving out those concepts that do not
 belong either to class or component diagrams. 
 The newly adapted metamodel ($slicedMM_{sysml}$) contains 171 metaclasses, 80 attributes and 460 references. 
-The size of the adapted transformation ($UML2slicedMM_{sysml}$) is XXXX lines 
+The size of the adapted transformation ($UML2slicedMM_{sysml}$) is 2690 lines 
 of ATL code; it contains 139 transformation rules, 1721 feature bindings and 10 helpers. 
-The $UML2slicedMM_{sysml}$ transformation will be used to transform the initial UML model described in the next step into its 
-corresponding MOF-based model.
+%The $UML2slicedMM_{sysml}$ transformation will be used to transform the initial UML model described in the next step into its 
+%corresponding MOF-based model.
 
-\textbf{Step 5.} In order to impartially test the bridge, we decided to reuse an already existing SysML model. 
-In this case study we considered the example model provided in the SysML official specification and we reproduced it in the Papyrus UML modeling tool.
-This model represents a Hybrid gas/electric powered Sport Utility Vehicle (HSUV) by focussing on its requirements, performance, structure, and behavior. Figure \ref{fig:hsuvUML} represents a fragment of SysML requirements diagram that shows how some low-level requirements
+\textbf{Step 5.} In order to impartially test the bridge, in this case study we consider the example model provided in the SysML official specification.
+This model represents a Hybrid gas/electric powered Sport Utility Vehicle (HSUV) by focussing on its requirements, performance, structure, and behavior. 
+Figure \ref{fig:hsuvUML} shows a fragment of SysML diagram in which low-level requirements
 (e.g., \textit{RegenerativeBraking})
-are derived from system requirements (e.g., \textit{Braking}). Due to space limitations, we do not provide the details of the HSUV model, interested readers can download the full HSUV model from the web page of our bridge. 
+are derived from system requirements (e.g., \textit{Braking}). 
+%Due to space limitations, we do not provide the details of the HSUV model, interested readers can download the full HSUV model from the web page of our bridge. 
 %
 \vspace{-.4cm}
 \begin{figure}
@@ -86,8 +87,8 @@ and (ii) tagged values (e.g., \textit{text} or \textit{id} of \textit{Requiremen
 have been translated to standard MOF properties. These two differences will facilitate
 the manipulation of the HSUV model because stereotypes and tagged values can be accessed as standard MOF elements.
 
-\textbf{Step 7.} In this step we provide an extremely simplified manipulation tool that operates on bridge MOF models. 
-It is important to point out that technical details and accuracy are not in the focus of this step of the case study, 
+\textbf{Step 7.} In this step we provide a simplified manipulation tool that operates on bridge MOF models. 
+Technical details and accuracy are not in the focus of this step of the case study, 
 its main goal is to show as clearly as possible how manipulation tools may benefit from our UML bridge. 
 The manipulation tool is implemented as an ATL transformation checking if a SysML model follows a simple naming convention.
 Listing \ref{lst:manipulationTool} shows an excerpt of this transformation.
@@ -119,8 +120,7 @@ the development of this transformation in different ways, above all:
 making the transformation more testable and maintainable, and 
 (ii) accessing stereotypes applications and tagged values 
 does not require to use UML-specific constructs (lines from 4 to 9 in Listing \ref{lst:manipulationTool} 
-show how the condition in line 3 could have been if the input UML model was not bridged with the approach
-proposed in this paper).
+show how the condition in line 3 could have been if the input UML model was not bridged with with our approach).
 
 In this case study we showed how the proposed bridge works and how manipulation tools developers benefit
 from its application. 
