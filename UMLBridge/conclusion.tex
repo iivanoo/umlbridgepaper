@@ -1,37 +1,37 @@
 \section{Conclusions}\label{sec:conclusion}
-In this paper we presented an automatic bridge between UML profiles and MOF metamodels.
-The problem we want to alleviate is that, even if profiled UML models are very used since they are intuitive for designers and model editors already exist, 
-they are intrinsically complex for model manipulation.
-So, the main goal of the proposed bridge is to support those kind of projects in which the system is modelled using UML profiles, and there is a strong need of automatic model manipulation.
+
+This paper presented an automatic bridge between UML profiles and MOF metamodels.
+The problem alleviated by this work is related to the manipulation of UML models written according to an UML profile. 
+The solution consists in a automatic bridge that transforms UML models into MOF models that may be more easily manipulated.
 
 The bridge is fully automatic and
-%, unless designers do not make particular assumptions on the models 
-%(see the slicing mechanism), 
-loss-less with respect to the information provided in the models. 
+%, unless designers do not make particular assumptions on the models
+%(see the slicing mechanism),
+loss-less with respect to the information provided in the models.
 These two aspects make the use of the proposed bridge totally transparent for designers, allowing
 model manipulation tool developers to gain from its features. The bridge is coupled with a slicing mechanism
 that allows to obtain smaller and more concise target MOF metamodels.
-In order to test its capabilities, we applied the proposed bridge to a non-trivial and widely used profile:
-SysML. 
+In order to get insights on its capabilities, we applied the proposed bridge to a non-trivial and widely used profile:
+SysML.
 
-If on one side the application to a real-sized profile provided interesting insights and proved the usefulness of the bridge, on the other side it unveiled some of its \textbf{\textit{limitations}}.
+If on one side the application to a real-sized profile provided interesting insights and proved the usefulness of the bridge, on the other hand it unveiled some of its \textbf{\textit{limitations}}.
 For example, the current implementation of the bridge is able to manage nested profiles (i.e., profiles containing other profiles), but it
 cannot manage profiles referencing external profiles.
 Furthermore, the slicing mechanism for model transformations can be enhanced in different ways. For example, currently it deletes all the
 elements (e.g., transformations rules, feature bindings, etc.) referring to meta-elements that have been sliced out from the metamodel;
-this behavior is correct and straightforward to be implemented, but we also recognize that it is a basic solution 
+this behavior is correct and straightforward to be implemented, but we also recognize that it is a basic solution
 and something more elaborated should be provided.
 
 The primary \textbf{\textit{future work}} direction for our UML bridge is to overcome the above mentioned limitations.
-Furthermore, we are also studying how to customize the generation of the target MOF metamodel in different ways: by deciding a priori the number of levels in its generalizations hierarchy, by specifying whether or not some kind of attributes should be part of it, or more in general, to specify a priori some kind of characteristics that the target MOF metamodel will have. 
+Furthermore, we are also studying how to customize the generation of the target MOF metamodel in different ways: by deciding a priori the number of levels in its generalizations hierarchy, by specifying whether or not some kind of attributes should be part of it, or more in general, to specify a priori some kind of characteristics that the target MOF metamodel will have.
 We are also planning to evolve the slicing mechanism by providing a richer annotation model; for example,
-designers can define a kind of black-list of meta-elements that must not be part of the sliced metamodel. 
+designers can define a kind of black-list of meta-elements that must not be part of the sliced metamodel.
 %Another interesting research direction concerns
-%the study of a mechanism for analyzing the UML "metamuddle" and then to automatically return a kind of \textit{simpleUML} metamodel with an higher-level of abstraction than UML. 
+%the study of a mechanism for analyzing the UML "metamuddle" and then to automatically return a kind of \textit{simpleUML} metamodel with an higher-level of abstraction than UML.
 Moreover, we are planning to study our bridge in the context of model-based analysis and to check
 how the proposed bridge can be combined with regression analysis techniques.
 In conclusion, we are planning to embed the bridge in stable releases of other research tools; this gives us two main benefits:
-(i) on one side those research tools will benefit from the features of the UML bridge, 
+(i) on one side those research tools will benefit from the features of the UML bridge,
 (ii) on the other side it also gives us the possibility to continuously test (and enhance) the UML bridge itself.
 
 
