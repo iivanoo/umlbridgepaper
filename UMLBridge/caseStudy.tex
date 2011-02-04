@@ -15,16 +15,6 @@ As shown in Figure \ref{fig:caseStudy}, we organized the case study as a seven-s
 	\item development of a simple manipulation tool that works on $HSUV.xmi$.
 \end{enumerate}
 %
-\vspace{-.4cm}
-\begin{figure}[htbp]
-	\centering
-		\includegraphics[width=1\textwidth]{figures/caseStudy.png}
-	\caption{Overview of the HSUV case study}
-	\label{fig:caseStudy}
-\end{figure}
-\vspace{-.4cm}
-
-%
 Before going into the details of each step, it is important to note that steps 1-4 are executed only once, 
 then the generated ATL transformation can be re-used every time a SysML model has to be bridged.
 Due to space limitations, in this section we will focus more on artifacts at the modeling level, by emphasizing
@@ -44,6 +34,15 @@ The resulting $MM_{sysml}$ metamodel is composed of 322 metaclasses (246 from th
 \textbf{Step 2.} In this step we execute the HOT called $UML2MM_xGenerator$ in order to obtain the
 model transformation that takes as input SysML-profiled models and returns MOF-based models. The generated transformation 
 ($UML2MM_{sysml}$ in figure) is composed of 292 transformation rules, 3625 feature bindings, 10 helpers; the total size of the transformation is 5680 lines of ATL code.
+%
+\vspace{-.4cm}
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1\textwidth]{figures/caseStudy.png}
+	\caption{Overview of the HSUV case study}
+	\label{fig:caseStudy}
+\end{figure}
+\vspace{-.6cm}
 
 \textbf{Step 3.} In order to slice the obtained $MM_{sysml}$ metamodel and the $UML2MM_{sysml}$ transformation, 
 we (automatically) generate an annotation model by means of the second generation mechanism
@@ -66,6 +65,15 @@ Figure \ref{fig:hsuvUML} shows a fragment of SysML diagram in which low-level re
 (e.g., \textit{RegenerativeBraking})
 are derived from system requirements (e.g., \textit{Braking}). 
 %Due to space limitations, we do not provide the details of the HSUV model, interested readers can download the full HSUV model from the web page of our bridge. 
+
+\textbf{Step 6.} At this point we can execute the $UML2slicedMM_{sysml}$ transformation in order to obtain a MOF-based representation
+of the HSUV model. Figure \ref{fig:hsuvMOF} shows a fragment of the obtained model. 
+Essentially, it contains the same elements of the source UML model, but (i) each stereotype application (e.g., \textit{Requirement}
+was applied to the \textit{Brake} UML class)
+has been transformed into an instance of the metaclass corresponding to the applied stereotype,
+and (ii) tagged values (e.g., \textit{text} or \textit{id} of \textit{Requirement}) 
+have been translated to standard MOF properties. These two differences will facilitate
+the manipulation of the HSUV model because stereotypes and tagged values can be accessed as standard MOF elements.
 %
 \vspace{-.4cm}
 \begin{figure}
@@ -76,24 +84,15 @@ are derived from system requirements (e.g., \textit{Braking}).
   \caption{HSUV system: a UML model (a) and its corresponding MOF-based model (b)}
   \label{fig:hsuv}
 \end{figure}
-\vspace{-.4cm}
-
-\textbf{Step 6.} At this point we can execute the $UML2slicedMM_{sysml}$ transformation in order to obtain a MOF-based representation
-of the HSUV model. Figure \ref{fig:hsuvMOF} shows a fragment of the obtained model. 
-Essentially, it contains the same elements of the source UML model, but (i) each stereotype application (e.g., \textit{Requirement}
-was applied to the \textit{Brake} UML class)
-has been transformed into an instance of the metaclass corresponding to the applied stereotype,
-and (ii) tagged values (e.g., \textit{text} or \textit{id} of \textit{Requirement}) 
-have been translated to standard MOF properties. These two differences will facilitate
-the manipulation of the HSUV model because stereotypes and tagged values can be accessed as standard MOF elements.
+\vspace{-.7cm}
 
 \textbf{Step 7.} In this step we provide a simplified manipulation tool that operates on bridge MOF models. 
 Technical details and accuracy are not in the focus of this step of the case study, 
 its main goal is to show as clearly as possible how manipulation tools may benefit from our UML bridge. 
 The manipulation tool is implemented as an ATL transformation checking if a SysML model follows a simple naming convention.
 Listing \ref{lst:manipulationTool} shows an excerpt of this transformation.
-It takes as input a SysML model and checks if the identifier of each Requirement starts with the string "ID\_" (line 3);
-the transformation generates a Problem element for each requirement that does not follow the convention (lines 10 to 15 in the listing).
+It takes as input a SysML model and checks if the identifier of each \texttt{Requirement} starts with "ID\_" (line 3);
+the transformation generates a \texttt{Problem} for each requirement that does not follow the convention (lines 10 to 14).
 %
 \begin{lstlisting}[breaklines,style=AMMA,language=ATL,mathescape,rulesepcolor=\color{black},caption=ATL transformation manipulating SysML models,captionpos=b,label={lst:manipulationTool}]
 rule checkIDsConvention {
@@ -108,8 +107,7 @@ rule checkIDsConvention {
 	to
 		t : Problem!Problem (
 			severity <- #warning,
-			description <- 'the id of ' + s.base_Class.name + ' must start with ID_',
-			...
+			description <- 'the id of ' + s.base_Class.name + ' must start with ID_'
 		)
 }
 \end{lstlisting}
