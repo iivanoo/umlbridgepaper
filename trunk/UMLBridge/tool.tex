@@ -1,6 +1,6 @@
 \section{Implementation of the bridge}\label{sec:tool}
 We implemented the proposed bridge in the context of the Eclipse platform.
-More specifically, it is realized as an Eclipse plugin that can be used in two different ways: i) as a standard Eclipse plugin: this allows designers to integrate the bridge with other technologies available in the Eclipse community (e.g., model differencing tools, model transformation engines, and so on); ii) as a stand-alone application in which the bridge and its dependencies are packed together: this allows designers to use the bridge also outside the Eclipse environment.
+More specifically, it is realized as an Eclipse plugin that can be used in two different ways: (i) as a standard Eclipse plugin: this allows designers to integrate the bridge with other technologies available in the Eclipse community (e.g., model differencing tools, model transformation engines, and so on); (ii) as a stand-alone application in which the bridge and its dependencies are packed together: this allows designers to use the bridge also outside the Eclipse environment.
 
 %Figure~\ref{fig:tech} shows the modeling technologies we used to realize the bridge (for the sake of simplicity,
 %transformations from MOF to UML are not represented in figure).
@@ -14,7 +14,9 @@ platform\footnote{UML2 project Web site:
 \underline{http://www.eclipse.org/uml2/}.}.
 This provides the bridge full compliance with OMG standards
 (specifically UML 2.0 and MDA) and interoperability with other
-UML modeling tools\footnote{List of UML2-compatible UML Tools: \small{\url{http://wiki.eclipse.org/MDT-UML2-Tool-Compatibility}}}. Thanks to this choice, designers can graphically design UML profiles with any UML modeling tool, and directly import them into
+UML modeling tools
+%\footnote{List of UML2-compatible UML Tools: \small{\url{http://wiki.eclipse.org/MDT-UML2-Tool-Compatibility}}}. 
+Thanks to this choice, designers can graphically design UML profiles with any UML modeling tool, and directly import them into
 the Eclipse environment. The same rationale holds for UML models.
 %
 %\begin{figure}[htbp]
@@ -31,10 +33,7 @@ The use of ATL allows designers to execute generated transformations (e.g., $UML
 on their models: via ANT scripts, manually as a standard ATL transformation, or directly from Java code
 (this is particularly useful if the proposed bridge must be embedded in already existing tools).
 The technology used for representing and manipulating annotation models is the Atlas Model Weaver (AMW)~\cite{3}. It allows the graphical definition of correspondences
-among models and links among model elements. Such links are captured by weaving models conforming to an extensible weaving metamodel~\cite{MCDFthesis}. The AMMA platform has been selected since it best fits the requirements required to implement the bridge: (i) it provides a flexible model transformation engine, (ii) it supports the concept of transformation model, thus enabling the development of higher-order transformations, and (iii) it is integrated into Eclipse and its modeling facilities.
-
-Interested readers can download the current version of the bridge (along with its source code) from the project
-web page at {\url{http://www.di.univaq.it/malavolta/umlbridge}.
+among models and links among model elements. Such links are captured by weaving models conforming to an extensible weaving metamodel~\cite{MCDFthesis}. The AMMA platform has been selected since it best fits the requirements required to implement the bridge: (i) it provides a flexible model transformation engine, (ii) it supports the concept of transformation model, thus enabling the development of higher-order transformations, and (iii) it is integrated into Eclipse and its modeling facilities. The current version of the bridge (along with its source code) is available {\url{http://www.di.univaq.it/malavolta/umlbridge/}.
 
 
 
